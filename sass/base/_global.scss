@@ -1,0 +1,5 @@
+@use "../abstracts/variables.scss" as var;
+
+body{
+    background: var.$BKGROUND-MAIN;
+}
