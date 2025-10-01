@@ -10,21 +10,21 @@
     <!-- THIS IS THE NAVBAR -->
     <div class="safe-area">
       <nav class="navbar" id="navbar">
-        <div class="focus-area-hover">
-        </div>
-        <div class="logo">izquierda</div>
+        <div class="focus-area-hover"></div>
+        <div class="logo"><img src="/images/logo.svg" alt="logo" /></div>
         <div class="options-nav">
           <ul>
-            <li>opc1</li>
-            <li>opc2</li>
-            <li>opc3</li>
-            <li>opc4</li>
-            <li>opc5</li>
+            <li>Inicio</li>
+            <li>Productos</li>
+            <li>Beneficios</li>
+            <li>Noticias</li>
+            <li>Nosotros</li>
           </ul>
         </div>
         <div class="dropdown">
+          <div><button class="contact-us-btn">Contactenos</button></div>
           <div id="drop-language">
-            🌍
+            <img class="outline" src="./icons/language_icon.svg" alt="lang" />
             <div class="window">
               <p onclick="translatePage('EN')">EN</p>
               <p onclick="translatePage('ES')">ES</p>
@@ -37,12 +37,34 @@
 
     <section class="home" id="home">
       <div id="margin-area">
-        <h1 translate-text>Title</h1>
-        <p translate-text>
-          This is test text for prove the translate api
+        <h1 id="title-home" translate-text>
+          Conecta a tus clientes en cualquier lugar del mundo con soluciones de
+          voz y SMS confiables, seguras y competitivas de Alkaip Telecom
+        </h1>
+        <p id="description-home" translate-text>
+          Obtén soluciones confiables en voz y SMS, con tecnología SS7 y SIP
+          para garantizar calidad, cobertura global y tarifas competitivas.
         </p>
-        <p translate-text> ESTA ES UNA PRUEBA PARA VER SI CAMBIA TEXTOS CON DISTINTOS PARRAFOS EN IDIOMAS</p>
+
+        <div class="wrapper-btns">
+          <button class="outline-home-btn">Donde estamos</button>
+          <button class="home-btn">Ver productos</button>
+        </div>
+
+        <h2>proveemos servicios a</h2>
+        <div class="separator"></div>
+
+        <div class="wrapper-cards">
+          <div class="card">ESPACIO PARA IMAGENES</div>
+        </div>
       </div>
+    </section>
+    <section class="ventages" id="ventages">
+      <h1 translate-text>Ventages</h1>
+      <p translate-text>
+        ESTA ES UNA PRUEBA PARA VER SI CAMBIA TEXTOS CON DISTINTOS PARRAFOS EN
+        IDIOMAS
+      </p>
     </section>
 
     <script src="js/main.js"></script>

@@ -18,7 +18,7 @@ app.use(express.json());
 
 app.use(express.static(dir)); 
 
-app.post("/translate", async (req, res) => {
+app.post("/translate", async (req, res) => {W
   const { text, lang } = req.body;
 
   try {
@@ -51,3 +51,8 @@ app.post("/translate", async (req, res) => {
 app.listen(PORT, () =>
   console.log(`Servidor corriendo en http://localhost:${PORT}`)
 );
+
+/// CONFIGURAR UN VPN CON WILEWARD
+
+
+/// COMPARADOR DE CDRS 

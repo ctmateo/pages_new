@@ -1,6 +1,7 @@
 @use "../abstracts/variables" as var;
 
 #navbar {
+    margin-top: 26px;
     top: 0;
     right: calc(width);
     position: fixed;
@@ -8,16 +9,20 @@
     align-items: center;
     justify-content: space-between;
     width: 100%;
-    height: 52px;
     background-color: transparent;
-    border-bottom: 1px solid black;
-    padding: 0.5%;
-    font-size: var.$FTSIZE-MEDIUM;
+    padding: 1.2%;
+    font-size: var.$FTSIZE-UPPERDOWN;
 
 
     ul {
+        backdrop-filter: blur(10px);
+        background-color: #1a1b1d62;
+        border: 0.3px solid #25262a;
+        border-radius: 12px;
+        padding: 18px;
         display: flex;
         flex-direction: row;
+        color: #a9a9a9;
         gap: 42px;
     }
 
@@ -26,18 +31,24 @@
     }
 
     li:hover {
-        color: blue;
+        color: #3E1CE6;
+    }
+
+}
+
+.logo {
+    img {
+        width: 62px;
+        height: 62px;
+        cursor: pointer;
     }
 }
 
-.safe-area {
-    display: block;
-    padding-bottom: 52px;
-}
+
 
 .home {
     height: 100vh;
-
+    background-color: #000000;
 }
 
 .options-nav {
@@ -61,7 +72,7 @@
     width: 100%;
     background-color: transparent;
 
-    &:hover ~ .dropdown .window {
+    &:hover~.dropdown .window {
         display: block;
     }
 }
@@ -73,7 +84,10 @@
     right: 0;
     position: absolute;
     display: none;
-    border: 1px solid black;
+    background-color: #1a1b1d62;
+    border: 0.3px solid #25262a;
+    border-radius: 12px;
+    color: #a9a9a9;
 
     p {
         padding: 8px;
@@ -88,6 +102,10 @@
 }
 
 .dropdown {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 20px;
     position: relative;
 
     &:hover .window {
@@ -95,6 +113,103 @@
     }
 }
 
+.contact-us-btn {
+    width: 180px;
+    background-color: #3E1CE6;
+    border: none;
+    cursor: pointer;
+    padding: 18px;
+    border-radius: 12px;
+    color: #d6d6d6;
+    font-size: 18px;
+
+    &:hover {
+        background-color: #3516ce;
+    }
+
+}
+
 #drop-language {
     cursor: pointer;
+}
+
+#ventages {
+    height: 100vh;
+}
+
+.outline {
+    border: 1px solid #1A1B1D;
+    padding: 18px;
+    border-radius: 12px;
+    background-color: #101113;
+}
+
+#title-home {
+    margin-top: 94px;
+    font-size: 48px;
+    font-weight: 500;
+    width: 64%;
+    margin-bottom: 24px;
+    color: #d6d6d6;
+}
+
+#description-home {
+    font-size: 28px;
+    width: 54%;
+    color: #929292;
+    margin-bottom: 24px;
+}
+
+.home h2 {
+    font-size: 24px;
+    color: #929292;
+    font-weight: 400;
+    margin-top: 32px;
+}
+
+.wrapper-cards {
+    margin-top: 24px;
+    height: 180px;
+    display: grid;
+
+}
+
+.card {
+    height: 100%;
+    width: 58%;
+    background-color: #101113;
+    color: #d6d6d6;
+}
+
+.outline-home-btn {
+    width: 18%;
+    background-color: transparent;
+    border: 1px solid #a9a9a9;
+    cursor: pointer;
+    padding: 18px;
+    border-radius: 12px;
+    color: #a9a9a9;
+    font-size: 18px;
+}
+
+.home-btn {
+    width: 18%;
+    background-color: #3E1CE6;
+    border: none;
+    cursor: pointer;
+    padding: 18px;
+    border-radius: 12px;
+    color: #d6d6d6;
+    font-size: 18px;
+
+    &:hover {
+        background-color: #3516ce;
+    }
+}
+
+.wrapper-btns {
+    margin-top: 12px;
+    margin-bottom: 12px;
+    display: flex;
+    gap: 0.5%;
 }

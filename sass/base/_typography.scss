@@ -1,15 +1,10 @@
-html{
-    font-size: 62.5%;
-    line-height: 1.25;
-    body{
-        font-family: "Poppins";
-    }
-}
-p,
-span{
-    font-size:1.4rem;
+@import url('https://fonts.googleapis.com/css2?family=Outfit:wght@100..900&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Bruno+Ace&display=swap');
+
+
+
+li,h1,h2,p,div,button{
+    font-family: Outfit;
+    font-weight: 400;
 }
 
-a{
-    font-weight: 600;
-}
