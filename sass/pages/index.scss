@@ -1,25 +1,22 @@
 @use "../abstracts/variables" as var;
 
 #navbar {
-    margin-top: 26px;
     top: 0;
     right: calc(width);
     position: fixed;
     display: flex;
     align-items: center;
-    justify-content: space-between;
     width: 100%;
     background-color: transparent;
-    padding: 1.2%;
     font-size: var.$FTSIZE-UPPERDOWN;
+    background-color: #000000;
+    padding: 16px;
+    z-index: 1;
+    padding-left: 48px;
+    padding-right: 48px;
 
 
     ul {
-        backdrop-filter: blur(10px);
-        background-color: #1a1b1d62;
-        border: 0.3px solid #25262a;
-        border-radius: 12px;
-        padding: 18px;
         display: flex;
         flex-direction: row;
         color: #a9a9a9;
@@ -37,10 +34,12 @@
 }
 
 .logo {
+    display: flex;
+
     img {
-        width: 62px;
-        height: 62px;
+        width: 164px;
         cursor: pointer;
+        margin-right: 124px
     }
 }
 
@@ -102,8 +101,9 @@
 }
 
 .dropdown {
+    width: 100%;
     display: flex;
-    justify-content: center;
+    justify-content: end;
     align-items: center;
     gap: 20px;
     position: relative;
@@ -133,10 +133,6 @@
     cursor: pointer;
 }
 
-#ventages {
-    height: 100vh;
-}
-
 .outline {
     border: 1px solid #1A1B1D;
     padding: 18px;
@@ -160,31 +156,11 @@
     margin-bottom: 24px;
 }
 
-.home h2 {
-    font-size: 24px;
-    color: #929292;
-    font-weight: 400;
-    margin-top: 32px;
-}
-
-.wrapper-cards {
-    margin-top: 24px;
-    height: 180px;
-    display: grid;
-
-}
-
-.card {
-    height: 100%;
-    width: 58%;
-    background-color: #101113;
-    color: #d6d6d6;
-}
 
 .outline-home-btn {
     width: 18%;
-    background-color: transparent;
-    border: 1px solid #a9a9a9;
+    border: 1px solid #1A1B1D;
+    background-color: #101113;
     cursor: pointer;
     padding: 18px;
     border-radius: 12px;
@@ -193,6 +169,9 @@
 }
 
 .home-btn {
+    display: flex;
+    justify-content: center;
+    align-items: center0;
     width: 18%;
     background-color: #3E1CE6;
     border: none;
@@ -201,6 +180,7 @@
     border-radius: 12px;
     color: #d6d6d6;
     font-size: 18px;
+    gap: 10px;
 
     &:hover {
         background-color: #3516ce;
@@ -211,5 +191,210 @@
     margin-top: 12px;
     margin-bottom: 12px;
     display: flex;
-    gap: 0.5%;
+    gap: 0.8%;
+}
+
+
+/// TRUSTED CARD COMPANIES
+
+.ventages {
+    background-color: #000000;
+    display: flex;
+    justify-content: center;
+    padding-bottom: 184px;
+}
+
+.home h2 {
+    font-size: 24px;
+    color: #929292;
+    font-weight: 400;
+    margin-top: 32px;
+}
+
+.wrapper-companies-trusted {
+    display: flex;
+    flex-direction: column;
+    padding: 24px;
+    border: 1px solid #1A1B1D;
+    background-color: #101113;
+    height: 474px;
+    width: 100%;
+
+    font-size: 24px;
+
+    h2 {
+        margin-top: 24px;
+        text-align: center;
+        color: #d6d6d6;
+        font-weight: 400
+    }
+}
+
+.data-companies-trusted {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 64px;
+    margin-top: 32px;
+    color: #929292;
+    font-size: 18px;
+
+    #data {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        gap: 10px;
+
+        img {
+            width: 28px;
+        }
+    }
+}
+
+.wrapper-images-trusted {
+    width: 100%;
+    margin-top: 54px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.images-companies-trusted {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 90%;
+    padding-left: 24px;
+    padding-right: 24px;
+
+    img {
+        margin: 24px;
+        width: 9%;
+        filter: brightness(0) invert(1);
+    }
+}
+
+
+/// PRODUDCT DESCRIPTION
+
+.w100 {
+    display: flex;
+    width: 100%;
+    align-items: center;
+    justify-content: center
+}
+
+.products-description {
+    background-color: #000000;
+    height: 3000px;
+
+    p {
+        text-align: center;
+        display: flex;
+        justify-content: center;
+        margin-top: 18px;
+        font-size: 24px;
+        color: #929292;
+    }
+
+    h1 {
+        text-align: center;
+        font-size: 48px;
+        font-weight: 500;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        color: #d6d6d6;
+    }
+
+
+
+
+    .chip {
+        font-size: 18px;
+        color: #d6d6d6;
+        justify-content: center;
+        border: 1px solid #1CE6D0;
+        border-radius: 32px;
+        padding: 12px;
+        margin-bottom: 24px;
+    }
+
+    .wrapper-card-products {
+        padding: 68px;
+        display: flex;
+        gap: 28px;
+
+    }
+
+    .card-voice {
+        width: 40%;
+        height: 484px;
+        border-radius: 18px;
+        border: 1px solid #1A1B1D;
+        background-color: #3516ce;
+        padding: 24px;
+
+        h2 {
+            font-size: 32px;
+            color: #d6d6d6;
+            margin-top: 52px;
+            font-weight: 500;
+        }
+
+        p {
+            font-size: 20px;
+            text-align: left;
+        }
+
+        span {
+
+            color: #d6d6d6;
+        }
+
+
+    }
+
+    .card-message {
+
+        padding: 24px;
+        border: 1px solid #1A1B1D;
+        background-color: #101113;
+        border-radius: 18px;
+        width: 60%;
+
+        h1{
+            display: flex;
+            justify-content: start;
+            margin-top: 32px;
+        }
+
+        span {
+            color: #d6d6d6;
+        }
+
+        h2 {
+            font-size: 32px;
+            font-weight: 500;
+            color: #d6d6d6;
+        }
+
+        p {
+            font-size: 20px;
+            text-align: left;
+        }
+
+
+    }
+    .product-data{
+        margin-top: 32px;
+        display: flex;
+        align-items: baseline;
+        img{
+            width: 20px;
+        }
+        h1{
+            margin: 0;
+        }
+    }
 }
