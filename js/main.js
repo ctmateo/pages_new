@@ -29,3 +29,12 @@ async function translatePage(lang) {
     element.innerText = translated;
   }
 }
+
+const cards = document.querySelectorAll(".card");
+const total = cards.length;
+const radius = 1200; // más grande = más separación en el cilindro
+
+cards.forEach((card, i) => {
+  const angle = (360 / total) * i;
+  card.style.transform = `rotateY(${angle}deg) translateZ(${radius}px)`;
+});
