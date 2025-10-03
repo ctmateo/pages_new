@@ -595,49 +595,56 @@
         color: #929292;
     }
 
+    body {
+        margin: 0;
+        background: black;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        height: 100vh;
+    }
+
     .vr-carousel {
-        perspective: 2000px;
+        perspective: 1500px;
+        /* profundidad 3D */
         width: 100%;
         height: 600px;
         display: flex;
         justify-content: center;
         align-items: center;
-        background: radial-gradient(circle at center, #050505, #000);
         overflow: hidden;
     }
 
     .carousel {
-        width: 1000px;
-        height: 600px;
         position: relative;
         transform-style: preserve-3d;
         animation: spin 20s linear infinite;
-        /* se mueve la cámara */
+        /* rotación del círculo */
     }
 
     .card {
         position: absolute;
-        width: 280px;
-        height: 420px;
+        width: 200px;
+        height: 300px;
+        background: #001f4d;
+        /* azul oscuro */
         border-radius: 20px;
-        overflow: hidden;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        font-size: 3rem;
+        font-weight: bold;
+        color: white;
         box-shadow: 0 10px 30px rgba(0, 0, 0, 0.6);
     }
 
-    .card img {
-        width: 100%;
-        height: 100%;
-        object-fit: cover;
-    }
-
-    /* Efecto de rotación */
     @keyframes spin {
         from {
-            transform: rotateY(0deg) translateZ(-1000px);
+            transform: rotateY(0deg);
         }
 
         to {
-            transform: rotateY(-360deg) translateZ(-1000px);
+            transform: rotateY(360deg);
         }
     }
 

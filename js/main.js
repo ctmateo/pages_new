@@ -32,7 +32,7 @@ async function translatePage(lang) {
 
 const cards = document.querySelectorAll(".card");
 const total = cards.length;
-const radius = 1200; // más grande = más separación en el cilindro
+const radius = 700; // distancia desde el centro
 
 cards.forEach((card, i) => {
   const angle = (360 / total) * i;
