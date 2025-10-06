@@ -30,11 +30,48 @@ async function translatePage(lang) {
   }
 }
 
+const carousel = document.querySelector(".carousel");
 const cards = document.querySelectorAll(".card");
 const total = cards.length;
-const radius = 700; // distancia desde el centro
+const radius = 1100; // distancia desde el centro
+const speed = 0.001; // velocidad de rotación
+let angle = 0;
 
-cards.forEach((card, i) => {
-  const angle = (360 / total) * i;
-  card.style.transform = `rotateY(${angle}deg) translateZ(${radius}px)`;
+function updateCarousel() {
+  angle += speed;
+
+  cards.forEach((card, i) => {
+    const theta = i * ((2 * Math.PI) / total) + angle;
+    const x = Math.sin(theta) * radius;
+    const z = Math.cos(theta) * radius;
+
+    card.style.transform = `translateX(${x}px) translateZ(${z}px) rotateY(${theta}rad)`;
+
+    // 🔹 Ocultar las cards que pasan por atrás (z < 0)
+    if (z > 0) {
+      card.style.opacity = 0;
+      card.style.pointerEvents = "none";
+    } else {
+      card.style.opacity = 1;
+      card.style.pointerEvents = "auto";
+    }
+  });
+
+  requestAnimationFrame(updateCarousel);
+}
+
+updateCarousel();
+
+setTimeout(() => {
+  document.getElementById("mouseScroll").classList.add("show");
+}, 2000);
+
+// Ocultar cuando se hace scroll
+window.addEventListener("scroll", () => {
+  const scrollIndicator = document.getElementById("mouseScroll");
+  if (window.scrollY > 50) {
+    scrollIndicator.style.opacity = "0";
+    setTimeout(() => (scrollIndicator.style.display = "none"), 600);
+  }
 });
+

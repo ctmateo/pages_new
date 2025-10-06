@@ -63,6 +63,58 @@
     background-color: #000000;
 }
 
+.anim-mouse {
+    cursor: pointer;
+    position: fixed;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    bottom: 58px;
+    right: 50%;
+    transform: translateX(50%);
+    z-index: 99;
+    height: 74px;
+    width: 48px;
+    border-radius: 33px;
+    border: 3px solid #d6d6d6;
+    opacity: 0;
+    transition: opacity 0.6s ease;
+
+    &:hover{
+        border: 3px solid #d6d6d69e;
+    }
+}
+
+.anim-mouse.show {
+    opacity: 1;
+}
+
+.mouser-int {
+    width: 12px;
+    height: 12px;
+    background-color: #d6d6d6;
+    border-radius: 100%;
+    animation: scrollDown 1.5s infinite ease-in-out;
+}
+
+@keyframes scrollDown {
+    0% {
+        transform: translateY(-10px);
+        opacity: 0.3;
+    }
+
+    50% {
+        transform: translateY(10px);
+        opacity: 1;
+    }
+
+    100% {
+        transform: translateY(-10px);
+        opacity: 0.3;
+    }
+}
+
+
 .options-nav {
     display: block;
 }
@@ -228,11 +280,8 @@
     display: flex;
     flex-direction: column;
     padding: 24px;
-    border: 1px solid #1A1B1D;
-    background-color: #101113;
     height: 474px;
     width: 100%;
-
     font-size: 24px;
 
     h2 {
@@ -555,7 +604,6 @@
 
 .events-news {
     background-color: #000000;
-    height: 3000px;
     padding-top: 132px;
 
 
@@ -595,20 +643,11 @@
         color: #929292;
     }
 
-    body {
-        margin: 0;
-        background: black;
-        display: flex;
-        justify-content: center;
-        align-items: center;
-        height: 100vh;
-    }
-
     .vr-carousel {
-        perspective: 1500px;
-        /* profundidad 3D */
+        padding-top: 15px;
+        perspective: 2800px;
         width: 100%;
-        height: 600px;
+        height: 800px;
         display: flex;
         justify-content: center;
         align-items: center;
@@ -617,17 +656,20 @@
 
     .carousel {
         position: relative;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+
         transform-style: preserve-3d;
-        animation: spin 20s linear infinite;
-        /* rotación del círculo */
+        padding-bottom: 120px;
+        padding-top: 120px;
     }
 
     .card {
         position: absolute;
-        width: 200px;
-        height: 300px;
-        background: #001f4d;
-        /* azul oscuro */
+        width: 590px;
+        height: 780px;
+        background: #3E1CE6;
         border-radius: 20px;
         display: flex;
         justify-content: center;
@@ -635,19 +677,90 @@
         font-size: 3rem;
         font-weight: bold;
         color: white;
-        box-shadow: 0 10px 30px rgba(0, 0, 0, 0.6);
-    }
+        transition: opacity 0.3s ease;
+        cursor: pointer;
 
-    @keyframes spin {
-        from {
-            transform: rotateY(0deg);
-        }
-
-        to {
-            transform: rotateY(360deg);
+        &:hover {
+            background-color: #3516ce;
         }
     }
 
+    .card img {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+        border-radius: 18px;
+    }
+
+    .info {
+        h1 {
+            font-size: 28px;
+        }
+
+        p {
+            font-size: 18px;
+        }
+    }
+
+}
+
+h1 {
+    color: #d6d6d6;
+}
+
+.about-us {
+    padding-top: 228px;
+    background-color: #000000;
+    padding-bottom: 580px;
+
+    .container-about-us {
+        padding: 0 68px 0 0;
+        border-radius: 18px;
+        display: flex;
+        align-items: center;
+    }
+
+    h2 {
+        color: #5b5c60;
+        margin-bottom: 8px;
+        font-size: 18px;
+        font-weight: 500;
+    }
+
+    h1 {
+        color: #d6d6d6;
+        font-size: 48px;
+        font-weight: 500;
+    }
+
+    p {
+        margin-top: 24px;
+        font-size: 24px;
+        color: #929292;
+
+    }
 
 
+    button {
+        margin-top: 48px;
+        font-size: 18px;
+        background-color: #3E1CE6;
+        border: none;
+        cursor: pointer;
+        padding: 16px;
+        color: #d6d6d6;
+        border-radius: 12px;
+
+        &:hover {
+            background-color: #3516ce;
+        }
+    }
+
+    .about-right {
+        margin-right: 48px;
+        background-color: #101113;
+        border: 1px solid #1A1B1D;
+        width: 90%;
+        height: 580px;
+    }
 }
