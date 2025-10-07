@@ -6,21 +6,23 @@ $LAYOUT-BREAKPOINT-XSMALL:480px;
 
 //---------- BACKGROUND COLORS -----------
 //BACKGROUND MAIN
-$BKGROUND-MAIN:#ffffff;
+$BKGROUND-MAIN:#101014;
+
+$BKGROUND-COLR-CARD:#1c1c21;
 
 // --------  TEXTCOLORS ----------------
 //  TITLES
-$TXT-TITLE-COLOR:#FFFF;
+$TXT-TITLE-COLOR:#e7e7e7;
 // MAIN TEXT
-$TXT-MAIN-COLOR: #FFFF;
+$TXT-MAIN-COLOR: #98989a;
 
                                            
 // --------- BUTTON TEXT COLORS ----------
-$TXT-BTN-COLOR: #FFFF;
+$TXT-BTN-COLOR: #1A1B1D;
 $TXT-INVERT-COLOR: #FFFF;
 
 // ---------- BUTTON COLORS --------------
-$BTN-COLOR-MAIN: #FFFF;
+$BTN-COLOR-MAIN: #03a0c9;
 $BTN-OUTLINE-COLOR:#FFFF;
 $BTN-COLOR-INVERT:#FFFF;
 
@@ -32,4 +34,15 @@ $FTSIZE-MEDIUM: 14px;
 $FTSIZE-LOW: 12px;
 
 
+/// -------- BORDER COLORS --------------
+$BORD_COLOR: #27272c;
 
+
+
+/// -------- SIZES --------------------
+
+// --------- BORDER RADIUS ------------
+$RADIUS-BRD-BTN: 12px;
+
+// --------- PADDING SIZE -------------
+$PADDING-BTN:12px;

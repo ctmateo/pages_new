@@ -6,17 +6,14 @@ async function translateText(text, lang) {
   });
 
   if (!res.ok) {
-    console.error("Error en la petición:", res.status, await res.text());
-    return text; // si falla, devuelve el texto original
+    return text;
   }
 
   const data = await res.json();
 
-  // Verifica que existan traducciones
   if (data.translations && data.translations.length > 0) {
     return data.translations[0].text;
   } else {
-    console.error("Respuesta inesperada:", data);
     return text;
   }
 }
@@ -33,8 +30,8 @@ async function translatePage(lang) {
 const carousel = document.querySelector(".carousel");
 const cards = document.querySelectorAll(".card");
 const total = cards.length;
-const radius = 1100; // distancia desde el centro
-const speed = 0.001; // velocidad de rotación
+const radius = 1100;
+const speed = 0.001;
 let angle = 0;
 
 function updateCarousel() {
@@ -47,7 +44,6 @@ function updateCarousel() {
 
     card.style.transform = `translateX(${x}px) translateZ(${z}px) rotateY(${theta}rad)`;
 
-    // 🔹 Ocultar las cards que pasan por atrás (z < 0)
     if (z > 0) {
       card.style.opacity = 0;
       card.style.pointerEvents = "none";
@@ -66,7 +62,6 @@ setTimeout(() => {
   document.getElementById("mouseScroll").classList.add("show");
 }, 2000);
 
-// Ocultar cuando se hace scroll
 window.addEventListener("scroll", () => {
   const scrollIndicator = document.getElementById("mouseScroll");
   if (window.scrollY > 50) {

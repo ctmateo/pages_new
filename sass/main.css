@@ -107,7 +107,7 @@ input {
 }
 
 body {
-  background: #ffffff;
+  background: #101014;
 }
 
 li, h1, h2, p, div, button {
@@ -123,7 +123,7 @@ li, h1, h2, p, div, button {
   align-items: center;
   width: 100%;
   font-size: 16px;
-  background-color: rgba(0, 0, 0, 0.5);
+  background-color: #101014;
   backdrop-filter: blur(10px);
   z-index: 1;
   padding-left: 48px;
@@ -167,7 +167,7 @@ li, h1, h2, p, div, button {
 
 .home {
   height: 100vh;
-  background-color: #000000;
+  background-color: #101014;
 }
 
 .anim-mouse {
@@ -276,12 +276,12 @@ li, h1, h2, p, div, button {
 
 .contact-us-btn {
   width: 180px;
-  background-color: #3E1CE6;
+  background-color: #03a0c9;
   border: none;
   cursor: pointer;
   padding: 12px;
   border-radius: 12px;
-  color: #d6d6d6;
+  color: #1A1B1D;
   font-size: 18px;
 }
 .contact-us-btn:hover {
@@ -293,36 +293,35 @@ li, h1, h2, p, div, button {
 }
 
 .outline {
-  border: 1px solid #1A1B1D;
+  border: 1px solid #27272c;
   padding: 12px;
   border-radius: 12px;
-  background-color: #101113;
+  background-color: #1c1c21;
 }
 
 #title-home {
   margin-top: 94px;
   font-size: 38px;
   font-weight: 500;
-  width: 64%;
   margin-bottom: 24px;
-  color: #d6d6d6;
+  color: #e7e7e7;
 }
 
 #description-home {
   font-size: 20px;
   width: 54%;
-  color: #929292;
+  color: #98989a;
   margin-bottom: 24px;
 }
 
 .outline-home-btn {
   width: fit-content;
-  border: 1px solid #1A1B1D;
-  background-color: #101113;
+  border: 1px solid #27272c;
+  background-color: #1c1c21;
   cursor: pointer;
-  padding: 16px;
+  padding: 12px;
   border-radius: 12px;
-  color: #a9a9a9;
+  color: #e7e7e7;
   font-size: 18px;
 }
 
@@ -331,12 +330,12 @@ li, h1, h2, p, div, button {
   justify-content: center;
   align-items: center;
   width: fit-content;
-  background-color: #3E1CE6;
+  background-color: #03a0c9;
   border: none;
   cursor: pointer;
-  padding: 16px;
+  padding: 12px;
   border-radius: 12px;
-  color: #d6d6d6;
+  color: #1A1B1D;
   font-size: 18px;
   gap: 10px;
 }
@@ -351,11 +350,11 @@ li, h1, h2, p, div, button {
   gap: 0.8%;
 }
 
-.ventages {
-  background-color: #000000;
+.trusted-companies {
+  background-color: #101014;
   display: flex;
   justify-content: center;
-  padding-bottom: 184px;
+  align-items: center;
 }
 
 .home h2 {
@@ -435,7 +434,7 @@ li, h1, h2, p, div, button {
 }
 
 .products-description {
-  background-color: #000000;
+  background-color: #101014;
 }
 .products-description p {
   text-align: center;
@@ -472,8 +471,7 @@ li, h1, h2, p, div, button {
   width: 40%;
   height: 484px;
   border-radius: 18px;
-  border: 1px solid #1A1B1D;
-  background-color: #3516ce;
+  background-color: #0194c0;
   padding: 24px;
 }
 .products-description .card-voice h2 {
@@ -491,8 +489,8 @@ li, h1, h2, p, div, button {
 }
 .products-description .card-message {
   padding: 24px;
-  border: 1px solid #1A1B1D;
-  background-color: #101113;
+  border: 2px solid #27272c;
+  background-color: #1c1c21;
   border-radius: 18px;
   width: 60%;
 }
@@ -629,7 +627,7 @@ li, h1, h2, p, div, button {
 }
 
 .events-news {
-  background-color: #000000;
+  background-color: #101014;
   padding-top: 132px;
 }
 .events-news .chip {
@@ -685,7 +683,7 @@ li, h1, h2, p, div, button {
   position: absolute;
   width: 590px;
   height: 780px;
-  background: #3E1CE6;
+  background: #0194c0;
   border-radius: 20px;
   display: flex;
   justify-content: center;
@@ -718,7 +716,7 @@ h1 {
 
 .about-us {
   padding-top: 228px;
-  background-color: #000000;
+  background-color: #101014;
   padding-bottom: 580px;
 }
 .about-us .container-about-us {

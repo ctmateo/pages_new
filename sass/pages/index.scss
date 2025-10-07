@@ -8,7 +8,7 @@
     align-items: center;
     width: 100%;
     font-size: 16px;
-    background-color: rgba(0, 0, 0, 0.5);
+    background-color: var.$BKGROUND-MAIN;
     backdrop-filter: blur(10px);
     z-index: 1;
     padding-left: 48px;
@@ -60,7 +60,7 @@
 
 .home {
     height: 100vh;
-    background-color: #000000;
+    background-color: var.$BKGROUND-MAIN;
 }
 
 .anim-mouse {
@@ -180,12 +180,12 @@
 
 .contact-us-btn {
     width: 180px;
-    background-color: #3E1CE6;
+    background-color: var.$BTN-COLOR-MAIN;
     border: none;
     cursor: pointer;
     padding: 12px;
-    border-radius: 12px;
-    color: #d6d6d6;
+    border-radius: var.$RADIUS-BRD-BTN;
+    color: var.$TXT-BTN-COLOR;
     font-size: 18px;
 
     &:hover {
@@ -199,37 +199,36 @@
 }
 
 .outline {
-    border: 1px solid #1A1B1D;
-    padding: 12px;
-    border-radius: 12px;
-    background-color: #101113;
+    border: 1px solid var.$BORD_COLOR;
+    padding: var.$PADDING-BTN;
+    border-radius: var.$RADIUS-BRD-BTN;
+    background-color: var.$BKGROUND-COLR-CARD;
 }
 
 #title-home {
     margin-top: 94px;
     font-size: 38px;
     font-weight: 500;
-    width: 64%;
     margin-bottom: 24px;
-    color: #d6d6d6;
+    color: var.$TXT-TITLE-COLOR;
 }
 
 #description-home {
     font-size: 20px;
     width: 54%;
-    color: #929292;
+    color: var.$TXT-MAIN-COLOR;
     margin-bottom: 24px;
 }
 
 
 .outline-home-btn {
     width: fit-content;
-    border: 1px solid #1A1B1D;
-    background-color: #101113;
+    border: 1px solid var.$BORD_COLOR;
+    background-color: var.$BKGROUND-COLR-CARD;
     cursor: pointer;
-    padding: 16px;
-    border-radius: 12px;
-    color: #a9a9a9;
+    padding: var.$PADDING-BTN;
+    border-radius: var.$RADIUS-BRD-BTN;
+    color: var.$TXT-TITLE-COLOR;
     font-size: 18px;
 }
 
@@ -238,12 +237,12 @@
     justify-content: center;
     align-items: center;
     width: fit-content;
-    background-color: #3E1CE6;
+    background-color: var.$BTN-COLOR-MAIN;
     border: none;
     cursor: pointer;
-    padding: 16px;
-    border-radius: 12px;
-    color: #d6d6d6;
+    padding: var.$PADDING-BTN;
+    border-radius: var.$RADIUS-BRD-BTN;
+    color: var.$TXT-BTN-COLOR;
     font-size: 18px;
     gap: 10px;
 
@@ -262,11 +261,11 @@
 
 /// TRUSTED CARD COMPANIES
 
-.ventages {
-    background-color: #000000;
+.trusted-companies {
+    background-color: var.$BKGROUND-MAIN;
     display: flex;
     justify-content: center;
-    padding-bottom: 184px;
+    align-items: center;
 }
 
 .home h2 {
@@ -353,7 +352,7 @@
 }
 
 .products-description {
-    background-color: #000000;
+    background-color: var.$BKGROUND-MAIN;
 
     p {
         text-align: center;
@@ -398,8 +397,7 @@
         width: 40%;
         height: 484px;
         border-radius: 18px;
-        border: 1px solid #1A1B1D;
-        background-color: #3516ce;
+        background-color: #0194c0;
         padding: 24px;
 
         h2 {
@@ -425,8 +423,8 @@
     .card-message {
 
         padding: 24px;
-        border: 1px solid #1A1B1D;
-        background-color: #101113;
+        border: 2px solid var.$BORD_COLOR;
+        background-color: var.$BKGROUND-COLR-CARD;
         border-radius: 18px;
         width: 60%;
 
@@ -603,7 +601,7 @@
 }
 
 .events-news {
-    background-color: #000000;
+    background-color: var.$BKGROUND-MAIN;
     padding-top: 132px;
 
 
@@ -669,7 +667,7 @@
         position: absolute;
         width: 590px;
         height: 780px;
-        background: #3E1CE6;
+        background: #0194c0;
         border-radius: 20px;
         display: flex;
         justify-content: center;
@@ -710,7 +708,7 @@ h1 {
 
 .about-us {
     padding-top: 228px;
-    background-color: #000000;
+    background-color: var.$BKGROUND-MAIN;
     padding-bottom: 580px;
 
     .container-about-us {
