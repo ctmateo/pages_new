@@ -10,7 +10,7 @@
     font-size: 16px;
     background-color: var.$BKGROUND-MAIN;
     backdrop-filter: blur(10px);
-    z-index: 1;
+    z-index: 3;
     padding-left: 48px;
     padding-right: 48px;
     padding-top: 8px;
@@ -80,7 +80,7 @@
     opacity: 0;
     transition: opacity 0.6s ease;
 
-    &:hover{
+    &:hover {
         border: 3px solid #d6d6d69e;
     }
 }
@@ -355,7 +355,8 @@
     background-color: var.$BKGROUND-MAIN;
 
     p {
-        text-align: center;
+        line-height: 1.1;
+        text-align: left;
         display: flex;
         justify-content: center;
         margin-top: 18px;
@@ -436,14 +437,14 @@
         }
 
         span {
-            color: #d6d6d6;
+            color: var.$TXT-TITLE-COLOR;
         }
 
         h2 {
             margin-top: 32px;
             font-size: 32px;
             font-weight: 500;
-            color: #d6d6d6;
+            color: var.$TXT-TITLE-COLOR;
         }
 
         p {
@@ -503,54 +504,193 @@
 
     .know-u-product {
         padding: 148px 68px 0 68px;
-        width: 100%;
-
-
-        .wrapper-window-product {
-            margin-top: 62px;
-            display: flex;
-            height: 100%;
-            width: 100%;
-        }
-
-        .left-window-product {
-            width: 35%;
-
-        }
-
-        .right-window-product {
-            width: 60%;
-        }
-
-        .card-drop {
-            padding: 18px;
-            border: 1px solid #1A1B1D;
-            background-color: #101113;
-            cursor: pointer;
-            margin-bottom: 18px;
-            gap: 28px;
-
-            p {
-                font-size: 18px;
-                text-align: left;
-            }
-        }
-
-        h3 {
-            color: #d6d6d6;
-            font-size: 20px;
-        }
+        display: flex;
+        flex-direction: column;
+        justify-content: flex-start;
+        align-items: flex-start;
 
         h1 {
-            display: flex;
-            justify-content: flex-start;
             text-align: left;
         }
 
-        .chip {
-            border-color: #3516ce;
+        .wrapper-bento {
+            background-color: transparent;
+            width: 100%;
+            margin-top: 50px;
+        }
+
+        .grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            /* 3 columnas flexibles */
+            grid-auto-rows: 384px;
+            gap: 28px;
+        }
+
+        .card-bento {
+            background-color: var.$BKGROUND-COLR-CARD;
+            border-radius: 12px;
+            border: 2px solid var.$BORD_COLOR;
+            cursor: pointer;
+            transition: all trasnform ease-in-out;
+
+            &:hover {
+                transition: all ease-out 550ms;
+                transform: scale(1.01);
+            }
+        }
+
+        /* Control individual mediante grid */
+        .card-bento:nth-child(1) {
+            grid-column: span 1;
+            display: flex;
+            align-items: flex-end;
+            background-color: #5BE3A5;
+
+            h2 {
+                color: var.$BKGROUND-MAIN;
+            }
+
+            p {
+                color: var.$BKGROUND-MAIN;
+            }
+
+            /* ocupa 2 columnas */
+        }
+
+        .card-bento:nth-child(2) {
+            grid-column: span 2;
+            /* ocupa 1 columna */
+        }
+
+        .card-bento:nth-child(3) {
+            grid-column: span 2;
+        }
+
+        .card-bento:nth-child(4) {
+            grid-column: span 1;
+            background-color: var.$TXT-TITLE-COLOR;
+
+            h2 {
+                color: var.$BKGROUND-MAIN;
+            }
+
+            p {
+                color: var.$BKGROUND-MAIN;
+            }
+
+        }
+
+        .info-bento {
+            padding: 36px;
+
+            h2 {
+                color: var.$TXT-TITLE-COLOR;
+                font-size: 21px;
+                font-weight: 500;
+            }
+
+            p {
+                color: var.$TXT-MAIN-COLOR;
+                font-size: 18px;
+
+            }
+        }
+
+    }
+
+    .description-message-container {
+        padding-top: 168px;
+
+        .tile-wrapper {
+            display: flex;
+            flex-direction: column;
+            justify-content: flex-start;
+            align-items: flex-start;
+            padding-left: 68px;
             width: fit-content;
         }
+
+        h1 {
+            text-align: left;
+            color: var.$TXT-TITLE-COLOR;
+        }
+
+        p {
+            width: 628px;
+            color: var.$TXT-MAIN-COLOR;
+        }
+
+        .absolute-container {
+            position: relative;
+            overflow: hidden;
+            /* importante para que el degradado no sobresalga */
+        }
+
+        .absolute-container::before,
+        .absolute-container::after {
+            content: "";
+            position: absolute;
+            top: 0;
+            width: 848px;
+            /* ancho del degradado en los bordes */
+            height: 100%;
+            z-index: 2;
+            pointer-events: none;
+            /* permite seguir arrastrando */
+        }
+
+        .absolute-container::before {
+            left: 0;
+            background: linear-gradient(to right, rgba(0, 0, 0, 0.5), transparent);
+        }
+
+        .absolute-container::after {
+            right: 0;
+            background: linear-gradient(to left, rgba(0, 0, 0, 0.5), transparent);
+        }
+
+
+        .wrapper-cards-mov {
+            display: flex;
+            align-items: flex-end;
+            gap: 28px;
+            cursor: grab;
+            user-select: none;
+            overflow: hidden;
+            margin-top: 48px;
+        }
+
+        .card-mov-right {
+            flex: 0 0 380px;
+            height: 348px;
+            border-radius: var.$RADIUS-BRD-BTN;
+            background-color: var.$BKGROUND-COLR-CARD;
+            border: 2px solid var.$BORD_COLOR;
+            transition: transform 0.2s ease-out;
+
+            &:hover {
+                background-color: var.$HOVER_COLOR;
+            }
+        }
+
+        .card-mov-right .info {
+            padding: 28px;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .card-mov-right h2 {
+            font-size: 22px;
+            color: var.$TXT-TITLE-COLOR;
+        }
+
+        .card-mov-right p {
+            font-size: 18px;
+            margin-top: 10px;
+        }
+
+
     }
 
     .container-btn-change {

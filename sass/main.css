@@ -125,7 +125,7 @@ li, h1, h2, p, div, button {
   font-size: 16px;
   background-color: #101014;
   backdrop-filter: blur(10px);
-  z-index: 1;
+  z-index: 3;
   padding-left: 48px;
   padding-right: 48px;
   padding-top: 8px;
@@ -437,7 +437,8 @@ li, h1, h2, p, div, button {
   background-color: #101014;
 }
 .products-description p {
-  text-align: center;
+  line-height: 1.1;
+  text-align: left;
   display: flex;
   justify-content: center;
   margin-top: 18px;
@@ -501,13 +502,13 @@ li, h1, h2, p, div, button {
   margin-bottom: 32px;
 }
 .products-description .card-message span {
-  color: #d6d6d6;
+  color: #e7e7e7;
 }
 .products-description .card-message h2 {
   margin-top: 32px;
   font-size: 32px;
   font-weight: 500;
-  color: #d6d6d6;
+  color: #e7e7e7;
 }
 .products-description .card-message p {
   font-size: 20px;
@@ -553,44 +554,160 @@ li, h1, h2, p, div, button {
 }
 .products-description .know-u-product {
   padding: 148px 68px 0 68px;
-  width: 100%;
-}
-.products-description .know-u-product .wrapper-window-product {
-  margin-top: 62px;
   display: flex;
-  height: 100%;
-  width: 100%;
-}
-.products-description .know-u-product .left-window-product {
-  width: 35%;
-}
-.products-description .know-u-product .right-window-product {
-  width: 60%;
-}
-.products-description .know-u-product .card-drop {
-  padding: 18px;
-  border: 1px solid #1A1B1D;
-  background-color: #101113;
-  cursor: pointer;
-  margin-bottom: 18px;
-  gap: 28px;
-}
-.products-description .know-u-product .card-drop p {
-  font-size: 18px;
-  text-align: left;
-}
-.products-description .know-u-product h3 {
-  color: #d6d6d6;
-  font-size: 20px;
+  flex-direction: column;
+  justify-content: flex-start;
+  align-items: flex-start;
 }
 .products-description .know-u-product h1 {
-  display: flex;
-  justify-content: flex-start;
   text-align: left;
 }
-.products-description .know-u-product .chip {
-  border-color: #3516ce;
+.products-description .know-u-product .wrapper-bento {
+  background-color: transparent;
+  width: 100%;
+  margin-top: 50px;
+}
+.products-description .know-u-product .grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  /* 3 columnas flexibles */
+  grid-auto-rows: 384px;
+  gap: 28px;
+}
+.products-description .know-u-product .card-bento {
+  background-color: #1c1c21;
+  border-radius: 12px;
+  border: 2px solid #27272c;
+  cursor: pointer;
+  transition: all trasnform ease-in-out;
+}
+.products-description .know-u-product .card-bento:hover {
+  transition: all ease-out 550ms;
+  transform: scale(1.01);
+}
+.products-description .know-u-product {
+  /* Control individual mediante grid */
+}
+.products-description .know-u-product .card-bento:nth-child(1) {
+  grid-column: span 1;
+  display: flex;
+  align-items: flex-end;
+  background-color: #5BE3A5;
+}
+.products-description .know-u-product .card-bento:nth-child(1) h2 {
+  color: #101014;
+}
+.products-description .know-u-product .card-bento:nth-child(1) p {
+  color: #101014;
+}
+.products-description .know-u-product .card-bento:nth-child(1) {
+  /* ocupa 2 columnas */
+}
+.products-description .know-u-product .card-bento:nth-child(2) {
+  grid-column: span 2;
+  /* ocupa 1 columna */
+}
+.products-description .know-u-product .card-bento:nth-child(3) {
+  grid-column: span 2;
+}
+.products-description .know-u-product .card-bento:nth-child(4) {
+  grid-column: span 1;
+  background-color: #e7e7e7;
+}
+.products-description .know-u-product .card-bento:nth-child(4) h2 {
+  color: #101014;
+}
+.products-description .know-u-product .card-bento:nth-child(4) p {
+  color: #101014;
+}
+.products-description .know-u-product .info-bento {
+  padding: 36px;
+}
+.products-description .know-u-product .info-bento h2 {
+  color: #e7e7e7;
+  font-size: 21px;
+  font-weight: 500;
+}
+.products-description .know-u-product .info-bento p {
+  color: #98989a;
+  font-size: 18px;
+}
+.products-description .description-message-container {
+  padding-top: 168px;
+}
+.products-description .description-message-container .tile-wrapper {
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  align-items: flex-start;
+  padding-left: 68px;
   width: fit-content;
+}
+.products-description .description-message-container h1 {
+  text-align: left;
+  color: #e7e7e7;
+}
+.products-description .description-message-container p {
+  width: 628px;
+  color: #98989a;
+}
+.products-description .description-message-container .absolute-container {
+  position: relative;
+  overflow: hidden;
+  /* importante para que el degradado no sobresalga */
+}
+.products-description .description-message-container .absolute-container::before,
+.products-description .description-message-container .absolute-container::after {
+  content: "";
+  position: absolute;
+  top: 0;
+  width: 848px;
+  /* ancho del degradado en los bordes */
+  height: 100%;
+  z-index: 2;
+  pointer-events: none;
+  /* permite seguir arrastrando */
+}
+.products-description .description-message-container .absolute-container::before {
+  left: 0;
+  background: linear-gradient(to right, rgba(0, 0, 0, 0.5), transparent);
+}
+.products-description .description-message-container .absolute-container::after {
+  right: 0;
+  background: linear-gradient(to left, rgba(0, 0, 0, 0.5), transparent);
+}
+.products-description .description-message-container .wrapper-cards-mov {
+  display: flex;
+  align-items: flex-end;
+  gap: 28px;
+  cursor: grab;
+  user-select: none;
+  overflow: hidden;
+  margin-top: 48px;
+}
+.products-description .description-message-container .card-mov-right {
+  flex: 0 0 380px;
+  height: 348px;
+  border-radius: 12px;
+  background-color: #1c1c21;
+  border: 2px solid #27272c;
+  transition: transform 0.2s ease-out;
+}
+.products-description .description-message-container .card-mov-right:hover {
+  background-color: #28282c;
+}
+.products-description .description-message-container .card-mov-right .info {
+  padding: 28px;
+  display: flex;
+  flex-direction: column;
+}
+.products-description .description-message-container .card-mov-right h2 {
+  font-size: 22px;
+  color: #e7e7e7;
+}
+.products-description .description-message-container .card-mov-right p {
+  font-size: 18px;
+  margin-top: 10px;
 }
 .products-description .container-btn-change {
   display: flex;
