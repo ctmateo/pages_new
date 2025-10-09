@@ -58,17 +58,32 @@ function updateCarousel() {
 
 updateCarousel();
 
-setTimeout(() => {
-  document.getElementById("mouseScroll").classList.add("show");
-}, 2000);
-
-window.addEventListener("scroll", () => {
+function waitMouseScroller() {
+  let checkObserver = 0;
   const scrollIndicator = document.getElementById("mouseScroll");
-  if (window.scrollY > 50) {
-    scrollIndicator.style.opacity = "0";
-    setTimeout(() => (scrollIndicator.style.display = "none"), 600);
-  }
-});
+  let pastPositionScrollY = window.screenY;
+  let newPositionScrollY = 0;
+
+  setTimeout(() => {
+    document.getElementById("mouseScroll").classList.add("show");
+  }, 1000);
+
+  window.addEventListener("scroll", () => {
+    if (window.scrollY > 50) {
+      scrollIndicator.style.opacity = "0";
+      setTimeout(() => (scrollIndicator.style.display = "none"), 600);
+      newPositionScrollY = window.scrollY;
+    }
+
+    console.log("nueva posicion", newPositionScrollY);
+  });
+  pastPositionScrollY = newPositionScrollY;
+  setTimeout(() => {
+    console.log("posicion pasada", pastPositionScrollY);
+  }, 250);
+}
+
+waitMouseScroller();
 document.addEventListener("DOMContentLoaded", () => {
   const wrapper = document.getElementById("cardsWrapper");
   if (!wrapper) return;
@@ -85,9 +100,8 @@ document.addEventListener("DOMContentLoaded", () => {
   let isDown = false;
   let startX;
   let scrollLeft;
-  let cardWidth = originalCards[0].offsetWidth + 28; // ancho + gap
+  let cardWidth = originalCards[0].offsetWidth + 30; // ancho + gap
 
-  // ---- ARRASTRE ----
   wrapper.addEventListener("mousedown", (e) => {
     isDown = true;
     wrapper.style.cursor = "grabbing";
@@ -104,14 +118,12 @@ document.addEventListener("DOMContentLoaded", () => {
     const x = e.pageX - wrapper.offsetLeft;
     const walk = (x - startX) * 0.8; // sensibilidad
 
-    // Solo permitir movimiento hacia la izquierda
     if (walk > 0) return;
 
     wrapper.scrollLeft = scrollLeft - walk;
     adjustInfiniteScroll();
   });
 
-  // ---- TOUCH ----
   wrapper.addEventListener("touchstart", (e) => {
     isDown = true;
     startX = e.touches[0].pageX - wrapper.offsetLeft;
@@ -129,14 +141,12 @@ document.addEventListener("DOMContentLoaded", () => {
     adjustInfiniteScroll();
   });
 
-  // ---- FUNCIÓN GENERAL DE FINALIZAR ARRASTRE ----
   function stopDragging() {
     if (isDown) snapToNextCard();
     isDown = false;
     wrapper.style.cursor = "grab";
   }
 
-  // ---- AJUSTE DE SCROLL INFINITO ----
   function adjustInfiniteScroll() {
     const maxScroll = sectionWidth * 2;
     const minScroll = 1;
@@ -148,7 +158,6 @@ document.addEventListener("DOMContentLoaded", () => {
     }
   }
 
-  // ---- SNAP AUTOMÁTICO SOLO HACIA LA SIGUIENTE CARD ----
   function snapToNextCard() {
     const current = wrapper.scrollLeft;
     const next = Math.ceil(current / cardWidth) * cardWidth;
@@ -157,4 +166,35 @@ document.addEventListener("DOMContentLoaded", () => {
       behavior: "smooth",
     });
   }
+});
+
+const object = document.querySelector(".dinamyc-map");
+
+object.addEventListener("load", function () {
+  const svg = object.contentDocument; // Accedemos al contenido del SVG
+
+  const paths = svg.querySelectorAll("path");
+  paths.forEach((path) => {
+    // Configuramos los estilos iniciales
+    path.style.fill = "#4A90E2"; // Color inicial
+    path.style.stroke = "#333"; // Contorno inicial (color gris oscuro)
+    path.style.strokeWidth = "1px"; // Grosor del contorno
+    path.style.transition = "fill 0.3s ease, stroke 0.3s ease"; // Transición suave
+    path.style.cursor = "pointer"; // Cambiar el cursor a pointer
+
+    // Evento para cuando el mouse entra (hover)
+    path.addEventListener("mouseenter", function () {
+      path.style.fill = "#FF6347"; // Cambio de color al pasar el mouse
+      path.style.stroke = "#FF4500"; // Cambio del contorno al pasar el mouse
+      path.style.strokeWidth = "2px"; // Aumentamos el grosor del contorno
+    });
+
+    // Evento para cuando el mouse sale (deja de hacer hover)
+    path.addEventListener("mouseleave", function () {
+      path.style.fill = "#4A90E2"; // Restauramos el color original
+      path.style.stroke = "#333"; // Restauramos el contorno original
+      path.style.strokeWidth = "1px"; // Restauramos elP
+      //  grosor del contorno
+    });
+  });
 });
