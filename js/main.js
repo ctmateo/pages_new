@@ -27,15 +27,26 @@ async function translatePage(lang) {
   }
 }
 
+const vrCarousel = document.querySelector(".vr-carousel");
 const carousel = document.querySelector(".carousel");
 const cards = document.querySelectorAll(".card");
+
+if (!vrCarousel || !carousel || cards.length === 0) {
+  console.error("Faltan elementos del carrusel en el DOM.");
+}
+
 const total = cards.length;
 const radius = 1100;
 const speed = 0.001;
 let angle = 0;
+let isDragging = false;
+let startX = 0;
+let currentX = 0;
 
 function updateCarousel() {
-  angle += speed;
+  if (!isDragging) {
+    angle += speed; // rotación automática si no estás arrastrando
+  }
 
   cards.forEach((card, i) => {
     const theta = i * ((2 * Math.PI) / total) + angle;
@@ -44,6 +55,7 @@ function updateCarousel() {
 
     card.style.transform = `translateX(${x}px) translateZ(${z}px) rotateY(${theta}rad)`;
 
+    // Mostrar solo las que están al frente
     if (z > 0) {
       card.style.opacity = 0;
       card.style.pointerEvents = "none";
@@ -55,6 +67,33 @@ function updateCarousel() {
 
   requestAnimationFrame(updateCarousel);
 }
+
+// --- eventos sobre el contenedor exterior ---
+vrCarousel.addEventListener("mousedown", (e) => {
+  isDragging = true;
+  startX = e.pageX;
+  vrCarousel.style.cursor = "grabbing";
+});
+
+vrCarousel.addEventListener("mousemove", (e) => {
+  if (!isDragging) return;
+  currentX = e.pageX;
+  const delta = currentX - startX;
+  angle += delta * 0.0008; // sensibilidad del arrastre
+  startX = currentX;
+});
+
+vrCarousel.addEventListener("mouseup", () => {
+  isDragging = false;
+  vrCarousel.style.cursor = "grab";
+});
+
+vrCarousel.addEventListener("mouseleave", () => {
+  isDragging = false;
+  vrCarousel.style.cursor = "grab";
+});
+
+vrCarousel.style.cursor = "grab";
 
 updateCarousel();
 
@@ -72,10 +111,18 @@ function waitMouseScroller() {
     if (window.scrollY > 50) {
       scrollIndicator.style.opacity = "0";
       setTimeout(() => (scrollIndicator.style.display = "none"), 600);
-      newPositionScrollY = window.scrollY;
+      pastPositionScrollY = newPositionScrollY;
     }
+    if (window.scrollY > pastPositionScrollY) {
+      newPositionScrollY = window.scrollY;
 
-    console.log("nueva posicion", newPositionScrollY);
+      let timeOut = setTimeout(() => {}, 1000);
+      if (timeOut > 1000 && !pastPositionScrollY) {
+        scrollIndicator.style.display = "flex";
+        document.getElementById("mouseScroll").classList.add("show");
+      }
+      console.log(newPositionScrollY);
+    }
   });
   pastPositionScrollY = newPositionScrollY;
   setTimeout(() => {
