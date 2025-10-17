@@ -218,30 +218,26 @@ document.addEventListener("DOMContentLoaded", () => {
 const object = document.querySelector(".dinamyc-map");
 
 object.addEventListener("load", function () {
-  const svg = object.contentDocument; // Accedemos al contenido del SVG
+  const svg = object.contentDocument; 
 
   const paths = svg.querySelectorAll("path");
   paths.forEach((path) => {
-    // Configuramos los estilos iniciales
-    path.style.fill = "#4A90E2"; // Color inicial
-    path.style.stroke = "#333"; // Contorno inicial (color gris oscuro)
-    path.style.strokeWidth = "1px"; // Grosor del contorno
-    path.style.transition = "fill 0.3s ease, stroke 0.3s ease"; // Transición suave
-    path.style.cursor = "pointer"; // Cambiar el cursor a pointer
+    path.style.fill = "#5d5d5d";
+    path.style.stroke = "#edededff"; 
+    path.style.strokeWidth = "1px"; 
+    path.style.transition = "fill 0.3s ease, stroke 0.3s ease";
+    path.style.cursor = "pointer";
 
-    // Evento para cuando el mouse entra (hover)
     path.addEventListener("mouseenter", function () {
-      path.style.fill = "#FF6347"; // Cambio de color al pasar el mouse
-      path.style.stroke = "#FF4500"; // Cambio del contorno al pasar el mouse
-      path.style.strokeWidth = "2px"; // Aumentamos el grosor del contorno
+      path.style.fill = "#FF6347";
+      path.style.stroke = "#FF4500";
+      path.style.strokeWidth = "2px";
     });
 
-    // Evento para cuando el mouse sale (deja de hacer hover)
     path.addEventListener("mouseleave", function () {
-      path.style.fill = "#4A90E2"; // Restauramos el color original
-      path.style.stroke = "#333"; // Restauramos el contorno original
-      path.style.strokeWidth = "1px"; // Restauramos elP
-      //  grosor del contorno
+      path.style.fill = "#5d5d5d";
+      path.style.stroke = "#edededff";
+      path.style.strokeWidth = "1px";
     });
   });
 });

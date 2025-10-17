@@ -901,6 +901,16 @@ h1 {
   margin-right: -128px;
   object-fit: cover;
 }
+.about-us .info-wrap-map {
+  margin-left: 48px;
+}
+.about-us .info-wrap-map h2 {
+  color: #98989a;
+}
+.about-us .info-wrap-map p {
+  font-size: 18px;
+  color: #98989a;
+}
 
 footer {
   background-color: #101113;

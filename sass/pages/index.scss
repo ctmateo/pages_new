@@ -921,7 +921,7 @@ h1 {
         border-radius: var.$RADIUS-BRD-BTN;
         background-color: var.$BKGROUND-COLR-CARD;
         border: 1px solid var.$BORD_COLOR;
-        
+
 
     }
 
@@ -930,5 +930,19 @@ h1 {
         width: 1500px;
         margin-right: -128px;
         object-fit: cover;
+    }
+
+    .info-wrap-map {
+        margin-left: 48px;
+
+        h2 {
+            color: var.$TXT-MAIN-COLOR;
+        }
+
+        p {
+            font-size: 18px;
+            color: var.$TXT-MAIN-COLOR;
+        }
+
     }
 }
