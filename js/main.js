@@ -218,13 +218,13 @@ document.addEventListener("DOMContentLoaded", () => {
 const object = document.querySelector(".dinamyc-map");
 
 object.addEventListener("load", function () {
-  const svg = object.contentDocument; 
+  const svg = object.contentDocument;
 
   const paths = svg.querySelectorAll("path");
   paths.forEach((path) => {
     path.style.fill = "#5d5d5d";
-    path.style.stroke = "#edededff"; 
-    path.style.strokeWidth = "1px"; 
+    path.style.stroke = "#edededff";
+    path.style.strokeWidth = "1px";
     path.style.transition = "fill 0.3s ease, stroke 0.3s ease";
     path.style.cursor = "pointer";
 
@@ -240,4 +240,136 @@ object.addEventListener("load", function () {
       path.style.strokeWidth = "1px";
     });
   });
+});
+
+/// Masonry Infinite Scroll
+const masonry = document.getElementById("masonry");
+const container = document.getElementById("scrollContainer");
+
+const ALTURA_GRANDE = 384;
+const ALTURA_PEQUENA = 248;
+
+const arrayContent = [
+  {
+    title:
+      "Terminación de llamadas nacionales e internacionales con precios competitivos y cobertura total",
+    img: "./images/test4kv.jpg",
+    description: `                  Llega a cualquier destino en el mundo con tarifas accesibles
+                  que se ajustan a tus necesidades, sin renunciar a la
+                  confiabilidad de una conexión estable y con calidad
+                  certificada en cada comunicación. Tanto si tu empresa atiende
+                  clientes locales como internacionales, contarás con una
+                  infraestructura sólida que asegura la mejor experiencia de
+                  voz.`,
+  },
+  {
+    title: `                    Capacidad robusta y alto CPS para Call Centers y grandes
+                    volúmenes de llamadas`,
+    img: "./images/test4kv.jpg",
+    description: `Nuestro servicio está diseñado para soportar picos de tráfico
+                  y grandes cantidades de llamadas simultáneas, lo que lo
+                  convierte en la solución ideal para centros de contacto,
+                  campañas de telemarketing o cualquier operación empresarial
+                  que requiera estabilidad a gran escala.`,
+  },
+  {
+    title: `                    Calidad, estabilidad y continuidad operativa garantizada en
+                    todo momento`,
+    img: "./images/test4kv.jpg",
+    description: `                  Con una red redundante y monitoreada de forma constante,
+                  aseguramos que tus llamadas mantengan una calidad superior y
+                  que tu negocio nunca se vea afectado por interrupciones. La
+                  experiencia del usuario final se mantiene fluida y confiable
+                  en cada interacción.`,
+  },
+  {
+    title: `Recargas de saldo rápidas y gestión financiera ágil para
+                    mantener siempre activa tu operación`,
+    img: "./images/test4kv.jpg",
+    description: `Administra de forma sencilla el saldo de tus servicios, con
+                  procesos de recarga inmediatos que evitan pausas o
+                  interrupciones en la comunicación. Mantén la continuidad de
+                  tus operaciones sin preocuparte por cortes inesperados.4`,
+  },
+
+];
+
+const columnas = [];
+for (let i = 0; i < 3; i++) {
+  const col = document.createElement("div");
+  col.classList.add("columna");
+  col.style.display = "flex";
+  col.style.flexDirection = "column";
+  col.style.flex = "1";
+  columnas.push(col);
+  masonry.appendChild(col);
+}
+
+const patronesColumnas = [
+  ["pequena", "grande"],
+  ["grande", "pequena"],
+  ["pequena", "grande"],
+];
+
+let indicePorColumna = [0, 0, 0];
+
+function generarCards(cantidadPorColumna = 3) {
+  for (let c = 0; c < 3; c++) {
+    const columna = columnas[c];
+    const patron = patronesColumnas[c];
+
+    for (let j = 0; j < cantidadPorColumna; j++) {
+      const tipo = patron[indicePorColumna[c] % patron.length];
+      const altura = tipo === "grande" ? ALTURA_GRANDE : ALTURA_PEQUENA;
+
+      const content =
+        arrayContent[(indicePorColumna[c] + j + c) % arrayContent.length];
+
+      const card = document.createElement("div");
+      card.classList.add("card");
+      card.style.height = `${altura}px`;
+      card.style.transition = "opacity 0.5s ease";
+      card.style.opacity = "0";
+
+      const imageDiv = document.createElement("div");
+      imageDiv.classList.add("card-image");
+      imageDiv.style.backgroundImage = `url(${content.img})`;
+      imageDiv.style.backgroundSize = "cover";
+      imageDiv.style.backgroundPosition = "center";
+
+
+
+      const contentDiv = document.createElement("div");
+      contentDiv.classList.add("card-content");
+
+      const title = document.createElement("h3");
+      title.textContent = content.title;
+
+      //const desc = document.createElement("p");
+      //desc.textContent = content.description;
+
+      contentDiv.appendChild(title);
+      // contentDiv.appendChild(desc);
+
+
+      card.appendChild(imageDiv);
+      card.appendChild(contentDiv);
+      columna.appendChild(card);
+
+      requestAnimationFrame(() => (card.style.opacity = "1"));
+
+      indicePorColumna[c]++;
+    }
+  }
+}
+
+generarCards();
+
+container.addEventListener("scroll", () => {
+  if (
+    container.scrollTop + container.clientHeight >=
+    container.scrollHeight - 50
+  ) {
+    generarCards(3);
+  }
 });
