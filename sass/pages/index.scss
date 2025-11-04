@@ -1,50 +1,57 @@
 @use "../abstracts/variables" as var;
 
 #navbar {
-    top: 0;
-    right: calc(width);
     position: fixed;
+    top: 0;
+    width: 100%;
     display: flex;
     align-items: center;
-    width: 100%;
-    font-size: 16px;
-    background-color: var.$BKGROUND-MAIN;
+    justify-content: space-between;
+    /* para logo y menú */
+    background-color: var(--BKGROUND-MAIN);
     backdrop-filter: blur(10px);
     z-index: 3;
-    padding-left: 48px;
-    padding-right: 48px;
-    padding-top: 8px;
-    padding-bottom: 14px;
+    padding: 8px 48px 14px;
+
+    .options-nav {
+        flex: 1;
+        display: flex;
+        justify-content: flex-end;
+        /* empuja el menú hacia la derecha */
+    }
 
     ul {
         display: flex;
         flex-direction: row;
-        color: #a9a9a9;
+        align-items: center;
         gap: 42px;
+        list-style: none;
+        margin: 0;
+        padding: 0;
+        width: 100%;
     }
 
     li {
         display: flex;
-        justify-content: center;
         align-items: center;
         cursor: pointer;
-        margin: 0;
+        color: #a9a9a9;
 
         img {
-            margin: 0;
-            margin-top: 3px;
-            width: 18px;
+            margin-top: 4px;
             display: flex;
-            justify-content: center;
             align-items: center;
+            justify-content: center;
+            margin-left: 2px;
+            width: 18px;
+        }
+
+        &:hover {
+            color: white;
         }
     }
-
-    li:hover {
-        color: white;
-    }
-
 }
+
 
 .logo {
     display: flex;
@@ -115,10 +122,6 @@
 }
 
 
-.options-nav {
-    display: block;
-}
-
 #margin-area {
     display: flex;
     justify-content: center;
@@ -128,17 +131,9 @@
 }
 
 
-.focus-area-hover {
-    top: 4%;
-    left: 0;
-    position: fixed;
-    height: 24px;
-    width: 100%;
-    background-color: transparent;
 
-    &:hover~.dropdown .window {
-        display: block;
-    }
+.drop.active .window {
+    display: block;
 }
 
 
@@ -159,31 +154,38 @@
         cursor: pointer;
 
         &:hover {
-            background-color: rgb(169, 169, 169);
+            background-color: #2b2b2b;
             display: block;
+            font-weight: bold;
+        }
+
+        &:nth-child(1):hover {
+            border-radius: 12px 12px 0 0;
+            font-weight: bold;
+        }
+
+        &:nth-child(3):hover {
+            border-radius: 0 0 12px 12px;
+            font-weight: bold;
         }
     }
 }
 
 .dropdown {
-    width: 100%;
+    width: fit-content;
     display: flex;
     justify-content: end;
     align-items: center;
     gap: 20px;
     position: relative;
-
-    &:hover .window {
-        display: block;
-    }
 }
 
 .contact-us-btn {
-    width: 180px;
+    width: fit-content;
     background-color: var.$BTN-COLOR-MAIN;
     border: none;
     cursor: pointer;
-    padding: 12px;
+    padding: 12px 18px 12px 18px;
     border-radius: var.$RADIUS-BRD-BTN;
     color: var.$TXT-BTN-COLOR;
     font-size: 18px;
@@ -194,7 +196,7 @@
 
 }
 
-#drop-language {
+.drop {
     cursor: pointer;
 }
 
@@ -338,6 +340,14 @@
 
 /// PRODUDCT DESCRIPTION
 
+.align-bottom {
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: end;
+    padding-bottom: 38px;
+}
+
 .w100 {
     display: flex;
     width: 100%;
@@ -395,11 +405,12 @@
     }
 
     .card-voice {
+        cursor: pointer;
         width: 40%;
         height: 484px;
         border-radius: 18px;
         background-color: #0194c0;
-        padding: 24px;
+        padding: 38px;
 
         h2 {
             font-size: 32px;
@@ -408,13 +419,8 @@
             font-weight: 500;
         }
 
-        p {
-            font-size: 20px;
-            text-align: left;
-        }
-
         span {
-
+            font-size: 18px;
             color: #d6d6d6;
         }
 
@@ -422,8 +428,8 @@
     }
 
     .card-message {
-
-        padding: 24px;
+        cursor: pointer;
+        padding: 38px;
         border: 2px solid var.$BORD_COLOR;
         background-color: var.$BKGROUND-COLR-CARD;
         border-radius: 18px;
@@ -437,6 +443,7 @@
         }
 
         span {
+            font-size: 18px;
             color: var.$TXT-TITLE-COLOR;
         }
 
@@ -453,6 +460,52 @@
         }
 
 
+    }
+
+    .counter h1 {
+        transition: transform 0.5s ease, opacity 0.5s ease;
+    }
+
+    .counter h1.enter {
+        opacity: 1;
+
+    }
+
+    .counter h1.exit {
+        opacity: 0;
+    }
+
+
+    .vertical-text {
+        position: relative;
+        overflow: hidden;
+        height: 24px;
+        /* ajusta según tamaño del texto */
+        display: flex;
+        align-items: center;
+        color: white;
+        font-size: 18px;
+    }
+
+    .vertical-text span {
+        position: absolute;
+        opacity: 0;
+        transform: translateY(20px);
+        transition: all 0.6s ease-in-out;
+    }
+
+    .vertical-text span.active {
+        opacity: 1;
+        transform: translateY(0);
+    }
+
+    .vertical-text span.exit {
+        opacity: 0;
+        transform: translateY(-20px);
+    }
+
+    #number-callers {
+        margin-left: 12px;
     }
 
     .product-data {
@@ -529,7 +582,7 @@
             height: 884px;
             overflow-y: scroll;
             scrollbar-width: none;
-            padding: 12px;
+            
         }
 
         .scroll-container::-webkit-scrollbar {
@@ -571,7 +624,7 @@
             }
 
             p {
-                
+
                 font-size: 16px;
 
             }

@@ -13,17 +13,30 @@
         <div class="logo"><img src="/images/logo10.svg" alt="logo" /></div>
         <div class="options-nav">
           <ul>
-            <li>Inicio</li>
-            <li>Productos <img src="/icons/arrow_down.svg" alt="down" /></li>
-            <li>Beneficios</li>
-            <li>Eventos<img src="/icons/arrow_down.svg" alt="down" /></li>
-            <li>Noticias</li>
-            <li>Nosotros<img src="/icons/arrow_down.svg" alt="down" /></li>
+            <li id="nav1" translate-text>Inicio</li>
+            <li>
+              <p id="nav2" translate-text>Productos</p>
+              <img src="/icons/arrow_down.svg" alt="down" />
+            </li>
+            <li id="nav3" translate-text>Beneficios</li>
+            <li>
+              <p id="nav4" translate-text>Eventos</p>
+              <img src="/icons/arrow_down.svg" alt="down" />
+            </li>
+            <li id="nav5" translate-text>Noticias</li>
+            <li>
+              <p id="nav6" translate-text>Nosotros</p>
+              <img src="/icons/arrow_down.svg" alt="down" />
+            </li>
           </ul>
         </div>
         <div class="dropdown">
-          <div><button class="contact-us-btn">Contactar ahora</button></div>
-          <div id="drop-language">
+          <div>
+            <button id="contact-us-btn" class="contact-us-btn" translate-text>
+              Contactar ahora
+            </button>
+          </div>
+          <div class="drop">
             <img class="outline" src="./icons/language_icon.svg" alt="lang" />
             <div class="window">
               <p onclick="translatePage('EN')">EN</p>
@@ -40,7 +53,7 @@
       <div id="margin-area">
         <h1 id="title-home" translate-text>
           Conecta a tus clientes en cualquier lugar con soluciones <br />
-          de voz y SMS confiables de Alkaip Telecom
+          de voz y SMS confiablses de Alkaip Telecom
         </h1>
         <p id="description-home" translate-text>
           Obtén soluciones confiables en voz y SMS, con tecnología SS7 y SIP
@@ -48,8 +61,12 @@
         </p>
 
         <div class="wrapper-btns">
-          <button class="home-btn">Nuestros productos</button>
-          <button class="outline-home-btn">Acerca de nosotros</button>
+          <button id="home-btn" class="home-btn" translate-text>
+            Nuestros productos
+          </button>
+          <button id="outline-home-btn" class="outline-home-btn" translate-text>
+            Acerca de nosotros
+          </button>
         </div>
       </div>
       <div class="anim-mouse" id="mouseScroll">
@@ -60,7 +77,7 @@
     <!-- MARCAS TRUSTED -->
     <section class="trusted-companies" id="trusted-companies">
       <div class="wrapper-companies-trusted">
-        <h2>
+        <h2 id="title-featured-services" translate-text>
           Operadores, call centers y empresas en todo el mundo confían en Alkaip
           Telecom para garantizar voz y mensajería de alta calidad.
         </h2>
@@ -68,15 +85,21 @@
         <div class="data-companies-trusted">
           <div id="data">
             <img src="/icons/world.svg" alt="world-secure" />
-            <p>Conectividad internacional confiable</p>
+            <p id="feat1" translate-text>
+              Conectividad internacional confiable
+            </p>
           </div>
           <div id="data">
             <img src="/icons/tech.svg" alt="tech" />
-            <p>Tecnología SS7 y SIP</p>
+            <p id="feat2" translate-text>Tecnología SS7 y SIP</p>
           </div>
           <div id="data">
             <img src="/icons/experience.svg" alt="experience" />
-            <p>Experiencia de más de 35 años</p>
+            <p id="feat3" translate-text>Experiencia de más de 35 años</p>
+          </div>
+          <div id="data">
+            <img src="/icons/experience.svg" alt="experience" />
+            <p id="feat4" translate-text>Experiencia de más de 35 años</p>
           </div>
         </div>
       </div>
@@ -85,44 +108,51 @@
     <!-- VITRINA DE PRODUCTOS -->
     <section class="products-description">
       <div class="w100">
-        <div class="chip"><h3>Nuestros productos</h3></div>
+        <div class="chip">
+          <h3 id="chip-products" translate-text>Nuestros productos</h3>
+        </div>
       </div>
-      <h1>
+      <h1 id="title-product" translate-text>
         Tecnología, Confiabilidad y <br />
         Alcance Global en un Solo Lugar
       </h1>
-      <p>
+      <p id="desc-product" translate-text>
         Desde call centers hasta grandes operadores, Alkaip brinda herramientas
         flexibles y robustas para potenciar tu comunicación global.
       </p>
       <div class="wrapper-card-products">
         <div class="card-message">
-          <span>Tecnología avanzada en VoIP y terminación competitiva</span>
-          <div class="product-data"><h1>+100 millones</h1></div>
-
-          <h2>
-            minutos de voz al año <br />
-            con rutas premium y calidad garantizada en cada llamada.
-          </h2>
-          <p>
-            Comunícate sin límites con rutas directas, baja latencia y cobertura
-            global. Alkaip ofrece terminación de voz premium, interconexión
-            rápida y precios competitivos para potenciar tu negocio.
-          </p>
+          <span class="vertical-text" id="change-text-voice" translate-text
+            >Tecnología avanzada en VoIP y terminación competitiva</span
+          >
+          <div class="align-bottom">
+            <div class="product-data">
+              <div id="number" class="counter"></div>
+              <h1 class="vertical-text" id="number-callers" translate-text>M</h1>
+            </div>
+            <h2 id="desc-card-voice" translate-text>
+              minutos de voz al año <br />
+              con rutas premium y calidad garantizada en cada llamada.
+            </h2>
+          </div>
         </div>
         <div class="card-voice">
-          <span>Interconexión en minutos</span>
-          <h2>
-            Escala tu negocio con SMS Velocidad, seguridad y cobertura global al
-            alcance de tu marca.
-          </h2>
+          <span id="change-text-sms" translate-text class="vertical-text"
+            >Interconexión en minutos</span
+          >
+          <div class="align-bottom">
+            <h2 id="desc-card-sms" translate-text>
+              Escala tu negocio con SMS Velocidad, seguridad y cobertura global
+              al alcance de tu marca.
+            </h2>
+          </div>
         </div>
       </div>
       <div class="features-product">
         <div class="feature">
           <img src="/images/test-img.png" alt="feature1" />
-          <h1>Calidad y estabilidad</h1>
-          <p>
+          <h1 id="demo1" translate-text>Calidad y estabilidad</h1>
+          <p id="demo-desc1" translate-text>
             Ofrecemos terminación de voz y SMS a cualquier destino con rutas
             directas, precios competitivos y la solidez que tus operaciones
             necesitan.
@@ -130,8 +160,8 @@
         </div>
         <div class="feature">
           <img src="/images/test-img.png" alt="feature1" />
-          <h1>Escalabilidad sin límites</h1>
-          <p>
+          <h1 id="demo2" translate-text>Escalabilidad sin límites</h1>
+          <p id="demo-desc2" translate-text>
             Soportamos grandes volúmenes de tráfico, alta capacidad CPS para
             call centers y mensajería masiva A2P para notificaciones, alertas y
             marketing.
@@ -139,16 +169,16 @@
         </div>
         <div class="feature">
           <img src="/images/test-img.png" alt="feature1" />
-          <h1>Tecnología de vanguardia</h1>
-          <p>
+          <h1 id="demo3" translate-text>Tecnología de vanguardia</h1>
+          <p id="demo-desc3" translate-text>
             Conectividad mediante SS7 y SMPP, que asegura interoperabilidad
             global y máxima velocidad en cada comunicación.
           </p>
         </div>
         <div class="feature">
           <img src="/images/test-img.png" alt="feature1" />
-          <h1>Confiabilidad en cada envío</h1>
-          <p>
+          <h1 id="demo4" translate-text>Confiabilidad en cada envío</h1>
+          <p id="demo-desc4" translate-text>
             Nuestros servicios están diseñados para garantizar baja latencia,
             alta entrega y una estabilidad sólida, incluso en los escenarios más
             exigentes.
@@ -163,7 +193,7 @@
         <p>
           Ofrecemos servicios de voz confiables y accesibles para empresas de
           todos los tamaños desde locutorios y call centers hasta operadores
-          internacionales. 
+          internacionales.
         </p>
         <div class="scroll-wrapper">
           <div class="fade-top"></div>

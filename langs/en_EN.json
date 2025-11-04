@@ -1,0 +1,58 @@
+{
+    "nav": {
+        "nav1": "Home",
+        "nav2": "Products",
+        "nav3": "Benefits",
+        "nav4": "Events",
+        "nav5": "News",
+        "nav6": "About Us",
+        "contact-us-btn": "Let’s Connect +1 (954) 372-0969"
+    },
+    "home": {
+        "title-home": "Global Voice and SMS Connectivity: Simplified, Reliable, and Scalable",
+        "description-home": "Direct carrier routes, enterprise-grade SMS, and crystal-clear VoIP termination, powered by carrier-grade reliability.",
+        "home-btn": "Learn about our products",
+        "outline-home-btn": "About Us"
+    },
+    "featured-services": {
+        "title-featured-services": "Power your global communications with AlkaIP, trusted by carriers worldwide.",
+        "feat1": "Tier-1 connectivity across 120+ countries.",
+        "feat2": "High delivery rates with real-time analytics.",
+        "feat3": "Voice and messaging at your fingertips.",
+        "feat4": "99.999% uptime and real-time monitoring."
+    },
+    "product-demo": {
+        "chip-products": "About Our Products",
+        "title-product": "Comprehensive Voice and Messaging Solutions",
+        "desc-product": "From call centers to large operators, Alkaip provides flexible and robust tools to enhance your global communication.",
+        "change-text-voice": {
+            "1": "Crystal-clear quality through Tier-1 routes",
+            "2": "CLI / TDM routing",
+            "3": "SIP trunking",
+            "4": "DID management",
+            "5": "Real-time analytics",
+            "6": "Global Call Center Termination"
+        },
+        "change-text-sms": {
+            "1": "A2P / P2A / Two-way messaging",
+            "2": "RCS, SS7, VOTP, Whatsapp, Telegram, Viber",
+            "3": "Global coverage",
+            "4": "Smart routing",
+            "5": "Delivery receipts + analytics"
+        },
+        "number-callers" : {
+            "1" : "Thousand",
+            "2" : "Millions"
+        },
+        "desc-card-voice": "minutes of voice calls per year with premium routes and guaranteed quality on every call.",
+        "desc-card-sms": "Scale your business with SMS Speed, security, and global coverage within reach of your brand.",
+        "demo1": "Tier-1 Global Network",
+        "demo2": "Transparent Billing",
+        "demo3": "99.999% Uptime",
+        "demo4": "Scalable Infrastructure",
+        "demo-desc1": "We offer voice and SMS termination to any destination, with direct routes and competitive prices.",
+        "demo-desc2": "We manage large volumes of traffic and notifications with clear billing and no hidden charges.",
+        "demo-desc3": "Reliable connectivity through SS7 and SMPP protocols for maximum availability in your communications.",
+        "demo-desc4": "Services designed for low latency, high availability, and stability in demanding and scalable environments."
+    }
+}

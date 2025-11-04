@@ -1,31 +1,139 @@
-async function translateText(text, lang) {
-  const res = await fetch("/translate", {
-    method: "POST",
-    headers: { "Content-Type": "application/json" },
-    body: JSON.stringify({ text, lang }),
-  });
-
-  if (!res.ok) {
-    return text;
-  }
-
-  const data = await res.json();
-
-  if (data.translations && data.translations.length > 0) {
-    return data.translations[0].text;
-  } else {
-    return text;
-  }
-}
-
+const LANG_PATHS = {
+  ES: "../langs/es_ES.json",
+  EN: "../langs/en_EN.json",
+};
+let currentLang = "";
 async function translatePage(lang) {
-  const elements = document.querySelectorAll("[translate-text]");
-  for (let element of elements) {
-    const text = element.innerText;
-    const translated = await translateText(text, lang);
-    element.innerText = translated;
+  currentLang = lang;
+
+  const path = LANG_PATHS[lang];
+  if (!path) {
+    console.error("Idioma no soportado:", lang);
+    return;
+  }
+
+  try {
+    const response = await fetch(path);
+    const translations = await response.json();
+    changeNumberFast();
+
+    const elements = document.querySelectorAll("[translate-text]");
+
+    elements.forEach((el) => {
+      const key = el.id;
+      if (key === "change-text-voice") {
+        displazeVerticalText(lang, key);
+      }
+      if (key === "change-text-sms") {
+        setTimeout(() => {
+          displazeVerticalText(lang, key);
+        }, 800);
+      }
+      let text = findTranslationByKey(translations, key);
+
+      if (text) {
+        el.textContent = text;
+      } else {
+        console.warn(`⚠️ No se encontró traducción para: ${key}`);
+      }
+    });
+  } catch (error) {
+    console.error("❌ Error al cargar archivo de idioma:", error);
   }
 }
+
+function findTranslationByKey(obj, key) {
+  for (const prop in obj) {
+    if (prop === key) {
+      return obj[prop];
+    }
+
+    if (typeof obj[prop] === "object" && obj[prop] !== null) {
+      const found = findTranslationByKey(obj[prop], key);
+      if (found) return found;
+    }
+  }
+  return null;
+}
+
+async function displazeVerticalText(lang, id) {
+  
+  try {
+    const element = document.getElementById(id);
+    if (!element) return console.error(`Elemento con id "${id}" no encontrado`);
+
+    const path = LANG_PATHS[lang];
+    const response = await fetch(path);
+    const data = await response.json();
+
+    const section = findTranslationByKey(data, id);
+    if (!section)
+      return console.error(`No se encontró la sección "${id}" en el JSON`);
+
+    // ✅ Convertir el objeto en array de textos
+    const textArray = Object.values(section);
+
+    let index = 0;
+    element.innerHTML = `<span class="active">${textArray[index]}</span>`;
+
+    setInterval(() => {
+      const oldText = element.querySelector("span");
+      if (oldText) oldText.classList.replace("active", "exit");
+
+      index = (index + 1) % textArray.length;
+      const newText = document.createElement("span");
+      newText.textContent = textArray[index];
+      element.appendChild(newText);
+
+      requestAnimationFrame(() => newText.classList.add("active"));
+      setTimeout(() => oldText?.remove(), 600);
+    }, 2500);
+  } catch (error) {
+    console.error("RUTA DEL ID Y LANG NO DISPONIBLE", error);
+  }
+}
+
+
+
+async function changeNumberFast() {
+  const element = document.getElementById("number");
+  if (!element) return;
+  const elementSufix = document.getElementById("number-callers");
+
+   const obj = await displazeVerticalText(currentLang, "number-callers");
+  console.log("esto arroja", currentLang)
+  let i = 0;
+  let h1 = element.querySelector("h1");
+  if (!h1) {
+    h1 = document.createElement("h1");
+    h1.classList.add("enter");
+    h1.textContent = `+${i}`;
+    element.innerHTML = "";
+    element.appendChild(h1);
+  } else {
+    h1.classList.add("enter");
+    h1.textContent = `+${i}`;
+  }
+
+  const interval = setInterval(() => {
+    i++;
+    h1.classList.remove("enter");
+    h1.classList.add("exit");
+
+    setTimeout(() => {
+      h1.textContent = `+${i}`;
+      h1.classList.remove("exit");
+      void h1.offsetWidth;
+      h1.classList.add("enter");
+    }, 10);
+
+    if (i >= 100) clearInterval(interval);
+  }, 10);
+}
+
+
+
+
 
 const vrCarousel = document.querySelector(".vr-carousel");
 const carousel = document.querySelector(".carousel");
@@ -291,7 +399,6 @@ const arrayContent = [
                   interrupciones en la comunicación. Mantén la continuidad de
                   tus operaciones sin preocuparte por cortes inesperados.4`,
   },
-
 ];
 
 const columnas = [];
@@ -337,8 +444,6 @@ function generarCards(cantidadPorColumna = 3) {
       imageDiv.style.backgroundSize = "cover";
       imageDiv.style.backgroundPosition = "center";
 
-
-
       const contentDiv = document.createElement("div");
       contentDiv.classList.add("card-content");
 
@@ -350,7 +455,6 @@ function generarCards(cantidadPorColumna = 3) {
 
       contentDiv.appendChild(title);
       // contentDiv.appendChild(desc);
-
 
       card.appendChild(imageDiv);
       card.appendChild(contentDiv);
@@ -373,3 +477,24 @@ container.addEventListener("scroll", () => {
     generarCards(3);
   }
 });
+
+function setupDropdowns() {
+  const dropdowns = document.querySelectorAll(".drop");
+
+  dropdowns.forEach((drop) => {
+    let closeTimeout;
+
+    drop.addEventListener("mouseenter", () => {
+      clearTimeout(closeTimeout);
+      drop.classList.add("active");
+    });
+
+    drop.addEventListener("mouseleave", () => {
+      closeTimeout = setTimeout(() => {
+        drop.classList.remove("active");
+      }, 150);
+    });
+  });
+}
+
+document.addEventListener("DOMContentLoaded", setupDropdowns);
