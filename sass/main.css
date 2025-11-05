@@ -1,4 +1,3 @@
-@charset "UTF-8";
 @import url("https://fonts.googleapis.com/css2?family=Outfit:wght@100..900&display=swap");
 @import url("https://fonts.googleapis.com/css2?family=Bruno+Ace&display=swap");
 *,
@@ -123,17 +122,15 @@ li, h1, h2, p, div, button {
   display: flex;
   align-items: center;
   justify-content: space-between;
-  /* para logo y menú */
-  background-color: var(--BKGROUND-MAIN);
-  backdrop-filter: blur(10px);
+  /*     background-color: var(--BKGROUND-MAIN);
+  backdrop-filter: blur(10px); */
   z-index: 3;
-  padding: 8px 48px 14px;
+  padding: 26px 48px 14px;
 }
 #navbar .options-nav {
   flex: 1;
   display: flex;
   justify-content: flex-end;
-  /* empuja el menú hacia la derecha */
 }
 #navbar ul {
   display: flex;
@@ -149,7 +146,8 @@ li, h1, h2, p, div, button {
   display: flex;
   align-items: center;
   cursor: pointer;
-  color: #a9a9a9;
+  color: white;
+  transition: all 0.2s ease-in-out;
 }
 #navbar li img {
   margin-top: 4px;
@@ -160,16 +158,31 @@ li, h1, h2, p, div, button {
   width: 18px;
 }
 #navbar li:hover {
+  color: #a9a9a9;
+}
+
+.btn-black {
+  width: fit-content;
+  background-color: #343437;
+  border: none;
+  cursor: pointer;
+  border-radius: 8px;
   color: white;
+  font-size: 18px;
+  padding: 8px 18px 8px 18px;
+  transition: all 0.2s ease-in-out;
+}
+.btn-black:hover {
+  background-color: #28282c;
 }
 
 .logo {
   display: flex;
 }
 .logo img {
-  width: 148px;
+  width: 128px;
   cursor: pointer;
-  margin-right: 124px;
+  margin-right: 64px;
 }
 
 .home {
@@ -238,9 +251,8 @@ li, h1, h2, p, div, button {
 
 .window {
   margin-top: 18.5px;
-  top: 100%;
-  right: 0;
   position: absolute;
+  right: 0;
   display: none;
   background-color: rgba(26, 27, 29, 0.3843137255);
   border: 0.3px solid #25262a;
@@ -249,7 +261,7 @@ li, h1, h2, p, div, button {
 }
 .window p {
   padding: 8px;
-  width: 82px;
+  width: 124px;
   cursor: pointer;
 }
 .window p:hover {
@@ -266,38 +278,39 @@ li, h1, h2, p, div, button {
   font-weight: bold;
 }
 
+.right-btns-nav {
+  display: flex;
+  gap: 16px;
+}
+
 .dropdown {
   width: fit-content;
   display: flex;
   justify-content: end;
   align-items: center;
-  gap: 20px;
   position: relative;
 }
+.dropdown img {
+  width: 32px;
+}
 
-.contact-us-btn {
+.global-btn {
   width: fit-content;
   background-color: #03a0c9;
   border: none;
   cursor: pointer;
-  padding: 12px 18px 12px 18px;
-  border-radius: 12px;
+  border-radius: 8px;
   color: #1A1B1D;
   font-size: 18px;
+  padding: 8px 18px 8px 18px;
+  transition: all 0.2s ease-in-out;
 }
-.contact-us-btn:hover {
-  background-color: #3516ce;
+.global-btn:hover {
+  background-color: #02b1dd;
 }
 
 .drop {
   cursor: pointer;
-}
-
-.outline {
-  border: 1px solid #27272c;
-  padding: 12px;
-  border-radius: 12px;
-  background-color: #1c1c21;
 }
 
 #title-home {
@@ -317,13 +330,16 @@ li, h1, h2, p, div, button {
 
 .outline-home-btn {
   width: fit-content;
-  border: 1px solid #27272c;
-  background-color: #1c1c21;
+  border: 2px solid #27272c;
+  background-color: transparent;
   cursor: pointer;
-  padding: 12px;
-  border-radius: 12px;
+  border-radius: 8px;
   color: #e7e7e7;
   font-size: 18px;
+  padding: 8px 18px 8px 18px;
+}
+.outline-home-btn:hover {
+  background-color: #28282c;
 }
 
 .home-btn {
@@ -334,14 +350,14 @@ li, h1, h2, p, div, button {
   background-color: #03a0c9;
   border: none;
   cursor: pointer;
-  padding: 12px;
-  border-radius: 12px;
+  padding: 8px 18px 8px 18px;
+  border-radius: 8px;
   color: #1A1B1D;
   font-size: 18px;
   gap: 10px;
 }
 .home-btn:hover {
-  background-color: #3516ce;
+  background-color: #02b1dd;
 }
 
 .wrapper-btns {
@@ -368,13 +384,15 @@ li, h1, h2, p, div, button {
 .wrapper-companies-trusted {
   display: flex;
   flex-direction: column;
-  padding: 24px;
-  height: 474px;
+  align-items: center;
+  justify-content: center;
+  height: 720px;
   width: 100%;
-  font-size: 24px;
+  background-color: #1c1c21;
+  margin-bottom: 198px;
 }
 .wrapper-companies-trusted h2 {
-  margin-top: 24px;
+  font-size: 28px;
   text-align: center;
   color: #d6d6d6;
   font-weight: 400;
@@ -384,10 +402,10 @@ li, h1, h2, p, div, button {
   display: flex;
   justify-content: center;
   align-items: center;
-  gap: 64px;
+  gap: 48px;
   margin-top: 32px;
   color: #929292;
-  font-size: 18px;
+  font-size: 20px;
 }
 .data-companies-trusted #data {
   display: flex;
@@ -426,7 +444,19 @@ li, h1, h2, p, div, button {
   display: flex;
   flex-direction: column;
   justify-content: end;
-  padding-bottom: 38px;
+  padding-bottom: 18px;
+}
+.align-bottom h1 {
+  margin: 0 !important;
+  font-weight: 500;
+}
+.align-bottom h2 {
+  margin-top: 0 !important;
+  font-weight: 500;
+}
+.align-bottom h3 {
+  font-size: 28px;
+  color: #e7e7e7;
 }
 
 .w100 {
@@ -495,6 +525,10 @@ li, h1, h2, p, div, button {
   font-size: 18px;
   color: #d6d6d6;
 }
+.products-description .card-voice:hover {
+  transform: scale(1.02);
+  transition: all 0.5s;
+}
 .products-description .card-message {
   cursor: pointer;
   padding: 38px;
@@ -503,25 +537,21 @@ li, h1, h2, p, div, button {
   border-radius: 18px;
   width: 60%;
 }
-.products-description .card-message h1 {
-  display: flex;
-  justify-content: start;
-  margin-top: 32px;
-  margin-bottom: 32px;
-}
 .products-description .card-message span {
   font-size: 18px;
   color: #e7e7e7;
 }
 .products-description .card-message h2 {
-  margin-top: 32px;
   font-size: 32px;
-  font-weight: 500;
   color: #e7e7e7;
 }
 .products-description .card-message p {
   font-size: 20px;
   text-align: left;
+}
+.products-description .card-message:hover {
+  transform: scale(1.02);
+  transition: all 0.5s;
 }
 .products-description .counter h1 {
   transition: transform 0.5s ease, opacity 0.5s ease;
@@ -532,21 +562,11 @@ li, h1, h2, p, div, button {
 .products-description .counter h1.exit {
   opacity: 0;
 }
-.products-description .vertical-text {
-  position: relative;
-  overflow: hidden;
-  height: 24px;
-  /* ajusta según tamaño del texto */
-  display: flex;
-  align-items: center;
-  color: white;
-  font-size: 18px;
-}
 .products-description .vertical-text span {
   position: absolute;
   opacity: 0;
   transform: translateY(20px);
-  transition: all 0.6s ease-in-out;
+  transition: all 1s ease-in-out;
 }
 .products-description .vertical-text span.active {
   opacity: 1;
@@ -556,21 +576,29 @@ li, h1, h2, p, div, button {
   opacity: 0;
   transform: translateY(-20px);
 }
-.products-description #number-callers {
-  margin-left: 12px;
+.products-description .vertical-text h2 {
+  height: 0;
+  opacity: 0;
+  transition: all 0.5s ease-in-out;
+  font-size: 48px;
 }
-.products-description .product-data {
-  margin-top: 32px;
+.products-description .vertical-text h2.active {
+  opacity: 1;
+}
+.products-description .vertical-text h2.fade {
+  opacity: 0;
+}
+.products-description .number-data {
+  margin-bottom: 18px;
   display: flex;
   align-items: baseline;
 }
-.products-description .product-data img {
-  width: 20px;
-}
-.products-description .product-data h1 {
-  margin: 0;
+.products-description .number-data #number-callers {
+  margin-left: 12px;
 }
 .products-description .features-product {
+  padding-top: 24px;
+  padding-bottom: 94px;
   padding-left: 68px;
   padding-right: 68px;
   display: flex;
@@ -608,7 +636,8 @@ li, h1, h2, p, div, button {
   text-align: left;
 }
 .products-description .know-u-product .scroll-wrapper {
-  margin-top: 48px;
+  margin-top: 94px;
+  margin-bottom: 94px;
   position: relative;
   width: 100%;
   height: 684px;
@@ -630,7 +659,7 @@ li, h1, h2, p, div, button {
 }
 .products-description .know-u-product .card-image {
   width: 100%;
-  border-radius: 12px;
+  border-radius: 8px;
   object-fit: cover;
   height: 70%;
 }
@@ -695,6 +724,7 @@ li, h1, h2, p, div, button {
   color: #98989a;
 }
 .products-description .description-message-container .absolute-container {
+  margin-bottom: 184px;
   position: relative;
   overflow: hidden;
   background-color: #101014;
@@ -725,7 +755,7 @@ li, h1, h2, p, div, button {
 .products-description .description-message-container .card-mov-right {
   flex: 0 0 380px;
   height: 348px;
-  border-radius: 12px;
+  border-radius: 8px;
   background-color: #1c1c21;
   border: 2px solid #27272c;
   transition: transform 0.2s ease-out;
@@ -929,7 +959,7 @@ h1 {
   border: 1px solid blue;
   box-sizing: border-box;
   overflow: hidden;
-  border-radius: 12px;
+  border-radius: 8px;
   background-color: #1c1c21;
   border: 1px solid #27272c;
 }

@@ -30,18 +30,22 @@
             </li>
           </ul>
         </div>
-        <div class="dropdown">
-          <div>
-            <button id="contact-us-btn" class="contact-us-btn" translate-text>
-              Contactar ahora
-            </button>
-          </div>
-          <div class="drop">
-            <img class="outline" src="./icons/language_icon.svg" alt="lang" />
-            <div class="window">
-              <p onclick="translatePage('EN')">EN</p>
-              <p onclick="translatePage('ES')">ES</p>
-              <p onclick="translatePage('FR')">FR</p>
+        <div class="right-btns-nav">
+          <button id="world-btn" class="btn-black" translate-text>
+            Ruta de servicios
+          </button>
+          <button id="contact-us-btn" class="global-btn" translate-text>
+            Contactar ahora
+          </button>
+
+          <div class="dropdown">
+            <div class="drop">
+              <img class="outline" src="./icons/language_icon.svg" alt="lang" />
+              <div class="window">
+                <p onclick="translatePage('EN')">English (EN)</p>
+                <p onclick="translatePage('ES')">Spanish (ES)</p>
+                <p onclick="translatePage('FR')">French (FR)</p>
+              </div>
             </div>
           </div>
         </div>
@@ -61,11 +65,8 @@
         </p>
 
         <div class="wrapper-btns">
-          <button id="home-btn" class="home-btn" translate-text>
+          <button id="home-btn" class="global-btn" translate-text>
             Nuestros productos
-          </button>
-          <button id="outline-home-btn" class="outline-home-btn" translate-text>
-            Acerca de nosotros
           </button>
         </div>
       </div>
@@ -97,10 +98,6 @@
             <img src="/icons/experience.svg" alt="experience" />
             <p id="feat3" translate-text>Experiencia de más de 35 años</p>
           </div>
-          <div id="data">
-            <img src="/icons/experience.svg" alt="experience" />
-            <p id="feat4" translate-text>Experiencia de más de 35 años</p>
-          </div>
         </div>
       </div>
     </section>
@@ -126,14 +123,15 @@
             >Tecnología avanzada en VoIP y terminación competitiva</span
           >
           <div class="align-bottom">
-            <div class="product-data">
+            <div class="number-data">
               <div id="number" class="counter"></div>
-              <h1 class="vertical-text" id="number-callers" translate-text>M</h1>
+              <h2 class="vertical-text" id="number-callers" translate-text></h2>
             </div>
-            <h2 id="desc-card-voice" translate-text>
+
+            <h3 id="desc-card-voice" translate-text>
               minutos de voz al año <br />
               con rutas premium y calidad garantizada en cada llamada.
-            </h2>
+            </h3>
           </div>
         </div>
         <div class="card-voice">
@@ -141,10 +139,10 @@
             >Interconexión en minutos</span
           >
           <div class="align-bottom">
-            <h2 id="desc-card-sms" translate-text>
+            <h3 id="desc-card-sms" translate-text>
               Escala tu negocio con SMS Velocidad, seguridad y cobertura global
               al alcance de tu marca.
-            </h2>
+            </h3>
           </div>
         </div>
       </div>
@@ -186,11 +184,11 @@
         </div>
       </div>
       <div class="know-u-product">
-        <h1>
+        <h1 id="title-voice" translate-text>
           Descubre las soluciones <br />
           en VOZ sin límites de AlkaIp Telecom
         </h1>
-        <p>
+        <p id="desc-voice" translate-text>
           Ofrecemos servicios de voz confiables y accesibles para empresas de
           todos los tamaños desde locutorios y call centers hasta operadores
           internacionales.

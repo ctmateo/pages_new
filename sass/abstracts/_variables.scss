@@ -22,6 +22,7 @@ $TXT-BTN-COLOR: #1A1B1D;
 $TXT-INVERT-COLOR: #FFFF;
 
 // ---------- BUTTON COLORS --------------
+$BTN-COLOR-BLACK: #343437;
 $BTN-COLOR-MAIN: #03a0c9;
 $BTN-OUTLINE-COLOR:#FFFF;
 $BTN-COLOR-INVERT:#FFFF;
@@ -38,14 +39,14 @@ $FTSIZE-LOW: 12px;
 $BORD_COLOR: #27272c;
 
 
-
 /// -------- SIZES --------------------
 
 // --------- BORDER RADIUS ------------
-$RADIUS-BRD-BTN: 12px;
+$RADIUS-BRD-BTN: 8px;
 
 // --------- PADDING SIZE -------------
-$PADDING-BTN:12px;
+$PADDING-BTN: 8px 18px 8px 18px;
 
 /// HOVER -------------
 $HOVER_COLOR: #28282c;
+$HOVER_BTN_MAIN: #02b1dd;

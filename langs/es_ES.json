@@ -1,0 +1,84 @@
+{
+    "nav": {
+        "nav1": "Inicio",
+        "nav2": "Productos",
+        "nav3": "Beneficios",
+        "nav4": "Eventos",
+        "nav5": "Noticias",
+        "nav6": "Sobre nosotros",
+        "contact-us-btn": "Contáctanos",
+        "world-btn": "Centro de recursos"
+    },
+    "home": {
+        "title-home": "Conectividad global de voz y SMS: simple, confiable y escalable",
+        "description-home": "Rutas directas con operadores, SMS de nivel empresarial y terminación VoIP de alta calidad, impulsadas por confiabilidad de nivel carrier.",
+        "home-btn": "Conoce más",
+        "outline-home-btn": "Sobre nosotros"
+    },
+    "featured-services": {
+        "title-featured-services": "Impulsa tus comunicaciones globales con AlkaIP, confiado por operadores en todo el mundo.",
+        "feat1": "Conectividad Tier-1 en más de 120 países.",
+        "feat2": "Altas tasas de entrega con análisis en tiempo real.",
+        "feat3": "Voz y mensajería al alcance de tu mano.",
+        "feat4": "99.999% de disponibilidad y monitoreo en tiempo real."
+    },
+    "product-demo": {
+        "chip-products": "Acerca de nuestros productos",
+        "title-product": "Soluciones integrales de voz y mensajería",
+        "desc-product": "Desde centros de llamadas hasta grandes operadores, AlkaIP ofrece herramientas flexibles y robustas para mejorar tu comunicación global.",
+        "change-text-voice": {
+            "1": "Calidad cristalina a través de rutas Tier-1",
+            "2": "Enrutamiento CLI / TDM",
+            "3": "Troncales SIP",
+            "4": "Gestión de DID",
+            "5": "Análisis en tiempo real",
+            "6": "Terminación global para centros de llamadas"
+        },
+        "change-text-sms": {
+            "1": "Mensajería A2P / P2A / bidireccional",
+            "2": "RCS, SS7, VOTP, Whatsapp, Telegram, Viber",
+            "3": "Cobertura global",
+            "4": "Enrutamiento inteligente",
+            "5": "Confirmaciones de entrega + análisis"
+        },
+        "number-callers": {
+            "1": "Cientos",
+            "2": "Miles",
+            "3": "Millones"
+        },
+        "desc-card-voice": "Minutos de llamadas de voz por año con rutas premium y calidad garantizada en cada llamada.",
+        "desc-card-sms": "Haz crecer tu negocio con SMS: velocidad, seguridad y cobertura global al alcance de tu marca.",
+        "demo1": "Red Global Tier-1",
+        "demo2": "Facturación transparente",
+        "demo3": "99.999% de disponibilidad",
+        "demo4": "Infraestructura escalable",
+        "demo-desc1": "Ofrecemos terminación de voz y SMS a cualquier destino, con rutas directas y precios competitivos.",
+        "demo-desc2": "Gestionamos grandes volúmenes de tráfico y notificaciones con facturación clara y sin cargos ocultos.",
+        "demo-desc3": "Conectividad confiable mediante protocolos SS7 y SMPP para máxima disponibilidad en tus comunicaciones.",
+        "demo-desc4": "Servicios diseñados para baja latencia, alta disponibilidad y estabilidad en entornos exigentes y escalables."
+    },
+    "voice-section": {
+        "title-voice": "Descubre las soluciones de VOZ ilimitadas de AlkaIP Telecom",
+        "desc-voice": "Ofrecemos servicios de voz confiables y accesibles para empresas de todos los tamaños, desde centros de llamadas y operadores telefónicos hasta carriers internacionales.",
+        "scroller-cards-voice": {
+            "titles": {
+                "1": "Terminación de llamadas nacionales e internacionales con precios competitivos y cobertura total",
+                "2": "Alta capacidad y CPS robusto para centros de llamadas y grandes volúmenes de tráfico",
+                "3": "Calidad, estabilidad y continuidad operativa garantizada en todo momento",
+                "4": "Recargas rápidas y gestión financiera ágil para mantener tu operación siempre activa"
+            },
+            "images": {
+                "img1": "./images/test4kv.jpg",
+                "img2": "./images/test4kv.jpg",
+                "img3": "./images/test4kv.jpg",
+                "img4": "./images/test4kv.jpg"
+            },
+            "desc": {
+                "desc1": "Llega a cualquier destino del mundo con tarifas accesibles adaptadas a tus necesidades, sin sacrificar la confiabilidad de una conexión estable y la calidad certificada en cada comunicación. Ya sea que tu empresa atienda clientes locales o internacionales, contarás con una infraestructura sólida que garantiza la mejor experiencia de voz.",
+                "desc2": "Nuestro servicio está diseñado para manejar picos de tráfico y grandes cantidades de llamadas simultáneas, siendo la solución ideal para contact centers, campañas de telemarketing o cualquier operación empresarial que requiera estabilidad a gran escala.",
+                "desc3": "Con una red redundante y monitoreada continuamente, garantizamos que tus llamadas mantengan una calidad superior y que tu negocio nunca se vea afectado por interrupciones. La experiencia del usuario final permanece fluida y confiable en cada interacción.",
+                "desc4": "Gestiona fácilmente el saldo de tu servicio con procesos de recarga instantáneos que evitan pausas o interrupciones en la comunicación. Mantén la continuidad de tus operaciones sin preocuparte por cortes inesperados."
+            }
+        }
+    }
+}

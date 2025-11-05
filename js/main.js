@@ -2,7 +2,7 @@ const LANG_PATHS = {
   ES: "../langs/es_ES.json",
   EN: "../langs/en_EN.json",
 };
-let currentLang = "";
+let currentLang = "EN";
 async function translatePage(lang) {
   currentLang = lang;
 
@@ -21,6 +21,7 @@ async function translatePage(lang) {
 
     elements.forEach((el) => {
       const key = el.id;
+      //// SOLUCIONAR TRANSLAPACIONES AQUII!!!
       if (key === "change-text-voice") {
         displazeVerticalText(lang, key);
       }
@@ -28,6 +29,9 @@ async function translatePage(lang) {
         setTimeout(() => {
           displazeVerticalText(lang, key);
         }, 800);
+      }
+      if(key === "number-callers"){
+        displazeVerticalText(lang, key, "number-callers");
       }
       let text = findTranslationByKey(translations, key);
 
@@ -41,6 +45,18 @@ async function translatePage(lang) {
     console.error("❌ Error al cargar archivo de idioma:", error);
   }
 }
+
+
+document.addEventListener("DOMContentLoaded", () => {
+  const languageBtns = document.getElementsByClassName("window");
+  translatePage(currentLang)
+
+  for (const btn of languageBtns) {
+    btn.addEventListener("click", () => {
+      translatePage(currentLang)
+    });
+  }
+});
 
 function findTranslationByKey(obj, key) {
   for (const prop in obj) {
@@ -56,11 +72,16 @@ function findTranslationByKey(obj, key) {
   return null;
 }
 
-async function displazeVerticalText(lang, id) {
-  
+async function displazeVerticalText(lang, id, key = "") {
   try {
     const element = document.getElementById(id);
     if (!element) return console.error(`Elemento con id "${id}" no encontrado`);
+
+    // Limpia cualquier interval previo para evitar solapamientos
+    if (element._displazeInterval) {
+      clearInterval(element._displazeInterval);
+      element._displazeInterval = null;
+    }
 
     const path = LANG_PATHS[lang];
     const response = await fetch(path);
@@ -70,24 +91,70 @@ async function displazeVerticalText(lang, id) {
     if (!section)
       return console.error(`No se encontró la sección "${id}" en el JSON`);
 
-    // ✅ Convertir el objeto en array de textos
     const textArray = Object.values(section);
-
     let index = 0;
-    element.innerHTML = `<span class="active">${textArray[index]}</span>`;
+    const lastIndex = textArray.length - 1;
 
-    setInterval(() => {
-      const oldText = element.querySelector("span");
-      if (oldText) oldText.classList.replace("active", "exit");
+    // Mapa de velocidades (ms) por key/id. Ajusta valores según necesites.
+    const SPEED_MAP = {
+      "number-callers": 1400,
+      "change-text-voice": 2000,
+      "change-text-sms": 2000,
+    };
+    const defaultInterval = 2500;
+    const intervalTime = SPEED_MAP[key || id] ?? defaultInterval;
 
-      index = (index + 1) % textArray.length;
-      const newText = document.createElement("span");
-      newText.textContent = textArray[index];
-      element.appendChild(newText);
+    // tiempo para remover el elemento viejo (no mayor que la mitad del intervalo)
+    const removalDelay = Math.min(600, Math.max(80, Math.floor(intervalTime / 2)));
 
-      requestAnimationFrame(() => newText.classList.add("active"));
-      setTimeout(() => oldText?.remove(), 600);
-    }, 2500);
+    // Render inicial
+    if (key === "number-callers") {
+      element.innerHTML = `<h2 class="active">${textArray[index]}</h2>`;
+    } else {
+      element.innerHTML = `<span class="active">${textArray[index]}</span>`;
+    }
+
+    // Si solo hay un elemento, no iniciar intervalo
+    if (textArray.length <= 1) return;
+
+    element._displazeInterval = setInterval(() => {
+      const oldElement =
+        key === "number-callers" ? element.querySelector("h2") : element.querySelector("span");
+
+      if (oldElement) {
+        oldElement.classList.replace("active", key === "number-callers" ? "fade" : "exit");
+      }
+
+      // Avanza al siguiente índice
+      if (key === "number-callers") {
+        // Para number-callers: avanzar hasta el último y detenerse allí
+        if (index < lastIndex) {
+          index++;
+        } else {
+          clearInterval(element._displazeInterval);
+          element._displazeInterval = null;
+          return;
+        }
+      } else {
+        // Para los demás: ciclar indefinidamente
+        index = (index + 1) % textArray.length;
+      }
+
+      const newElement = key === "number-callers" ? document.createElement("h2") : document.createElement("span");
+      newElement.textContent = textArray[index];
+      element.appendChild(newElement);
+
+      // Forzar frame para animaciones CSS
+      requestAnimationFrame(() => newElement.classList.add("active"));
+
+      setTimeout(() => oldElement?.remove(), removalDelay);
+
+      // Solo number-callers se detiene en el último; los demás continúan (no limpiar)
+      if (key === "number-callers" && index === lastIndex) {
+        clearInterval(element._displazeInterval);
+        element._displazeInterval = null;
+      }
+    }, intervalTime);
   } catch (error) {
     console.error("RUTA DEL ID Y LANG NO DISPONIBLE", error);
   }
@@ -100,8 +167,7 @@ async function changeNumberFast() {
   if (!element) return;
   const elementSufix = document.getElementById("number-callers");
 
-   const obj = await displazeVerticalText(currentLang, "number-callers");
-  console.log("esto arroja", currentLang)
+
   let i = 0;
   let h1 = element.querySelector("h1");
   if (!h1) {
@@ -128,7 +194,7 @@ async function changeNumberFast() {
     }, 10);
 
     if (i >= 100) clearInterval(interval);
-  }, 10);
+  }, 30);
 }
 
 
@@ -187,7 +253,7 @@ vrCarousel.addEventListener("mousemove", (e) => {
   if (!isDragging) return;
   currentX = e.pageX;
   const delta = currentX - startX;
-  angle += delta * 0.0008; // sensibilidad del arrastre
+  angle += delta * 0.0008; 
   startX = currentX;
 });
 

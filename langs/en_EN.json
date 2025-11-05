@@ -6,12 +6,13 @@
         "nav4": "Events",
         "nav5": "News",
         "nav6": "About Us",
-        "contact-us-btn": "Let’s Connect +1 (954) 372-0969"
+        "contact-us-btn": "Contact us",
+        "world-btn": "Resource center"
     },
     "home": {
         "title-home": "Global Voice and SMS Connectivity: Simplified, Reliable, and Scalable",
         "description-home": "Direct carrier routes, enterprise-grade SMS, and crystal-clear VoIP termination, powered by carrier-grade reliability.",
-        "home-btn": "Learn about our products",
+        "home-btn": "Learn about more",
         "outline-home-btn": "About Us"
     },
     "featured-services": {
@@ -40,11 +41,12 @@
             "4": "Smart routing",
             "5": "Delivery receipts + analytics"
         },
-        "number-callers" : {
-            "1" : "Thousand",
-            "2" : "Millions"
+        "number-callers": {
+            "1": "Hundred",
+            "2": "Thousand",
+            "3": "Millions"
         },
-        "desc-card-voice": "minutes of voice calls per year with premium routes and guaranteed quality on every call.",
+        "desc-card-voice": "Minutes of voice calls per year with premium routes and guaranteed quality on every call.",
         "desc-card-sms": "Scale your business with SMS Speed, security, and global coverage within reach of your brand.",
         "demo1": "Tier-1 Global Network",
         "demo2": "Transparent Billing",
@@ -54,5 +56,29 @@
         "demo-desc2": "We manage large volumes of traffic and notifications with clear billing and no hidden charges.",
         "demo-desc3": "Reliable connectivity through SS7 and SMPP protocols for maximum availability in your communications.",
         "demo-desc4": "Services designed for low latency, high availability, and stability in demanding and scalable environments."
+    },
+    "voice-section": {
+        "title-voice": "Discover AlkaIp Telecom's unlimited VOICE solutions",
+        "desc-voice": "We offer reliable and affordable voice services for businesses of all sizes, from call centers and telephone operators to international carriers",
+        "scroller-cards-voice": {
+            "titles": {
+            "1": "Termination of national and international calls with competitive pricing and full coverage",
+            "2": "Robust capacity and high CPS for Call Centers and large volumes of calls",
+            "3": "Quality, stability, and guaranteed operational continuity at all times",
+            "4": "Fast balance top-ups and agile financial management to keep your operation always active"
+            },
+            "images": {
+            "img1": "./images/test4kv.jpg",
+            "img2": "./images/test4kv.jpg",
+            "img3": "./images/test4kv.jpg",
+            "img4": "./images/test4kv.jpg"
+            },
+            "desc": {
+            "desc1": "Reach any destination in the world with affordable rates tailored to your needs, without sacrificing the reliability of a stable connection and certified quality in every communication. Whether your company serves local or international customers, you'll have a solid infrastructure that ensures the best voice experience.",
+            "desc2": "Our service is designed to handle traffic spikes and large numbers of simultaneous calls, making it the ideal solution for contact centers, telemarketing campaigns, or any business operation that requires large-scale stability.",
+            "desc3": "With a redundant, continuously monitored network, we ensure your calls maintain superior quality and that your business is never affected by interruptions. The end-user experience remains smooth and reliable in every interaction.",
+            "desc4": "Easily manage your service balance with instant top-up processes that prevent pauses or interruptions in communication. Maintain the continuity of your operations without worrying about unexpected outages."
+            }
+        }
     }
 }
