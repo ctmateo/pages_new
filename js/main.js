@@ -1,6 +1,6 @@
 const LANG_PATHS = {
-  ES: "../langs/es_ES.json",
-  EN: "../langs/en_EN.json",
+  ES: "./langs/es_ES.json",
+  EN: "./langs/en_EN.json",
 };
 let currentLang = "EN";
 async function translatePage(lang) {
@@ -15,31 +15,36 @@ async function translatePage(lang) {
   try {
     const response = await fetch(path);
     const translations = await response.json();
-    changeNumberFast();
 
+    // 🔹 Extraer los datos del bloque de las cards
+    const voiceSection = translations["voice-section"];
+    const cardsData = voiceSection["scroller-cards-voice"];
+
+    // Construir un arreglo de objetos compatible con generarCards()
+    const arrayContent = Object.keys(cardsData.titles).map((key, i) => ({
+      title: cardsData.titles[key],
+      img: cardsData.images[`img${i + 1}`],
+      description: cardsData.desc[`desc${i + 1}`],
+    }));
+
+    // Generar las cards con el idioma seleccionado
+    generarCards(arrayContent);
+
+    // 🔹 (Tu código original de traducción)
+    changeNumberFast();
     const elements = document.querySelectorAll("[translate-text]");
 
     elements.forEach((el) => {
       const key = el.id;
-      //// SOLUCIONAR TRANSLAPACIONES AQUII!!!
-      if (key === "change-text-voice") {
-        displazeVerticalText(lang, key);
-      }
-      if (key === "change-text-sms") {
-        setTimeout(() => {
-          displazeVerticalText(lang, key);
-        }, 800);
-      }
-      if(key === "number-callers"){
+      if (key === "change-text-voice") displazeVerticalText(lang, key);
+      if (key === "change-text-sms")
+        setTimeout(() => displazeVerticalText(lang, key), 800);
+      if (key === "number-callers")
         displazeVerticalText(lang, key, "number-callers");
-      }
-      let text = findTranslationByKey(translations, key);
 
-      if (text) {
-        el.textContent = text;
-      } else {
-        console.warn(`⚠️ No se encontró traducción para: ${key}`);
-      }
+      const text = findTranslationByKey(translations, key);
+      if (text) el.textContent = text;
+      else console.warn(`⚠️ No se encontró traducción para: ${key}`);
     });
   } catch (error) {
     console.error("❌ Error al cargar archivo de idioma:", error);
@@ -416,56 +421,9 @@ object.addEventListener("load", function () {
   });
 });
 
-/// Masonry Infinite Scroll
 const masonry = document.getElementById("masonry");
-const container = document.getElementById("scrollContainer");
-
 const ALTURA_GRANDE = 384;
 const ALTURA_PEQUENA = 248;
-
-const arrayContent = [
-  {
-    title:
-      "Terminación de llamadas nacionales e internacionales con precios competitivos y cobertura total",
-    img: "./images/test4kv.jpg",
-    description: `                  Llega a cualquier destino en el mundo con tarifas accesibles
-                  que se ajustan a tus necesidades, sin renunciar a la
-                  confiabilidad de una conexión estable y con calidad
-                  certificada en cada comunicación. Tanto si tu empresa atiende
-                  clientes locales como internacionales, contarás con una
-                  infraestructura sólida que asegura la mejor experiencia de
-                  voz.`,
-  },
-  {
-    title: `                    Capacidad robusta y alto CPS para Call Centers y grandes
-                    volúmenes de llamadas`,
-    img: "./images/test4kv.jpg",
-    description: `Nuestro servicio está diseñado para soportar picos de tráfico
-                  y grandes cantidades de llamadas simultáneas, lo que lo
-                  convierte en la solución ideal para centros de contacto,
-                  campañas de telemarketing o cualquier operación empresarial
-                  que requiera estabilidad a gran escala.`,
-  },
-  {
-    title: `                    Calidad, estabilidad y continuidad operativa garantizada en
-                    todo momento`,
-    img: "./images/test4kv.jpg",
-    description: `                  Con una red redundante y monitoreada de forma constante,
-                  aseguramos que tus llamadas mantengan una calidad superior y
-                  que tu negocio nunca se vea afectado por interrupciones. La
-                  experiencia del usuario final se mantiene fluida y confiable
-                  en cada interacción.`,
-  },
-  {
-    title: `Recargas de saldo rápidas y gestión financiera ágil para
-                    mantener siempre activa tu operación`,
-    img: "./images/test4kv.jpg",
-    description: `Administra de forma sencilla el saldo de tus servicios, con
-                  procesos de recarga inmediatos que evitan pausas o
-                  interrupciones en la comunicación. Mantén la continuidad de
-                  tus operaciones sin preocuparte por cortes inesperados.4`,
-  },
-];
 
 const columnas = [];
 for (let i = 0; i < 3; i++) {
@@ -486,7 +444,15 @@ const patronesColumnas = [
 
 let indicePorColumna = [0, 0, 0];
 
-function generarCards(cantidadPorColumna = 3) {
+// 🧩 Función que limpia las cards actuales
+function limpiarMasonry() {
+  columnas.forEach((col) => (col.innerHTML = ""));
+  indicePorColumna = [0, 0, 0];
+}
+
+// 🧩 Generar cards desde datos del JSON
+function generarCards(arrayContent, cantidadPorColumna = 9) {
+  limpiarMasonry();
   for (let c = 0; c < 3; c++) {
     const columna = columnas[c];
     const patron = patronesColumnas[c];
@@ -494,7 +460,6 @@ function generarCards(cantidadPorColumna = 3) {
     for (let j = 0; j < cantidadPorColumna; j++) {
       const tipo = patron[indicePorColumna[c] % patron.length];
       const altura = tipo === "grande" ? ALTURA_GRANDE : ALTURA_PEQUENA;
-
       const content =
         arrayContent[(indicePorColumna[c] + j + c) % arrayContent.length];
 
@@ -516,8 +481,8 @@ function generarCards(cantidadPorColumna = 3) {
       const title = document.createElement("h3");
       title.textContent = content.title;
 
-      //const desc = document.createElement("p");
-      //desc.textContent = content.description;
+      // const desc = document.createElement("p");
+      // desc.textContent = content.description;
 
       contentDiv.appendChild(title);
       // contentDiv.appendChild(desc);
@@ -532,17 +497,6 @@ function generarCards(cantidadPorColumna = 3) {
     }
   }
 }
-
-generarCards();
-
-container.addEventListener("scroll", () => {
-  if (
-    container.scrollTop + container.clientHeight >=
-    container.scrollHeight - 50
-  ) {
-    generarCards(3);
-  }
-});
 
 function setupDropdowns() {
   const dropdowns = document.querySelectorAll(".drop");

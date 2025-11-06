@@ -80,5 +80,30 @@
             "desc4": "Easily manage your service balance with instant top-up processes that prevent pauses or interruptions in communication. Maintain the continuity of your operations without worrying about unexpected outages."
             }
         }
+    },
+    "sms-section": {
+        "sms-title" : "Enhance your communication with reliable and secure SMS",
+        "sms-desc" : "Ideal for companies seeking speed, stability, and scalability in their communications.",
+        "cards" : {
+            "sms-cd-1" : "SMPP connectivity and direct routing",
+            "sms-cd-2" : "High-priority messages and 24/7 availability",
+            "sms-cd-3" : "International coverage and competitive prices",
+            "sms-cd-4" : "Total flexibility and scalability",
+            "sms-cd-5" : "Specialized technical support"
+        }
+    },
+    "events-section" : {
+        "chip-event": "Events and news",
+        "title-event" :"AlkaIp present at major global telecommunications events",
+        "desc-event" : "Our participation in international conferences and meetings reflects AlkaIp's commitment to innovation, building strategic alliances, and growth in the global market."
+    },
+    "map-section" : {
+        "subtitle-map" : "At AlkaIP Telecom",
+        "title-map" : "We believe that communication shouldn't be complicated."
+
+    },
+    "footer" : {
+        "reserved" : "©2025 Alkaip Telecom, LLC. All rights reserved. Alkaip and its logo are registered trademarks or trademarks of Alkaip in the United States and elsewhere.",
+        "btn-back" : "Back to top"
     }
 }
