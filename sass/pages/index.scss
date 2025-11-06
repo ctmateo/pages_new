@@ -62,11 +62,39 @@
     padding: var.$PADDING-BTN;
     transition: all 0.2s ease-in-out;
 
-    &:hover{
+    &:hover {
         background-color: var.$HOVER_COLOR;
     }
 }
 
+.expand-btn-global {
+    width: fit-content;
+    background-color: var.$BTN-COLOR-BLACK;
+    border: none;
+    cursor: pointer;
+    border-radius: var.$RADIUS-BRD-BTN;
+    color: white;
+    font-size: 18px;
+    padding: var.$PADDING-BTN;
+    transition: all 0.2s ease-in-out;
+    font-weight: 500;
+
+    &:hover {
+        background-color: var.$HOVER_COLOR;
+    }
+}
+
+.overlay {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    border-radius: 0 0 12px 12px;
+    background: linear-gradient(to bottom, transparent 40%, var.$BKGROUND-COLR-CARD 100%);
+}
 
 .logo {
     display: flex;
@@ -185,7 +213,7 @@
     }
 }
 
-.right-btns-nav{
+.right-btns-nav {
     display: flex;
     gap: 16px;
     height: 32px;
@@ -197,7 +225,8 @@
     justify-content: end;
     align-items: center;
     position: relative;
-    img{
+
+    img {
         width: 32px;
     }
 }
@@ -212,14 +241,15 @@
     font-size: 18px;
     padding: var.$PADDING-BTN;
     transition: all 0.2s ease-in-out;
-    font-weight: 600;
+    font-weight: 500;
 
     &:hover {
         background-color: var.$HOVER_BTN_MAIN;
     }
 }
 
-#contact-us-btn, #world-btn{
+#contact-us-btn,
+#world-btn {
     padding: 3px 12px 3px 12px;
     font-size: 18px;
     font-weight: 500;
@@ -229,9 +259,7 @@
     cursor: pointer;
 }
 
-.outline {
-    
-}
+.outline {}
 
 #title-home {
     font-size: 38px;
@@ -637,25 +665,55 @@
 
         .masonry {
             column-count: 3;
-            column-gap: 12px;
+            column-gap: 10px;
         }
 
         .card-image {
             width: 100%;
             border-radius: var.$RADIUS-BRD-BTN;
             object-fit: cover;
-            height: 70%;
+            height: 348px;
+
+            h3{
+                z-index: 1000;
+                padding: 12px;
+                font-size: 18px;
+                color: var.$TXT-INVERT-COLOR;
+                display: flex;
+                align-items: end;
+                justify-content: start;
+                height: 100%;
+            }
         }
 
 
         .card {
             width: 100%;
             border-radius: 12px;
-            margin: 0 0 12px;
             transition: transform 0.2s ease;
             cursor: pointer;
             break-inside: avoid;
-            padding: 12px;
+            padding: 8px;
+            transition: all 0.5 ease-in-out;
+
+            .expand-btn-global {
+                opacity: 0;
+                display: none;
+            }
+            .overlay{
+                display: none;
+            }
+        }
+
+        .card.active {
+            .overlay{
+                display: block;
+            }
+            .expand-btn-global {
+                transition: all 0.5 ease-in;
+                opacity: 1;
+                display: block;
+            }
         }
 
         .card-content {
@@ -665,7 +723,7 @@
 
             h3 {
                 font-size: 18px;
-                color: var.$TXT-TITLE-COLOR;
+                color: blue;
             }
 
             p {
@@ -673,10 +731,6 @@
                 font-size: 16px;
 
             }
-        }
-
-        .card:hover {
-            background-color: var.$HOVER_COLOR;
         }
 
         .fade-top,
@@ -690,11 +744,13 @@
 
 
         .fade-top {
+            pointer-events: none;
             top: 0;
             background: linear-gradient(to bottom, (var.$BKGROUND-MAIN), transparent);
         }
 
         .fade-bottom {
+            pointer-events: none;
             bottom: 0;
             background: linear-gradient(to top, (var.$BKGROUND-MAIN), transparent);
         }
@@ -743,6 +799,11 @@
             pointer-events: none;
         }
 
+        .absolute-container::before {
+            left: 0;
+            background: linear-gradient(to right, (var.$BKGROUND-MAIN), transparent);
+        }
+
         .absolute-container::after {
             right: 0;
             background: linear-gradient(to left, (var.$BKGROUND-MAIN), transparent);
@@ -775,12 +836,16 @@
         .card-mov-right .info {
             padding: 28px;
             display: flex;
-            flex-direction: column;
+            height: 100%;
         }
 
         .card-mov-right h2 {
+            display: flex;
+            align-items: end;
+            justify-content: center;
             font-size: 22px;
             color: var.$TXT-TITLE-COLOR;
+            
         }
 
         .card-mov-right p {
@@ -916,6 +981,8 @@
         transition: opacity 0.3s ease;
         cursor: pointer;
 
+
+
         &:hover {
             background-color: #3516ce;
         }
@@ -947,7 +1014,7 @@ h1 {
 .about-us {
     padding-top: 228px;
     background-color: var.$BKGROUND-MAIN;
-    padding-bottom: 580px;
+    padding-bottom: 348px;
     padding-left: 68px;
 
     .container-about-us {
@@ -957,7 +1024,7 @@ h1 {
     }
 
     h2 {
-        color: #5b5c60;
+        color: var.$TXT-TITLE-COLOR;
         margin-bottom: 8px;
         font-size: 18px;
         font-weight: 500;
@@ -1012,7 +1079,7 @@ h1 {
         align-items: center;
         justify-content: flex-end;
         width: 100%;
-        height: 500px;
+        height: 484px;
         border: 1px solid blue;
         box-sizing: border-box;
         overflow: hidden;
@@ -1025,7 +1092,7 @@ h1 {
 
 
     .dinamyc-map {
-        width: 1500px;
+        width: 75%;
         margin-right: -128px;
         object-fit: cover;
     }
@@ -1034,7 +1101,8 @@ h1 {
         margin-left: 48px;
 
         h2 {
-            color: var.$TXT-MAIN-COLOR;
+            color: var.$TXT-INVERT-COLOR;
+            font-size: 21px;
         }
 
         p {
@@ -1042,5 +1110,20 @@ h1 {
             color: var.$TXT-MAIN-COLOR;
         }
 
+    }
+
+}
+
+
+.support-demo {
+    height: 548px;
+    background-color: var.$BKGROUND-COLR-CARD;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    h1 {
+        font-size: 48px;
+        font-weight: 600;
     }
 }

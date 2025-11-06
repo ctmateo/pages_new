@@ -16,21 +16,17 @@ async function translatePage(lang) {
     const response = await fetch(path);
     const translations = await response.json();
 
-    // 🔹 Extraer los datos del bloque de las cards
     const voiceSection = translations["voice-section"];
     const cardsData = voiceSection["scroller-cards-voice"];
 
-    // Construir un arreglo de objetos compatible con generarCards()
     const arrayContent = Object.keys(cardsData.titles).map((key, i) => ({
       title: cardsData.titles[key],
       img: cardsData.images[`img${i + 1}`],
       description: cardsData.desc[`desc${i + 1}`],
     }));
 
-    // Generar las cards con el idioma seleccionado
     generarCards(arrayContent);
 
-    // 🔹 (Tu código original de traducción)
     changeNumberFast();
     const elements = document.querySelectorAll("[translate-text]");
 
@@ -44,21 +40,20 @@ async function translatePage(lang) {
 
       const text = findTranslationByKey(translations, key);
       if (text) el.textContent = text;
-      else console.warn(`⚠️ No se encontró traducción para: ${key}`);
+      else console.warn(`No se encontró traducción para: ${key}`);
     });
   } catch (error) {
-    console.error("❌ Error al cargar archivo de idioma:", error);
+    console.error("Error al cargar archivo de idioma:", error);
   }
 }
 
-
 document.addEventListener("DOMContentLoaded", () => {
   const languageBtns = document.getElementsByClassName("window");
-  translatePage(currentLang)
+  translatePage(currentLang);
 
   for (const btn of languageBtns) {
     btn.addEventListener("click", () => {
-      translatePage(currentLang)
+      translatePage(currentLang);
     });
   }
 });
@@ -82,7 +77,6 @@ async function displazeVerticalText(lang, id, key = "") {
     const element = document.getElementById(id);
     if (!element) return console.error(`Elemento con id "${id}" no encontrado`);
 
-    // Limpia cualquier interval previo para evitar solapamientos
     if (element._displazeInterval) {
       clearInterval(element._displazeInterval);
       element._displazeInterval = null;
@@ -100,7 +94,6 @@ async function displazeVerticalText(lang, id, key = "") {
     let index = 0;
     const lastIndex = textArray.length - 1;
 
-    // Mapa de velocidades (ms) por key/id. Ajusta valores según necesites.
     const SPEED_MAP = {
       "number-callers": 1400,
       "change-text-voice": 2000,
@@ -109,30 +102,33 @@ async function displazeVerticalText(lang, id, key = "") {
     const defaultInterval = 2500;
     const intervalTime = SPEED_MAP[key || id] ?? defaultInterval;
 
-    // tiempo para remover el elemento viejo (no mayor que la mitad del intervalo)
-    const removalDelay = Math.min(600, Math.max(80, Math.floor(intervalTime / 2)));
+    const removalDelay = Math.min(
+      600,
+      Math.max(80, Math.floor(intervalTime / 2))
+    );
 
-    // Render inicial
     if (key === "number-callers") {
       element.innerHTML = `<h2 class="active">${textArray[index]}</h2>`;
     } else {
       element.innerHTML = `<span class="active">${textArray[index]}</span>`;
     }
 
-    // Si solo hay un elemento, no iniciar intervalo
     if (textArray.length <= 1) return;
 
     element._displazeInterval = setInterval(() => {
       const oldElement =
-        key === "number-callers" ? element.querySelector("h2") : element.querySelector("span");
+        key === "number-callers"
+          ? element.querySelector("h2")
+          : element.querySelector("span");
 
       if (oldElement) {
-        oldElement.classList.replace("active", key === "number-callers" ? "fade" : "exit");
+        oldElement.classList.replace(
+          "active",
+          key === "number-callers" ? "fade" : "exit"
+        );
       }
 
-      // Avanza al siguiente índice
       if (key === "number-callers") {
-        // Para number-callers: avanzar hasta el último y detenerse allí
         if (index < lastIndex) {
           index++;
         } else {
@@ -141,20 +137,20 @@ async function displazeVerticalText(lang, id, key = "") {
           return;
         }
       } else {
-        // Para los demás: ciclar indefinidamente
         index = (index + 1) % textArray.length;
       }
 
-      const newElement = key === "number-callers" ? document.createElement("h2") : document.createElement("span");
+      const newElement =
+        key === "number-callers"
+          ? document.createElement("h2")
+          : document.createElement("span");
       newElement.textContent = textArray[index];
       element.appendChild(newElement);
 
-      // Forzar frame para animaciones CSS
       requestAnimationFrame(() => newElement.classList.add("active"));
 
       setTimeout(() => oldElement?.remove(), removalDelay);
 
-      // Solo number-callers se detiene en el último; los demás continúan (no limpiar)
       if (key === "number-callers" && index === lastIndex) {
         clearInterval(element._displazeInterval);
         element._displazeInterval = null;
@@ -165,13 +161,10 @@ async function displazeVerticalText(lang, id, key = "") {
   }
 }
 
-
-
 async function changeNumberFast() {
   const element = document.getElementById("number");
   if (!element) return;
   const elementSufix = document.getElementById("number-callers");
-
 
   let i = 0;
   let h1 = element.querySelector("h1");
@@ -202,10 +195,6 @@ async function changeNumberFast() {
   }, 30);
 }
 
-
-
-
-
 const vrCarousel = document.querySelector(".vr-carousel");
 const carousel = document.querySelector(".carousel");
 const cards = document.querySelectorAll(".card");
@@ -222,9 +211,25 @@ let isDragging = false;
 let startX = 0;
 let currentX = 0;
 
+// Save previous user-select to restore later
+let prevUserSelect = "";
+let prevWebkitUserSelect = "";
+
+function disableTextSelection() {
+  prevUserSelect = document.body.style.userSelect;
+  prevWebkitUserSelect = document.body.style.webkitUserSelect;
+  document.body.style.userSelect = "none";
+  document.body.style.webkitUserSelect = "none";
+}
+
+function restoreTextSelection() {
+  document.body.style.userSelect = prevUserSelect;
+  document.body.style.webkitUserSelect = prevWebkitUserSelect;
+}
+
 function updateCarousel() {
   if (!isDragging) {
-    angle += speed; // rotación automática si no estás arrastrando
+    angle += speed;
   }
 
   cards.forEach((card, i) => {
@@ -234,7 +239,6 @@ function updateCarousel() {
 
     card.style.transform = `translateX(${x}px) translateZ(${z}px) rotateY(${theta}rad)`;
 
-    // Mostrar solo las que están al frente
     if (z > 0) {
       card.style.opacity = 0;
       card.style.pointerEvents = "none";
@@ -247,29 +251,70 @@ function updateCarousel() {
   requestAnimationFrame(updateCarousel);
 }
 
-// --- eventos sobre el contenedor exterior ---
 vrCarousel.addEventListener("mousedown", (e) => {
   isDragging = true;
   startX = e.pageX;
   vrCarousel.style.cursor = "grabbing";
+  disableTextSelection();
+  e.preventDefault();
 });
 
 vrCarousel.addEventListener("mousemove", (e) => {
   if (!isDragging) return;
   currentX = e.pageX;
   const delta = currentX - startX;
-  angle += delta * 0.0008; 
+  angle += delta * 0.0008;
   startX = currentX;
+  e.preventDefault();
 });
 
 vrCarousel.addEventListener("mouseup", () => {
   isDragging = false;
   vrCarousel.style.cursor = "grab";
+  restoreTextSelection();
 });
 
 vrCarousel.addEventListener("mouseleave", () => {
   isDragging = false;
   vrCarousel.style.cursor = "grab";
+  restoreTextSelection();
+});
+
+// Prevent native drag behavior (images, etc.)
+vrCarousel.addEventListener("dragstart", (e) => {
+  e.preventDefault();
+});
+
+// Touch support
+vrCarousel.addEventListener(
+  "touchstart",
+  (e) => {
+    isDragging = true;
+    startX = e.touches[0].pageX;
+    vrCarousel.style.cursor = "grabbing";
+    disableTextSelection();
+    e.preventDefault();
+  },
+  { passive: false }
+);
+
+vrCarousel.addEventListener(
+  "touchmove",
+  (e) => {
+    if (!isDragging) return;
+    currentX = e.touches[0].pageX;
+    const delta = currentX - startX;
+    angle += delta * 0.0008;
+    startX = currentX;
+    e.preventDefault();
+  },
+  { passive: false }
+);
+
+vrCarousel.addEventListener("touchend", () => {
+  isDragging = false;
+  vrCarousel.style.cursor = "grab";
+  restoreTextSelection();
 });
 
 vrCarousel.style.cursor = "grab";
@@ -305,7 +350,7 @@ function waitMouseScroller() {
   });
   pastPositionScrollY = newPositionScrollY;
   setTimeout(() => {
-    console.log("posicion pasada", pastPositionScrollY);
+    console.log("Past position", pastPositionScrollY);
   }, 250);
 }
 
@@ -326,7 +371,7 @@ document.addEventListener("DOMContentLoaded", () => {
   let isDown = false;
   let startX;
   let scrollLeft;
-  let cardWidth = originalCards[0].offsetWidth + 30; // ancho + gap
+  let cardWidth = originalCards[0].offsetWidth + 30;
 
   wrapper.addEventListener("mousedown", (e) => {
     isDown = true;
@@ -342,7 +387,7 @@ document.addEventListener("DOMContentLoaded", () => {
     if (!isDown) return;
     e.preventDefault();
     const x = e.pageX - wrapper.offsetLeft;
-    const walk = (x - startX) * 0.8; // sensibilidad
+    const walk = (x - startX) * 0.8;
 
     if (walk > 0) return;
 
@@ -422,8 +467,8 @@ object.addEventListener("load", function () {
 });
 
 const masonry = document.getElementById("masonry");
-const ALTURA_GRANDE = 384;
-const ALTURA_PEQUENA = 248;
+const ALTURA_GRANDE = 424;
+const ALTURA_PEQUENA = 424;
 
 const columnas = [];
 for (let i = 0; i < 3; i++) {
@@ -443,14 +488,11 @@ const patronesColumnas = [
 ];
 
 let indicePorColumna = [0, 0, 0];
-
-// 🧩 Función que limpia las cards actuales
 function limpiarMasonry() {
   columnas.forEach((col) => (col.innerHTML = ""));
   indicePorColumna = [0, 0, 0];
 }
 
-// 🧩 Generar cards desde datos del JSON
 function generarCards(arrayContent, cantidadPorColumna = 9) {
   limpiarMasonry();
   for (let c = 0; c < 3; c++) {
@@ -475,17 +517,39 @@ function generarCards(arrayContent, cantidadPorColumna = 9) {
       imageDiv.style.backgroundSize = "cover";
       imageDiv.style.backgroundPosition = "center";
 
+      const overlay = document.createElement("div");
+      overlay.classList.add("overlay");
+
       const contentDiv = document.createElement("div");
       contentDiv.classList.add("card-content");
 
       const title = document.createElement("h3");
       title.textContent = content.title;
 
-      // const desc = document.createElement("p");
-      // desc.textContent = content.description;
+      const btn = document.createElement("button");
+      btn.classList.add("expand-btn-global", "over-image");
+      btn.textContent = "Detail feature";
 
-      contentDiv.appendChild(title);
-      // contentDiv.appendChild(desc);
+      imageDiv.appendChild(title);
+
+      imageDiv.style.position = "relative";
+
+      overlay.style.position = "absolute";
+
+      overlay.style.zIndex = "2";
+      overlay.style.pointerEvents = "none";
+      imageDiv.style.pointerEvents ="none";
+
+
+      btn.style.position = "absolute";
+      btn.style.top = "50%";
+      btn.style.left = "50%";
+      btn.style.transform = "translate(-50%, -50%)";
+      btn.style.zIndex = "3";
+      btn.style.pointerEvents = "auto";
+
+      imageDiv.appendChild(overlay);
+      imageDiv.appendChild(btn);
 
       card.appendChild(imageDiv);
       card.appendChild(contentDiv);
@@ -496,6 +560,29 @@ function generarCards(arrayContent, cantidadPorColumna = 9) {
       indicePorColumna[c]++;
     }
   }
+  activeBtnMasonry();
+}
+
+function activeBtnMasonry() {
+  const cards = document.querySelectorAll(".card");
+  const imagecard = document.querySelectorAll(".card-image");
+
+  console.log("Setting up masonry interactions");
+  cards.forEach((card) => {
+    card.addEventListener("mouseenter", (e) => {
+      console.log("clic");
+      card.classList.add("active");
+
+      e.stopPropagation();
+    });
+  });
+
+  cards.forEach((card) => {
+    card.addEventListener("mouseleave", () => {
+        card.classList.remove("active");
+
+    });
+  });
 }
 
 function setupDropdowns() {
@@ -517,4 +604,5 @@ function setupDropdowns() {
   });
 }
 
+document.addEventListener("DOMContentLoaded", activeBtnMasonry);
 document.addEventListener("DOMContentLoaded", setupDropdowns);
