@@ -65,19 +65,25 @@
             "1": "Crystal-clear quality through Tier-1 routes",
             "2": "CLI / TDM routing",
             "3": "SIP trunking",
-            "4": "DID management"
+            "4": "DID management",
+            "5": "Real-time analytics",
+            "6": "Global Call Center Termination"
             },
             "images": {
             "img1": "./images/test4kv.jpg",
             "img2": "./images/test4kv.jpg",
             "img3": "./images/test4kv.jpg",
-            "img4": "./images/test4kv.jpg"
+            "img4": "./images/test4kv.jpg",
+            "img5": "./images/test4kv.jpg",
+            "img6": "./images/test4kv.jpg"
             },
             "desc": {
             "desc1": "Reach any destination in the world with affordable rates tailored to your needs, without sacrificing the reliability of a stable connection and certified quality in every communication. Whether your company serves local or international customers, you'll have a solid infrastructure that ensures the best voice experience.",
             "desc2": "Our service is designed to handle traffic spikes and large numbers of simultaneous calls, making it the ideal solution for contact centers, telemarketing campaigns, or any business operation that requires large-scale stability.",
             "desc3": "With a redundant, continuously monitored network, we ensure your calls maintain superior quality and that your business is never affected by interruptions. The end-user experience remains smooth and reliable in every interaction.",
-            "desc4": "Easily manage your service balance with instant top-up processes that prevent pauses or interruptions in communication. Maintain the continuity of your operations without worrying about unexpected outages."
+            "desc4": "Easily manage your service balance with instant top-up processes that prevent pauses or interruptions in communication. Maintain the continuity of your operations without worrying about unexpected outages.",
+            "desc5": "Easily manage your service balance with instant top-up processes that prevent pauses or interruptions in communication. Maintain the continuity of your operations without worrying about unexpected outages.",
+            "desc6": "Easily manage your service balance with instant top-up processes that prevent pauses or interruptions in communication. Maintain the continuity of your operations without worrying about unexpected outages."
             }
         }
     },

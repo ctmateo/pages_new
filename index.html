@@ -3,48 +3,75 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>AlkaIP Telecom, WholeSale VoIP and TDM Termination</title>
+    <title></title>
+    <link rel="icon" type="image/x-icon" href="./icons/facv-ico.svg" />
     <link rel="stylesheet" href="./sass/main.css" />
   </head>
   <body>
-    <!-- THIS IS THE NAVBAR -->
     <div class="safe-area">
       <nav class="navbar" id="navbar">
-        <div class="logo"><img src="./images/logo10.svg" alt="logo" /></div>
+        <div class="logo">
+          <img
+            id="logo"
+            data-route=".home"
+            data-auto-scroll="true"
+            src="./images/logo10.svg"
+            alt="logo"
+          />
+        </div>
         <div class="options-nav">
           <ul>
-            <li id="nav1" translate-text>Inicio</li>
+            <li
+              id="nav1"
+              translate-text
+              data-route=".home"
+              data-auto-scroll="true"
+            ></li>
             <li>
-              <p id="nav2" translate-text>Productos</p>
-              <img src="./icons/arrow_down.svg" alt="down" />
+              <p
+                id="nav2"
+                translate-text
+                data-route=".products-description"
+                data-auto-scroll="true"
+              ></p>
+              <img src="./icons/expand.svg" alt="down" />
             </li>
-            <li id="nav3" translate-text>Beneficios</li>
             <li>
-              <p id="nav4" translate-text>Eventos</p>
-              <img src="./icons/arrow_down.svg" alt="down" />
+              <p
+                id="nav4"
+                translate-text
+                data-route=".events-news"
+                data-auto-scroll="true"
+              ></p>
+              <img src="./icons/expand.svg" alt="down" />
             </li>
-            <li id="nav5" translate-text>Noticias</li>
+            <li id="nav5" translate-text></li>
             <li>
-              <p id="nav6" translate-text>Nosotros</p>
+              <p id="nav6" translate-text></p>
               <img src="./icons/arrow_down.svg" alt="down" />
             </li>
           </ul>
         </div>
         <div class="right-btns-nav">
-          <button id="world-btn" class="btn-black" translate-text>
-            Ruta de servicios
-          </button>
-          <button id="contact-us-btn" class="global-btn" translate-text>
-            Contactar ahora
-          </button>
+          <button id="world-btn" class="btn-black" translate-text></button>
+          <button
+            id="contact-us-btn"
+            class="global-btn"
+            translate-text
+            data-open-dialog="true"
+            data-title="Contáctanos"
+            data-description="Rellena el formulario y te contactaremos pronto."
+            data-img="./images/contact.png"
+            data-name-btn="Cerrar"
+            data-number-btn="1"
+          ></button>
 
           <div class="dropdown">
             <div class="drop">
               <img class="outline" src="./icons/language_icon.svg" alt="lang" />
               <div class="window">
                 <p onclick="translatePage('EN')">English (EN)</p>
-                <p onclick="translatePage('ES')">Spanish (ES)</p>
-                <p onclick="translatePage('FR')">French (FR)</p>
+                <p onclick="translatePage('ES')">Español (ES)</p>
               </div>
             </div>
           </div>
@@ -52,22 +79,19 @@
       </nav>
     </div>
 
-    <!-- INICIO -->
     <section class="home" id="home">
       <div id="margin-area">
-        <h1 id="title-home" translate-text>
-          Conecta a tus clientes en cualquier lugar con soluciones <br />
-          de voz y SMS confiablses de Alkaip Telecom
-        </h1>
-        <p id="description-home" translate-text>
-          Obtén soluciones confiables en voz y SMS, con tecnología SS7 y SIP
-          para garantizar calidad, cobertura global y tarifas competitivas.
-        </p>
+        <h1 id="title-home" translate-text></h1>
+        <p id="description-home" translate-text></p>
 
         <div class="wrapper-btns">
-          <button id="home-btn" class="global-btn" translate-text>
-            Nuestros productos
-          </button>
+          <button
+            id="home-btn"
+            class="global-btn"
+            translate-text
+            data-route=".products-description"
+            data-auto-scroll="true"
+          ></button>
         </div>
       </div>
       <div class="anim-mouse" id="mouseScroll">
@@ -75,129 +99,95 @@
       </div>
     </section>
 
-    <!-- MARCAS TRUSTED -->
     <section class="trusted-companies" id="trusted-companies">
       <div class="wrapper-companies-trusted">
-        <h2 id="title-featured-services" translate-text>
-          Operadores, call centers y empresas en todo el mundo confían en Alkaip
-          Telecom para garantizar voz y mensajería de alta calidad.
-        </h2>
+        <h2 id="title-featured-services" translate-text></h2>
 
         <div class="data-companies-trusted">
           <div id="data">
             <img src="./icons/world.svg" alt="world-secure" />
-            <p id="feat1" translate-text>
-              Conectividad internacional confiable
-            </p>
+            <p id="feat1" translate-text></p>
           </div>
           <div id="data">
             <img src="./icons/tech.svg" alt="tech" />
-            <p id="feat2" translate-text>Tecnología SS7 y SIP</p>
+            <p id="feat2" translate-text></p>
           </div>
           <div id="data">
             <img src="./icons/experience.svg" alt="experience" />
-            <p id="feat3" translate-text>Experiencia de más de 35 años</p>
+            <p id="feat3" translate-text></p>
           </div>
         </div>
       </div>
     </section>
 
-    <!-- VITRINA DE PRODUCTOS -->
     <section class="products-description">
       <div class="w100">
         <div class="chip">
-          <h3 id="chip-products" translate-text>Nuestros productos</h3>
+          <h3 id="chip-products" translate-text></h3>
         </div>
       </div>
-      <h1 id="title-product" translate-text>
-        Tecnología, Confiabilidad y <br />
-        Alcance Global en un Solo Lugar
-      </h1>
-      <p id="desc-product" translate-text>
-        Desde call centers hasta grandes operadores, Alkaip brinda herramientas
-        flexibles y robustas para potenciar tu comunicación global.
-      </p>
+      <h1 id="title-product" translate-text></h1>
+      <p id="desc-product" translate-text></p>
       <div class="wrapper-card-products">
-        <div class="card-message">
-          <span class="vertical-text" id="change-text-voice" translate-text
-            >Tecnología avanzada en VoIP y terminación competitiva</span
-          >
+        <div data-expandable="true" id="voice-features" class="card-message">
+          <h1 id="head-title"></h1>
+          <span
+            class="vertical-text"
+            id="change-text-voice"
+            translate-text
+          ></span>
           <div class="align-bottom">
             <div class="number-data">
               <div id="number" class="counter"></div>
               <h2 class="vertical-text" id="number-callers" translate-text></h2>
             </div>
 
-            <h3 id="desc-card-voice" translate-text>
-              minutos de voz al año <br />
-              con rutas premium y calidad garantizada en cada llamada.
-            </h3>
+            <h3 id="desc-card-voice" translate-text></h3>
           </div>
         </div>
-        <div class="card-voice">
-          <span id="change-text-sms" translate-text class="vertical-text"
-            >Interconexión en minutos</span
-          >
+        <div data-expandable="true" id="sms-features" class="card-voice">
+          <span
+            id="change-text-sms"
+            translate-text
+            class="vertical-text"
+          ></span>
           <div class="align-bottom">
-            <h3 id="desc-card-sms" translate-text>
-              Escala tu negocio con SMS Velocidad, seguridad y cobertura global
-              al alcance de tu marca.
-            </h3>
+            <h3 id="desc-card-sms" translate-text></h3>
           </div>
         </div>
       </div>
       <div class="features-product">
         <div class="feature">
           <img src="./images/test-img.png" alt="feature1" />
-          <h1 id="demo1" translate-text>Calidad y estabilidad</h1>
-          <p id="demo-desc1" translate-text>
-            Ofrecemos terminación de voz y SMS a cualquier destino con rutas
-            directas, precios competitivos y la solidez que tus operaciones
-            necesitan.
-          </p>
+          <h1 id="demo1" translate-text></h1>
+          <p id="demo-desc1" translate-text></p>
         </div>
         <div class="feature">
           <img src="./images/test-img.png" alt="feature1" />
-          <h1 id="demo2" translate-text>Escalabilidad sin límites</h1>
-          <p id="demo-desc2" translate-text>
-            Soportamos grandes volúmenes de tráfico, alta capacidad CPS para
-            call centers y mensajería masiva A2P para notificaciones, alertas y
-            marketing.
-          </p>
+          <h1 id="demo2" translate-text></h1>
+          <p id="demo-desc2" translate-text></p>
         </div>
         <div class="feature">
           <img src="./images/test-img.png" alt="feature1" />
-          <h1 id="demo3" translate-text>Tecnología de vanguardia</h1>
-          <p id="demo-desc3" translate-text>
-            Conectividad mediante SS7 y SMPP, que asegura interoperabilidad
-            global y máxima velocidad en cada comunicación.
-          </p>
+          <h1 id="demo3" translate-text></h1>
+          <p id="demo-desc3" translate-text></p>
         </div>
         <div class="feature">
           <img src="./images/test-img.png" alt="feature1" />
-          <h1 id="demo4" translate-text>Confiabilidad en cada envío</h1>
-          <p id="demo-desc4" translate-text>
-            Nuestros servicios están diseñados para garantizar baja latencia,
-            alta entrega y una estabilidad sólida, incluso en los escenarios más
-            exigentes.
-          </p>
+          <h1 id="demo4" translate-text></h1>
+          <p id="demo-desc4" translate-text></p>
         </div>
       </div>
       <div class="know-u-product">
-        <h1 id="title-voice" translate-text>
-          Descubre las soluciones <br />
-          en VOZ sin límites de AlkaIp Telecom
-        </h1>
-        <p id="desc-voice" translate-text>
-          Ofrecemos servicios de voz confiables y accesibles para empresas de
-          todos los tamaños desde locutorios y call centers hasta operadores
-          internacionales.
-        </p>
+        <div class="info-voice">
+          <h1 id="title-voice" translate-text></h1>
+          <p id="desc-voice" translate-text></p>
+        </div>
         <div class="scroll-wrapper">
           <div class="fade-top"></div>
           <div class="scroll-container" id="scrollContainer">
             <div class="masonry" id="masonry">
-              <!-- Las tarjetas se construyen en JS -->
+              <!-- CARDS EN JS -->
             </div>
           </div>
           <div class="fade-bottom"></div>
@@ -205,50 +195,36 @@
       </div>
       <div class="description-message-container">
         <div class="tile-wrapper">
-          <h1 id="sms-title" translate-text>
-            Potencia tu comunicación <br />
-            con SMS confiables y seguros
-          </h1>
-          <p id="sms-desc" translate-text>
-            Ideal para empresas que buscan velocidad, estabilidad y
-            escalabilidad en su comunicación.
-          </p>
+          <div class="info-voice">
+            <h1 id="sms-title" translate-text></h1>
+            <p id="sms-desc" translate-text></p>
+          </div>
         </div>
         <div class="absolute-container">
           <div class="wrapper-cards-mov" id="cardsWrapper">
-            <div class="card-mov-right">
+            <div id="sms-cd-1" class="card-mov-right" data-expandable="true">
               <div class="info">
-                <h2 id="sms-cd-1" translate-text>
-                  Conectividad SMPP y enrutamiento directo
-                </h2>
+                <h2 id="sms-cd-1" translate-text></h2>
               </div>
             </div>
-            <div class="card-mov-right">
+            <div id="sms-cd-2" class="card-mov-right" data-expandable="true">
               <div class="info">
-                <h2 id="sms-cd-2" translate-text>
-                  Mensajes de alta prioridad y disponibilidad 24/7
-                </h2>
+                <h2 id="sms-cd-2" translate-text></h2>
               </div>
             </div>
-            <div class="card-mov-right">
+            <div id="sms-cd-3" class="card-mov-right" data-expandable="true">
               <div class="info">
-                <h2 id="sms-cd-3" translate-text>
-                  Cobertura internacional y precios competitivos
-                </h2>
+                <h2 id="sms-cd-3" translate-text></h2>
               </div>
             </div>
-            <div class="card-mov-right">
+            <div id="sms-cd-4" class="card-mov-right" data-expandable="true">
               <div class="info">
-                <h2 id="sms-cd-4" translate-text>
-                  Flexibilidad y escalabilidad total
-                </h2>
+                <h2 id="sms-cd-4" translate-text></h2>
               </div>
             </div>
-            <div class="card-mov-right">
+            <div id="sms-cd-5" class="card-mov-right" data-expandable="true">
               <div class="info">
-                <h2 id="sms-cd-5" translate-text>
-                  Soporte técnico especializado
-                </h2>
+                <h2 id="sms-cd-5" translate-text></h2>
               </div>
             </div>
           </div>
@@ -257,16 +233,11 @@
     </section>
 
     <section class="events-news">
-      <div class="flex"><div id="chip-event" translate-text class="chip">Events and news</div></div>
-      <h1 id="title-event" translate-text>
-        AlkaIp presente en los principales <br />
-        eventos globales de telecomunicaciones
-      </h1>
-      <p id="desc-event" translate-text>
-        Nuestra participación en conferencias y encuentros internacionales
-        refleja el compromiso de AlkaIp con la innovación, la construcción de
-        alianzas estratégicas y el crecimiento en el mercado global.
-      </p>
+      <div class="flex">
+        <div id="chip-event" translate-text class="chip"></div>
+      </div>
+      <h1 id="title-event" translate-text></h1>
+      <p id="desc-event" translate-text></p>
 
       <div class="vr-carousel">
         <div class="carousel">
@@ -284,11 +255,8 @@
     <section class="about-us">
       <div class="container-about-us">
         <div class="about-left">
-          <h2 id="subtitle-map" translate-text>En AlkaIP Telecom</h2>
-          <h1 id="title-map" translate-text>
-            Creemos que comunicarse <br />
-            no debería ser complicado.
-          </h1>
+          <h2 id="subtitle-map" translate-text></h2>
+          <h1 id="title-map" translate-text></h1>
         </div>
       </div>
       <div class="wrapper-map">
@@ -315,24 +283,23 @@
     </section>
     <footer>
       <div class="icons">
-        <a href="https://www.linkedin.com/company/alkaip-telecom-llc/" target="_blank" rel="noopener noreferrer">
+        <a
+          href="https://www.linkedin.com/company/alkaip-telecom-llc/"
+          target="_blank"
+          rel="noopener noreferrer"
+        >
           <img src="./icons/linked-logo.svg" alt="linkedin_alkaip" />
         </a>
       </div>
       <div class="separator"></div>
       <div class="container-bottom-footer">
-        <p id="reserved" translate-text>
-          ©<span id="date-footer">2025</span>, Alkaip Telecom, S.A.S. Todos los
-          derechos reservados. Alkaip y su logotipo son marcas registradas o
-          marcas comerciales de Alkaip en EE. UU. y cualquier otro lugar del
-          mundo.
-        </p>
+        <p id="reserved" translate-text></p>
         <button class="btn-black" id="btn-back" translate-text>
           <img src="./icons/top_home.svg" alt="" />
         </button>
       </div>
     </footer>
 
-    <script src="js/main.js"></script>
+    <script type="module" src="./js/main.js"></script>
   </body>
 </html>

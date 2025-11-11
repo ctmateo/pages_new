@@ -1,69 +1,222 @@
+import { goToRoute } from "./router.js";
+import { dynamicChangesExpand } from "./utils/dynamic-expand.js";
+
+let lastClickedId = null;
 const LANG_PATHS = {
   ES: "./langs/es_ES.json",
   EN: "./langs/en_EN.json",
 };
-let currentLang = "EN";
-async function translatePage(lang) {
-  currentLang = lang;
+export let currentLang = "EN";
 
-  const path = LANG_PATHS[lang];
-  if (!path) {
-    console.error("Idioma no soportado:", lang);
-    return;
+dynamicChangesExpand();
+
+
+function eventListener() {
+  document.addEventListener("click", (event) => {
+    const el = event.target;
+    if (!el.id) return;
+
+    if (el.dataset.expandable === "true") {
+      setTimeout(() => {
+        goToRoute("expand", "products", lastClickedId);
+      }, 300);
+      console.log(`Clic en elemento expandible: ${el.id}`);
+    }
+
+    if (el.dataset.autoScroll === "true" && el.dataset.route) {
+      const section = document.querySelector(el.dataset.route);
+      if (section) section.scrollIntoView({ behavior: "smooth" });
+    }
+     if (el.dataset.openDialog === "true") {
+      console.log("estoy aqui")
+      dialogRecycle(
+        el.dataset.title || "",
+        el.dataset.img || "",
+        el.dataset.description || "",
+        el.dataset.nameBtn || "Aceptar",
+        parseInt(el.dataset.numberBtn) || 2
+      );
+    }
+
+    lastClickedId = el.id;
+  });
+}
+
+eventListener();
+
+
+function dialogRecycle(titleDialog = "", img = "", description = "", nameBtn = "Aceptar", numberBtn = 2) {
+  // Crear contenedor del diálogo
+  const newDialog = document.createElement("div");
+  newDialog.classList.add("dialog", "visible"); // visible al crearlo
+
+  // Overlay
+  const overlay = document.createElement("div");
+  overlay.classList.add("dialog-overlay");
+  overlay.addEventListener("click", () => {
+    newDialog.remove(); // cerrar al hacer click fuera
+  });
+
+  // Contenido del diálogo
+  const content = document.createElement("div");
+  content.classList.add("dialog-content");
+
+  if (img) {
+    const imageEl = document.createElement("img");
+    imageEl.src = img;
+    imageEl.alt = titleDialog;
+    content.appendChild(imageEl);
   }
 
+  if (titleDialog) {
+    const titleEl = document.createElement("h3");
+    titleEl.textContent = titleDialog;
+    content.appendChild(titleEl);
+  }
+
+  if (description) {
+    const descEl = document.createElement("p");
+    descEl.textContent = description;
+    content.appendChild(descEl);
+  }
+
+  // Botones
+  const buttonsContainer = document.createElement("div");
+  buttonsContainer.classList.add("dialog-buttons");
+
+  for (let i = 1; i <= numberBtn; i++) {
+    const btn = document.createElement("button");
+    btn.textContent = i === 1 ? nameBtn : `Botón ${i}`;
+    btn.addEventListener("click", () => newDialog.remove()); // cerrar diálogo
+    buttonsContainer.appendChild(btn);
+  }
+
+  content.appendChild(buttonsContainer);
+  newDialog.append(overlay, content);
+  document.body.appendChild(newDialog);
+}
+
+
+let translationsCache = {};
+
+window.translatePage = async function translatePage(lang) {
+  currentLang = lang;
+
   try {
-    const response = await fetch(path);
-    const translations = await response.json();
+    let translations = translationsCache[lang];
+    if (!translations) {
+      const path = LANG_PATHS[lang];
+      if (!path) return console.error("Idioma no disponible:", lang);
+      const response = await fetch(path);
+      translations = await response.json();
+      translationsCache[lang] = translations;
+    }
 
     const voiceSection = translations["voice-section"];
     const cardsData = voiceSection["scroller-cards-voice"];
-
     const arrayContent = Object.keys(cardsData.titles).map((key, i) => ({
       title: cardsData.titles[key],
       img: cardsData.images[`img${i + 1}`],
       description: cardsData.desc[`desc${i + 1}`],
     }));
-
     generarCards(arrayContent);
 
     changeNumberFast();
-    const elements = document.querySelectorAll("[translate-text]");
 
+    const elements = document.querySelectorAll("[translate-text]");
     elements.forEach((el) => {
       const key = el.id;
-      if (key === "change-text-voice") displazeVerticalText(lang, key);
-      if (key === "change-text-sms")
-        setTimeout(() => displazeVerticalText(lang, key), 800);
-      if (key === "number-callers")
-        displazeVerticalText(lang, key, "number-callers");
+      const textSection = findTranslationByKey(translations, key);
+      if (!textSection)
+        return console.warn(`No se encontró traducción para: ${key}`);
 
-      const text = findTranslationByKey(translations, key);
-      if (text) el.textContent = text;
-      else console.warn(`No se encontró traducción para: ${key}`);
+      if (key === "change-text-voice")
+        displazeVerticalTextWithData(textSection, el);
+      else if (key === "change-text-sms")
+        setTimeout(() => displazeVerticalTextWithData(textSection, el), 800);
+      else if (key === "number-callers")
+        displazeVerticalTextWithData(textSection, el);
+      else el.textContent = textSection;
     });
   } catch (error) {
-    console.error("Error al cargar archivo de idioma:", error);
+    console.error("Error cargando JSON/Lang:", error);
   }
+};
+
+function displazeVerticalTextWithData(sectionData, element) {
+  if (element._displazeInterval) {
+    clearInterval(element._displazeInterval);
+    element._displazeInterval = null;
+  }
+
+  element.innerHTML = "";
+
+  const textArray =
+    typeof sectionData === "object"
+      ? Object.values(sectionData)
+      : [sectionData];
+  if (textArray.length === 0) return;
+
+  let index = 0;
+  const lastIndex = textArray.length - 1;
+  const id = element.id;
+
+  const SPEED_MAP = {
+    "number-callers": 1400,
+    "change-text-voice": 2000,
+    "change-text-sms": 2000,
+  };
+  const intervalTime = SPEED_MAP[id] ?? 2500;
+  const removalDelay = Math.min(
+    600,
+    Math.max(80, Math.floor(intervalTime / 2))
+  );
+  const tag = id === "number-callers" ? "h2" : "span";
+
+  const firstEl = document.createElement(tag);
+  firstEl.textContent = textArray[index];
+  firstEl.classList.add("active");
+  element.appendChild(firstEl);
+
+  if (textArray.length <= 1) return;
+
+  element._displazeInterval = setInterval(() => {
+    const oldEl = element.querySelector(tag);
+    if (oldEl)
+      oldEl.classList.replace(
+        "active",
+        id === "number-callers" ? "fade" : "exit"
+      );
+
+    if (id === "number-callers") {
+      if (index < lastIndex) index++;
+      else {
+        clearInterval(element._displazeInterval);
+        element._displazeInterval = null;
+        return;
+      }
+    } else {
+      index = (index + 1) % textArray.length;
+    }
+
+    const newEl = document.createElement(tag);
+    newEl.textContent = textArray[index];
+    element.appendChild(newEl);
+
+    requestAnimationFrame(() => newEl.classList.add("active"));
+
+    setTimeout(() => oldEl?.remove(), removalDelay);
+
+    if (id === "number-callers" && index === lastIndex) {
+      clearInterval(element._displazeInterval);
+      element._displazeInterval = null;
+    }
+  }, intervalTime);
 }
-
-document.addEventListener("DOMContentLoaded", () => {
-  const languageBtns = document.getElementsByClassName("window");
-  translatePage(currentLang);
-
-  for (const btn of languageBtns) {
-    btn.addEventListener("click", () => {
-      translatePage(currentLang);
-    });
-  }
-});
 
 function findTranslationByKey(obj, key) {
   for (const prop in obj) {
-    if (prop === key) {
-      return obj[prop];
-    }
-
+    if (prop === key) return obj[prop];
     if (typeof obj[prop] === "object" && obj[prop] !== null) {
       const found = findTranslationByKey(obj[prop], key);
       if (found) return found;
@@ -72,94 +225,7 @@ function findTranslationByKey(obj, key) {
   return null;
 }
 
-async function displazeVerticalText(lang, id, key = "") {
-  try {
-    const element = document.getElementById(id);
-    if (!element) return console.error(`Elemento con id "${id}" no encontrado`);
-
-    if (element._displazeInterval) {
-      clearInterval(element._displazeInterval);
-      element._displazeInterval = null;
-    }
-
-    const path = LANG_PATHS[lang];
-    const response = await fetch(path);
-    const data = await response.json();
-
-    const section = findTranslationByKey(data, id);
-    if (!section)
-      return console.error(`No se encontró la sección "${id}" en el JSON`);
-
-    const textArray = Object.values(section);
-    let index = 0;
-    const lastIndex = textArray.length - 1;
-
-    const SPEED_MAP = {
-      "number-callers": 1400,
-      "change-text-voice": 2000,
-      "change-text-sms": 2000,
-    };
-    const defaultInterval = 2500;
-    const intervalTime = SPEED_MAP[key || id] ?? defaultInterval;
-
-    const removalDelay = Math.min(
-      600,
-      Math.max(80, Math.floor(intervalTime / 2))
-    );
-
-    if (key === "number-callers") {
-      element.innerHTML = `<h2 class="active">${textArray[index]}</h2>`;
-    } else {
-      element.innerHTML = `<span class="active">${textArray[index]}</span>`;
-    }
-
-    if (textArray.length <= 1) return;
-
-    element._displazeInterval = setInterval(() => {
-      const oldElement =
-        key === "number-callers"
-          ? element.querySelector("h2")
-          : element.querySelector("span");
-
-      if (oldElement) {
-        oldElement.classList.replace(
-          "active",
-          key === "number-callers" ? "fade" : "exit"
-        );
-      }
-
-      if (key === "number-callers") {
-        if (index < lastIndex) {
-          index++;
-        } else {
-          clearInterval(element._displazeInterval);
-          element._displazeInterval = null;
-          return;
-        }
-      } else {
-        index = (index + 1) % textArray.length;
-      }
-
-      const newElement =
-        key === "number-callers"
-          ? document.createElement("h2")
-          : document.createElement("span");
-      newElement.textContent = textArray[index];
-      element.appendChild(newElement);
-
-      requestAnimationFrame(() => newElement.classList.add("active"));
-
-      setTimeout(() => oldElement?.remove(), removalDelay);
-
-      if (key === "number-callers" && index === lastIndex) {
-        clearInterval(element._displazeInterval);
-        element._displazeInterval = null;
-      }
-    }, intervalTime);
-  } catch (error) {
-    console.error("RUTA DEL ID Y LANG NO DISPONIBLE", error);
-  }
-}
+translatePage(currentLang);
 
 async function changeNumberFast() {
   const element = document.getElementById("number");
@@ -171,6 +237,7 @@ async function changeNumberFast() {
   if (!h1) {
     h1 = document.createElement("h1");
     h1.classList.add("enter");
+    h1.style.fontSize = "48px";
     h1.textContent = `+${i}`;
     element.innerHTML = "";
     element.appendChild(h1);
@@ -211,7 +278,6 @@ let isDragging = false;
 let startX = 0;
 let currentX = 0;
 
-// Save previous user-select to restore later
 let prevUserSelect = "";
 let prevWebkitUserSelect = "";
 
@@ -280,12 +346,10 @@ vrCarousel.addEventListener("mouseleave", () => {
   restoreTextSelection();
 });
 
-// Prevent native drag behavior (images, etc.)
 vrCarousel.addEventListener("dragstart", (e) => {
   e.preventDefault();
 });
 
-// Touch support
 vrCarousel.addEventListener(
   "touchstart",
   (e) => {
@@ -345,13 +409,9 @@ function waitMouseScroller() {
         scrollIndicator.style.display = "flex";
         document.getElementById("mouseScroll").classList.add("show");
       }
-      console.log(newPositionScrollY);
     }
   });
   pastPositionScrollY = newPositionScrollY;
-  setTimeout(() => {
-    console.log("Past position", pastPositionScrollY);
-  }, 250);
 }
 
 waitMouseScroller();
@@ -369,27 +429,29 @@ document.addEventListener("DOMContentLoaded", () => {
   wrapper.scrollLeft = sectionWidth;
 
   let isDown = false;
+  let isDragging = false;
   let startX;
   let scrollLeft;
-  let cardWidth = originalCards[0].offsetWidth + 30;
+  const cardWidth = originalCards[0].offsetWidth + 30;
 
   wrapper.addEventListener("mousedown", (e) => {
     isDown = true;
-    wrapper.style.cursor = "grabbing";
     startX = e.pageX - wrapper.offsetLeft;
     scrollLeft = wrapper.scrollLeft;
+    wrapper.style.cursor = "grabbing";
   });
 
-  wrapper.addEventListener("mouseleave", () => stopDragging());
-  wrapper.addEventListener("mouseup", () => stopDragging());
+  wrapper.addEventListener("mouseleave", stopDragging);
+  wrapper.addEventListener("mouseup", stopDragging);
 
   wrapper.addEventListener("mousemove", (e) => {
     if (!isDown) return;
     e.preventDefault();
+
     const x = e.pageX - wrapper.offsetLeft;
     const walk = (x - startX) * 0.8;
 
-    if (walk > 0) return;
+    if (Math.abs(walk) > 5) isDragging = true;
 
     wrapper.scrollLeft = scrollLeft - walk;
     adjustInfiniteScroll();
@@ -401,20 +463,32 @@ document.addEventListener("DOMContentLoaded", () => {
     scrollLeft = wrapper.scrollLeft;
   });
 
-  wrapper.addEventListener("touchend", () => stopDragging());
+  wrapper.addEventListener("touchend", stopDragging);
 
   wrapper.addEventListener("touchmove", (e) => {
     if (!isDown) return;
+
     const x = e.touches[0].pageX - wrapper.offsetLeft;
     const walk = (x - startX) * 1.4;
-    if (walk > 0) return;
+
+    if (Math.abs(walk) > 5) isDragging = true;
+
     wrapper.scrollLeft = scrollLeft - walk;
     adjustInfiniteScroll();
+  });
+
+  wrapper.addEventListener("click", (e) => {
+    if (isDragging) {
+      e.preventDefault();
+      e.stopPropagation();
+      isDragging = false;
+    }
   });
 
   function stopDragging() {
     if (isDown) snapToNextCard();
     isDown = false;
+    isDragging = false;
     wrapper.style.cursor = "grab";
   }
 
@@ -467,8 +541,8 @@ object.addEventListener("load", function () {
 });
 
 const masonry = document.getElementById("masonry");
-const ALTURA_GRANDE = 424;
-const ALTURA_PEQUENA = 424;
+const ALTURA_GRANDE = 374;
+const ALTURA_PEQUENA = 374;
 
 const columnas = [];
 for (let i = 0; i < 3; i++) {
@@ -493,73 +567,77 @@ function limpiarMasonry() {
   indicePorColumna = [0, 0, 0];
 }
 
-function generarCards(arrayContent, cantidadPorColumna = 9) {
-  limpiarMasonry();
-  for (let c = 0; c < 3; c++) {
-    const columna = columnas[c];
-    const patron = patronesColumnas[c];
+let indiceGlobal = 0;
 
-    for (let j = 0; j < cantidadPorColumna; j++) {
+function generarCards(arrayContent, cantidadPorColumna = 3) {
+  limpiarMasonry();
+
+  const totalFilas = 3;
+  let indiceGlobal = 0;
+
+  for (let fila = 0; fila < totalFilas; fila++) {
+    for (let c = 0; c < cantidadPorColumna; c++) {
+      const columna = columnas[c];
+      const patron = patronesColumnas[c];
       const tipo = patron[indicePorColumna[c] % patron.length];
       const altura = tipo === "grande" ? ALTURA_GRANDE : ALTURA_PEQUENA;
-      const content =
-        arrayContent[(indicePorColumna[c] + j + c) % arrayContent.length];
+
+      const content = arrayContent[indiceGlobal % arrayContent.length];
+      indiceGlobal++;
 
       const card = document.createElement("div");
       card.classList.add("card");
+      card.id = `voice-cd-${indiceGlobal}`;
+      card.dataset.expandable = "true";
       card.style.height = `${altura}px`;
       card.style.transition = "opacity 0.5s ease";
       card.style.opacity = "0";
 
       const imageDiv = document.createElement("div");
       imageDiv.classList.add("card-image");
+
       imageDiv.style.backgroundImage = `url(${content.img})`;
       imageDiv.style.backgroundSize = "cover";
       imageDiv.style.backgroundPosition = "center";
+      imageDiv.style.position = "relative";
+      imageDiv.style.pointerEvents = "none";
 
       const overlay = document.createElement("div");
       overlay.classList.add("overlay");
-
-      const contentDiv = document.createElement("div");
-      contentDiv.classList.add("card-content");
+      overlay.style.position = "absolute";
+      overlay.style.pointerEvents = "none";
 
       const title = document.createElement("h3");
+      title.classList.add("title-card-scroller");
       title.textContent = content.title;
+      title.style.position = "absolute";
+      title.style.zIndex = "4";
 
       const btn = document.createElement("button");
       btn.classList.add("expand-btn-global", "over-image");
-      btn.textContent = "Detail feature";
-
-      imageDiv.appendChild(title);
-
-      imageDiv.style.position = "relative";
-
-      overlay.style.position = "absolute";
-
-      overlay.style.zIndex = "2";
-      overlay.style.pointerEvents = "none";
-      imageDiv.style.pointerEvents ="none";
-
-
+      btn.textContent = "Select to expand";
       btn.style.position = "absolute";
-      btn.style.top = "50%";
-      btn.style.left = "50%";
-      btn.style.transform = "translate(-50%, -50%)";
+      btn.style.top = "20px";
+      btn.style.right = "20px";
       btn.style.zIndex = "3";
       btn.style.pointerEvents = "auto";
 
+      imageDiv.appendChild(title);
       imageDiv.appendChild(overlay);
       imageDiv.appendChild(btn);
+
+      const contentDiv = document.createElement("div");
+      contentDiv.classList.add("card-content");
 
       card.appendChild(imageDiv);
       card.appendChild(contentDiv);
       columna.appendChild(card);
 
       requestAnimationFrame(() => (card.style.opacity = "1"));
-
       indicePorColumna[c]++;
     }
   }
+
   activeBtnMasonry();
 }
 
@@ -570,7 +648,6 @@ function activeBtnMasonry() {
   console.log("Setting up masonry interactions");
   cards.forEach((card) => {
     card.addEventListener("mouseenter", (e) => {
-      console.log("clic");
       card.classList.add("active");
 
       e.stopPropagation();
@@ -579,8 +656,7 @@ function activeBtnMasonry() {
 
   cards.forEach((card) => {
     card.addEventListener("mouseleave", () => {
-        card.classList.remove("active");
-
+      card.classList.remove("active");
     });
   });
 }
@@ -606,3 +682,4 @@ function setupDropdowns() {
 
 document.addEventListener("DOMContentLoaded", activeBtnMasonry);
 document.addEventListener("DOMContentLoaded", setupDropdowns);
+eventListener();

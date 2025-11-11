@@ -69,20 +69,16 @@
 
 .expand-btn-global {
     width: fit-content;
-    background-color: var.$BTN-COLOR-BLACK;
-    border: none;
+    background-color: transparent;
+    border: 1px solid var.$BTN-COLOR-MAIN;
     cursor: pointer;
     border-radius: var.$RADIUS-BRD-BTN;
     color: white;
     font-size: 18px;
-    padding: var.$PADDING-BTN;
+    padding: 3px 12px 3px 12px;
     transition: all 0.2s ease-in-out;
-    font-weight: 500;
-
-    &:hover {
-        background-color: var.$HOVER_COLOR;
-    }
 }
+
 
 .overlay {
     display: flex;
@@ -92,8 +88,9 @@
     left: 0;
     width: 100%;
     height: 100%;
-    border-radius: 0 0 12px 12px;
-    background: linear-gradient(to bottom, transparent 40%, var.$BKGROUND-COLR-CARD 100%);
+    border-radius: 0 0 8px 6px;
+    background: linear-gradient(to bottom, transparent 50%, var.$BKGROUND-MAIN 100%);
+    background: linear-gradient(to top, transparent 50%, var.$BKGROUND-MAIN 100%);
 }
 
 .logo {
@@ -124,11 +121,12 @@
     transform: translateX(50%);
     z-index: 99;
     height: 74px;
-    width: 48px;
+    width: 44px;
     border-radius: 33px;
-    border: 3px solid #d6d6d6;
+    border: 2px solid #d6d6d6;
     opacity: 0;
     transition: opacity 0.6s ease;
+    transition: all 0.1s ease-in-out;
 
     &:hover {
         border: 3px solid #d6d6d69e;
@@ -206,7 +204,7 @@
             font-weight: bold;
         }
 
-        &:nth-child(3):hover {
+        &:nth-child(2):hover {
             border-radius: 0 0 12px 12px;
             font-weight: bold;
         }
@@ -343,7 +341,6 @@
     height: 720px;
     width: 100%;
     background-color: var.$BKGROUND-COLR-CARD;
-    margin-bottom: 198px;
 
     h2 {
         font-size: 26px;
@@ -406,6 +403,8 @@
     flex-direction: column;
     justify-content: end;
     padding-bottom: 18px;
+    pointer-events: none;
+    
 
 
     h1 {
@@ -440,29 +439,8 @@
 }
 
 .products-description {
+    padding-top: 198px;
     background-color: var.$BKGROUND-MAIN;
-
-    p {
-        line-height: 1.1;
-        text-align: left;
-        display: flex;
-        justify-content: center;
-        margin-top: 18px;
-        font-size: 22px;
-        color: #929292;
-    }
-
-    h1 {
-        text-align: center;
-        font-size: 48px;
-        font-weight: 500;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        color: #d6d6d6;
-    }
-
-
 
 
     .chip {
@@ -473,6 +451,25 @@
         border-radius: 32px;
         padding: 12px;
         margin-bottom: 24px;
+    }
+
+    #title-product {
+        font-size: 48px;
+        font-weight: 500;
+        color: #d6d6d6;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+    }
+
+    #desc-product {
+        line-height: 1.1;
+        text-align: left;
+        display: flex;
+        justify-content: center;
+        margin-top: 18px;
+        font-size: 22px;
+        color: #929292;
     }
 
     .wrapper-card-products {
@@ -611,13 +608,17 @@
             height: 322px;
 
             h1 {
+                font-weight: 500;
                 text-align: left;
                 font-size: 24px;
             }
 
             p {
+                margin-top: 10px;
                 font-size: 18px;
                 text-align: left;
+                color: var.$TXT-MAIN-COLOR;
+                line-height: 1.2;
             }
 
             img {
@@ -628,19 +629,17 @@
     }
 
     .know-u-product {
-        padding: 148px 68px 0 68px;
+        padding: 148px 68px 0 48px;
         display: flex;
         flex-direction: column;
         justify-content: flex-start;
         align-items: flex-start;
 
-        h1 {
-            text-align: left;
-        }
+
 
 
         .scroll-wrapper {
-            margin-top: 94px;
+            margin-top: 48px;
             margin-bottom: 94px;
             position: relative;
             width: 100%;
@@ -674,15 +673,21 @@
             object-fit: cover;
             height: 348px;
 
-            h3{
+            h3 {
+                position: absolute;
                 z-index: 1000;
-                padding: 12px;
-                font-size: 18px;
+                padding: 16px;
+                font-size: 22px;
                 color: var.$TXT-INVERT-COLOR;
                 display: flex;
-                align-items: end;
-                justify-content: start;
+                flex-direction: row;
+                max-lines: 1;
                 height: 100%;
+                white-space: nowrap;
+                overflow: hidden;
+                text-overflow: ellipsis;
+                max-width: 300px;
+                align-items: end;
             }
         }
 
@@ -700,15 +705,21 @@
                 opacity: 0;
                 display: none;
             }
-            .overlay{
+
+            .overlay {
                 display: none;
             }
         }
 
+        .title-card-scroller {
+            position: absolute;
+        }
+
         .card.active {
-            .overlay{
+            .overlay {
                 display: block;
             }
+
             .expand-btn-global {
                 transition: all 0.5 ease-in;
                 opacity: 1;
@@ -723,7 +734,6 @@
 
             h3 {
                 font-size: 18px;
-                color: blue;
             }
 
             p {
@@ -754,6 +764,7 @@
             bottom: 0;
             background: linear-gradient(to top, (var.$BKGROUND-MAIN), transparent);
         }
+
 
 
     }
@@ -845,7 +856,7 @@
             justify-content: center;
             font-size: 22px;
             color: var.$TXT-TITLE-COLOR;
-            
+
         }
 
         .card-mov-right p {
@@ -901,6 +912,21 @@
         border-top: 1px solid #1A1B1D;
     }
 
+}
+
+.info-voice {
+    text-align: left;
+
+    h1 {
+        font-weight: 500;
+        font-size: 48px;
+    }
+
+    p {
+        margin-top: 12px;
+        font-size: 20px;
+        color: var.$TXT-MAIN-COLOR;
+    }
 }
 
 .events-news {
@@ -1012,9 +1038,9 @@ h1 {
 }
 
 .about-us {
-    padding-top: 228px;
+    padding-top: 52px;
     background-color: var.$BKGROUND-MAIN;
-    padding-bottom: 348px;
+    padding-bottom: 184px;
     padding-left: 68px;
 
     .container-about-us {
@@ -1126,4 +1152,45 @@ h1 {
         font-size: 48px;
         font-weight: 600;
     }
+}
+
+.dialog {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 9999;
+}
+
+.dialog.hidden {
+  display: none;
+}
+
+.dialog-overlay {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0,0,0,0.5);
+}
+
+.dialog-content {
+  position: relative;
+  background: white;
+  padding: 20px;
+  border-radius: 8px;
+  max-width: 500px;
+  z-index: 10000;
+}
+
+.dialog-buttons {
+  margin-top: 15px;
+  display: flex;
+  justify-content: flex-end;
+  gap: 10px;
 }
