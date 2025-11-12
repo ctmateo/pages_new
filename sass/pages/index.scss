@@ -404,7 +404,7 @@
     justify-content: end;
     padding-bottom: 18px;
     pointer-events: none;
-    
+
 
 
     h1 {
@@ -1155,42 +1155,53 @@ h1 {
 }
 
 .dialog {
-  position: fixed;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  z-index: 9999;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 3;
 }
 
 .dialog.hidden {
-  display: none;
+    display: none;
 }
 
 .dialog-overlay {
-  position: absolute;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  background: rgba(0,0,0,0.5);
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.5);
+    cursor: pointer;
 }
 
 .dialog-content {
-  position: relative;
-  background: white;
-  padding: 20px;
-  border-radius: 8px;
-  max-width: 500px;
-  z-index: 10000;
+    position: relative;
+    background: var.$BKGROUND-MAIN;
+    padding: 20px;
+    border-radius: var.$RADIUS-BRD-BTN;
+    width: 80%;
+    height: 80%;
+    z-index: 4;
+    color: var.$TXT-INVERT-COLOR;
+
+    img{
+        width: 100%;
+        height: 50%;
+        box-sizing: border-box;
+        object-fit: cover;
+        border-radius: var.$RADIUS-BRD-BTN;
+    }
 }
 
 .dialog-buttons {
-  margin-top: 15px;
-  display: flex;
-  justify-content: flex-end;
-  gap: 10px;
+    align-items: end;
+    display: flex;
+    justify-content: flex-end;
+    gap: 10px;
 }

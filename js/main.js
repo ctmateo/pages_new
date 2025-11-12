@@ -10,7 +10,6 @@ export let currentLang = "EN";
 
 dynamicChangesExpand();
 
-
 function eventListener() {
   document.addEventListener("click", (event) => {
     const el = event.target;
@@ -27,8 +26,7 @@ function eventListener() {
       const section = document.querySelector(el.dataset.route);
       if (section) section.scrollIntoView({ behavior: "smooth" });
     }
-     if (el.dataset.openDialog === "true") {
-      console.log("estoy aqui")
+    if (el.dataset.openDialog === "true") {
       dialogRecycle(
         el.dataset.title || "",
         el.dataset.img || "",
@@ -45,56 +43,98 @@ function eventListener() {
 eventListener();
 
 
-function dialogRecycle(titleDialog = "", img = "", description = "", nameBtn = "Aceptar", numberBtn = 2) {
-  // Crear contenedor del diálogo
-  const newDialog = document.createElement("div");
-  newDialog.classList.add("dialog", "visible"); // visible al crearlo
+function dialogRecycle(isProduction = false) {
+  const siteKey = "6LdpdQosAAAAAFqkM9uMMSj3sBZ_0C9YOapvqLmj";
+  const scriptURL = "https://script.google.com/macros/s/AKfycbwR-dCRyjNRQhYY_7L0CpfimUkz67C4zLFjm4lUHbuSLGfu3sr5JLwux7xmwX2CpaoO/exec";
 
-  // Overlay
+  // Evita múltiples diálogos
+  if (document.querySelector(".dialog")) return;
+
+  // Cargar el script de reCAPTCHA solo una vez
+  function loadRecaptchaScript(callback) {
+    if (window.grecaptcha) return callback();
+
+    const script = document.createElement("script");
+    script.id = "recaptcha-script";
+    script.src = "https://www.google.com/recaptcha/api.js?onload=onRecaptchaReady&render=explicit";
+    script.async = true;
+    script.defer = true;
+    window.onRecaptchaReady = callback;
+    document.body.appendChild(script);
+  }
+
+  // Crear estructura del diálogo
+  const dialog = document.createElement("div");
+  dialog.classList.add("dialog");
+
   const overlay = document.createElement("div");
   overlay.classList.add("dialog-overlay");
-  overlay.addEventListener("click", () => {
-    newDialog.remove(); // cerrar al hacer click fuera
-  });
+  overlay.addEventListener("click", () => dialog.remove());
 
-  // Contenido del diálogo
   const content = document.createElement("div");
   content.classList.add("dialog-content");
 
-  if (img) {
-    const imageEl = document.createElement("img");
-    imageEl.src = img;
-    imageEl.alt = titleDialog;
-    content.appendChild(imageEl);
-  }
+  const title = document.createElement("h3");
+  title.textContent = "Contáctanos";
 
-  if (titleDialog) {
-    const titleEl = document.createElement("h3");
-    titleEl.textContent = titleDialog;
-    content.appendChild(titleEl);
-  }
+  const status = document.createElement("p");
+  status.id = "status";
 
-  if (description) {
-    const descEl = document.createElement("p");
-    descEl.textContent = description;
-    content.appendChild(descEl);
-  }
+  const form = document.createElement("form");
+  form.innerHTML = `
+    <input type="text" name="name" placeholder="Tu nombre" required>
+    <input type="email" name="email" placeholder="Tu correo electrónico" required>
+    <textarea name="msg" placeholder="Tu mensaje..." required></textarea>
+    <div id="captcha-container"></div>
+    <button type="submit">Enviar</button>
+    <button type="button" id="cancel-btn">Cancelar</button>
+  `;
 
-  // Botones
-  const buttonsContainer = document.createElement("div");
-  buttonsContainer.classList.add("dialog-buttons");
+  content.append(title, status, form);
+  dialog.append(overlay, content);
+  document.body.appendChild(dialog);
 
-  for (let i = 1; i <= numberBtn; i++) {
-    const btn = document.createElement("button");
-    btn.textContent = i === 1 ? nameBtn : `Botón ${i}`;
-    btn.addEventListener("click", () => newDialog.remove()); // cerrar diálogo
-    buttonsContainer.appendChild(btn);
-  }
+  form.querySelector("#cancel-btn").addEventListener("click", () => dialog.remove());
 
-  content.appendChild(buttonsContainer);
-  newDialog.append(overlay, content);
-  document.body.appendChild(newDialog);
+  // Renderizar el CAPTCHA
+  loadRecaptchaScript(() => {
+    if (!document.getElementById("captcha-container").hasAttribute("data-rendered")) {
+      grecaptcha.render("captcha-container", {
+        sitekey: siteKey,
+      });
+      document.getElementById("captcha-container").setAttribute("data-rendered", "true");
+    }
+  });
+
+  // Envío del formulario
+  form.addEventListener("submit", (e) => {
+    e.preventDefault();
+
+    const captchaResponse = grecaptcha.getResponse();
+    if (!captchaResponse) {
+      status.textContent = "❌ Por favor completa el CAPTCHA";
+      return;
+    }
+
+    const formData = new FormData(form);
+    formData.append("g-recaptcha-response", captchaResponse);
+
+    fetch(scriptURL, { method: "POST", body: formData })
+      .then((res) => res.text())
+      .then(() => {
+        status.textContent = "✅ Mensaje enviado con éxito";
+        form.reset();
+        grecaptcha.reset();
+        setTimeout(() => dialog.remove(), 1500);
+      })
+      .catch((err) => {
+        console.error("Error!", err);
+        status.textContent = "❌ Error al enviar el mensaje";
+      });
+  });
 }
+
+
 
 
 let translationsCache = {};
