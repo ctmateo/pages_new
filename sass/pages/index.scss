@@ -250,7 +250,6 @@
 #world-btn {
     padding: 3px 12px 3px 12px;
     font-size: 18px;
-    font-weight: 500;
 }
 
 .drop {
@@ -268,10 +267,10 @@
 
 #description-home {
     font-size: 22px;
-    width: 84%;
+    width: 70%;
     color: var.$TXT-MAIN-COLOR;
     margin-bottom: 24px;
-    line-height: 1.3;
+    line-height: 1.1;
 }
 
 
@@ -439,7 +438,7 @@
 }
 
 .products-description {
-    padding-top: 198px;
+    padding-top: 98px;
     background-color: var.$BKGROUND-MAIN;
 
 
@@ -562,6 +561,7 @@
     }
 
     .vertical-text h2 {
+        font-weight: 600;
         height: 0;
         opacity: 0;
         transition: all 0.5s ease-in-out;
@@ -591,7 +591,6 @@
 
 
     .features-product {
-        padding-top: 24px;
         padding-bottom: 94px;
         padding-left: 68px;
         padding-right: 68px;
@@ -629,14 +628,16 @@
     }
 
     .know-u-product {
-        padding: 148px 68px 0 48px;
+        padding: 0px 68px 0 48px;
         display: flex;
         flex-direction: column;
         justify-content: flex-start;
         align-items: flex-start;
 
 
-
+        #desc-voice{
+            width: 68%;
+        }
 
         .scroll-wrapper {
             margin-top: 48px;
@@ -770,7 +771,7 @@
     }
 
     .description-message-container {
-        padding-top: 168px;
+
         background-color: var.$BKGROUND-MAIN;
 
         .tile-wrapper {
@@ -931,7 +932,6 @@
 
 .events-news {
     background-color: var.$BKGROUND-MAIN;
-    padding-top: 132px;
 
 
     .chip {
@@ -1142,16 +1142,35 @@ h1 {
 
 
 .support-demo {
-    height: 548px;
-    background-color: var.$BKGROUND-COLR-CARD;
-    display: flex;
-    align-items: center;
-    justify-content: center;
+  position: relative;
+  height: 548px;
+  background-color: var.$BKGROUND-COLR-CARD; 
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden; // evita desbordes del gradiente
 
-    h1 {
-        font-size: 48px;
-        font-weight: 600;
-    }
+  h1 {
+    font-size: 48px;
+    font-weight: 600;
+    color: white;
+  }
+
+  .fade-bottom {
+    position: absolute;
+    bottom: 0;
+    width: 100%;
+    height: 60%; // hace que el gradiente cubra una buena parte hacia arriba
+    pointer-events: none;
+    background: linear-gradient(
+      to bottom,
+      rgba(0, 0, 255, 0) 0%,       /* completamente transparente arriba */
+      rgba(0, 0, 255, 0.05) 25%,   /* apenas visible */
+      rgba(0, 0, 255, 0.15) 50%,   /* transición más notoria */
+      rgba(0, 0, 255, 0.4) 75%,    /* mezcla intermedia */
+      var.$BKGROUND-MAIN 100% /* color final */
+    );
+  }
 }
 
 .dialog {
@@ -1163,7 +1182,7 @@ h1 {
     display: flex;
     justify-content: center;
     align-items: center;
-    z-index: 3;
+    z-index: 999;
 }
 
 .dialog.hidden {
@@ -1183,20 +1202,122 @@ h1 {
 .dialog-content {
     position: relative;
     background: var.$BKGROUND-MAIN;
-    padding: 20px;
+    padding: 48px;
     border-radius: var.$RADIUS-BRD-BTN;
     width: 80%;
-    height: 80%;
     z-index: 4;
     color: var.$TXT-INVERT-COLOR;
 
-    img{
+    img {
         width: 100%;
         height: 50%;
         box-sizing: border-box;
         object-fit: cover;
         border-radius: var.$RADIUS-BRD-BTN;
     }
+
+    .title-dialog {
+        font-weight: 600;
+        font-size: 48px;
+    }
+
+    form {
+        width: 100%;
+    }
+
+    #align-inpt {
+        margin-top: 18px;
+        width: 100%;
+        display: grid;
+        grid-template-columns: repeat(2, 1fr);
+        gap: 12px;
+    }
+
+    input {
+        cursor: pointer;
+
+        background-color: var.$BKGROUND-MAIN;
+        border: 1.4px solid var.$HOVER_COLOR;
+        padding: 18px;
+        border-radius: var.$RADIUS-BRD-BTN;
+        color: var.$TXT-INVERT-COLOR;
+        font-size: 14px;
+        outline: none;
+        font-weight: 500;
+
+        &:hover {
+            background-color: var.$BTN-COLOR-BLACK;
+        }
+
+    }
+
+    textarea {
+        appearance: none;
+        cursor: pointer;
+        width: 100%;
+        margin-top: 18px;
+        background-color: var.$BKGROUND-MAIN;
+        border: 1.4px solid var.$HOVER_COLOR;
+        padding: 18px;
+        border-radius: var.$RADIUS-BRD-BTN;
+        color: var.$TXT-INVERT-COLOR;
+        font-size: 16px;
+        outline: none;
+        resize: none;
+        height: 180px;
+        margin-bottom: 18px;
+
+        &:hover {
+            background-color: var.$BTN-COLOR-BLACK;
+        }
+
+    }
+
+    #captcha-container {
+        display: flex;
+        justify-content: center;
+        margin-bottom: 18px;
+    }
+
+    #sub-btn {
+        border-radius: var.$RADIUS-BRD-BTN;
+        cursor: pointer;
+        width: 100%;
+        padding: var.$PADDING-BTN;
+        font-size: 16px;
+        font-weight: 600;
+        background-color: var.$BTN-COLOR-MAIN;
+        border: none;
+
+        &:hover {
+            background-color: var.$HOVER_BTN_MAIN;
+        }
+    }
+
+    #cancel-btn {
+        cursor: pointer;
+        position: absolute;
+        top: 28px;
+        right: 28px;
+        height: 38px;
+        width: 38px;
+        border-radius: 100%;
+        background-color: var.$BTN-COLOR-BLACK;
+        border:none;
+
+
+        &:hover{
+            background-color: var.$HOVER_COLOR;
+        }
+    }
+
+    .subt-dialog{
+        margin-top: 12px;
+        color: var.$TXT-MAIN-COLOR;
+        font-size: 16px;
+        line-height: 1.2;
+    }
+
 }
 
 .dialog-buttons {
@@ -1204,4 +1325,8 @@ h1 {
     display: flex;
     justify-content: flex-end;
     gap: 10px;
+}
+
+h1{
+    font-weight: 600 !important; 
 }

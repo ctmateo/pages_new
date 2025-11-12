@@ -110,7 +110,7 @@ body {
   background: #101014;
 }
 
-li, h1, h2, p, div, button {
+li, h1, h2, p, div, button, textarea, input, h3 {
   font-family: Outfit;
   font-weight: 400;
 }
@@ -341,7 +341,6 @@ li, h1, h2, p, div, button {
 #world-btn {
   padding: 3px 12px 3px 12px;
   font-size: 18px;
-  font-weight: 500;
 }
 
 .drop {
@@ -357,10 +356,10 @@ li, h1, h2, p, div, button {
 
 #description-home {
   font-size: 22px;
-  width: 84%;
+  width: 70%;
   color: #98989a;
   margin-bottom: 24px;
-  line-height: 1.3;
+  line-height: 1.1;
 }
 
 .outline-home-btn {
@@ -510,7 +509,7 @@ li, h1, h2, p, div, button {
 }
 
 .products-description {
-  padding-top: 198px;
+  padding-top: 98px;
   background-color: #101014;
 }
 .products-description .chip {
@@ -607,6 +606,7 @@ li, h1, h2, p, div, button {
   transform: translateY(-20px);
 }
 .products-description .vertical-text h2 {
+  font-weight: 600;
   height: 0;
   opacity: 0;
   transition: all 0.5s ease-in-out;
@@ -627,7 +627,6 @@ li, h1, h2, p, div, button {
   margin-left: 12px;
 }
 .products-description .features-product {
-  padding-top: 24px;
   padding-bottom: 94px;
   padding-left: 68px;
   padding-right: 68px;
@@ -660,11 +659,14 @@ li, h1, h2, p, div, button {
   margin-bottom: 48px;
 }
 .products-description .know-u-product {
-  padding: 148px 68px 0 48px;
+  padding: 0px 68px 0 48px;
   display: flex;
   flex-direction: column;
   justify-content: flex-start;
   align-items: flex-start;
+}
+.products-description .know-u-product #desc-voice {
+  width: 68%;
 }
 .products-description .know-u-product .scroll-wrapper {
   margin-top: 48px;
@@ -767,7 +769,6 @@ li, h1, h2, p, div, button {
   background: linear-gradient(to top, #101014, transparent);
 }
 .products-description .description-message-container {
-  padding-top: 168px;
   background-color: #101014;
 }
 .products-description .description-message-container .tile-wrapper {
@@ -895,7 +896,6 @@ li, h1, h2, p, div, button {
 
 .events-news {
   background-color: #101014;
-  padding-top: 132px;
 }
 .events-news .chip {
   font-size: 18px;
@@ -1064,15 +1064,26 @@ h1 {
 }
 
 .support-demo {
+  position: relative;
   height: 548px;
   background-color: #1c1c21;
   display: flex;
   align-items: center;
   justify-content: center;
+  overflow: hidden;
 }
 .support-demo h1 {
   font-size: 48px;
   font-weight: 600;
+  color: white;
+}
+.support-demo .fade-bottom {
+  position: absolute;
+  bottom: 0;
+  width: 100%;
+  height: 60%;
+  pointer-events: none;
+  background: linear-gradient(to bottom, rgba(0, 0, 255, 0) 0%, rgba(0, 0, 255, 0.05) 25%, rgba(0, 0, 255, 0.15) 50%, rgba(0, 0, 255, 0.4) 75%, #101014 100%);
 }
 
 .dialog {
@@ -1084,7 +1095,7 @@ h1 {
   display: flex;
   justify-content: center;
   align-items: center;
-  z-index: 3;
+  z-index: 999;
 }
 
 .dialog.hidden {
@@ -1104,10 +1115,9 @@ h1 {
 .dialog-content {
   position: relative;
   background: #101014;
-  padding: 20px;
+  padding: 48px;
   border-radius: 8px;
   width: 80%;
-  height: 80%;
   z-index: 4;
   color: white;
 }
@@ -1118,6 +1128,91 @@ h1 {
   object-fit: cover;
   border-radius: 8px;
 }
+.dialog-content .title-dialog {
+  font-weight: 600;
+  font-size: 48px;
+}
+.dialog-content form {
+  width: 100%;
+}
+.dialog-content #align-inpt {
+  margin-top: 18px;
+  width: 100%;
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 12px;
+}
+.dialog-content input {
+  cursor: pointer;
+  background-color: #101014;
+  border: 1.4px solid #434343;
+  padding: 18px;
+  border-radius: 8px;
+  color: white;
+  font-size: 14px;
+  outline: none;
+  font-weight: 500;
+}
+.dialog-content input:hover {
+  background-color: #343437;
+}
+.dialog-content textarea {
+  appearance: none;
+  cursor: pointer;
+  width: 100%;
+  margin-top: 18px;
+  background-color: #101014;
+  border: 1.4px solid #434343;
+  padding: 18px;
+  border-radius: 8px;
+  color: white;
+  font-size: 16px;
+  outline: none;
+  resize: none;
+  height: 180px;
+  margin-bottom: 18px;
+}
+.dialog-content textarea:hover {
+  background-color: #343437;
+}
+.dialog-content #captcha-container {
+  display: flex;
+  justify-content: center;
+  margin-bottom: 18px;
+}
+.dialog-content #sub-btn {
+  border-radius: 8px;
+  cursor: pointer;
+  width: 100%;
+  padding: 8px 18px 8px 18px;
+  font-size: 16px;
+  font-weight: 600;
+  background-color: #03a0c9;
+  border: none;
+}
+.dialog-content #sub-btn:hover {
+  background-color: #49dbff;
+}
+.dialog-content #cancel-btn {
+  cursor: pointer;
+  position: absolute;
+  top: 28px;
+  right: 28px;
+  height: 38px;
+  width: 38px;
+  border-radius: 100%;
+  background-color: #343437;
+  border: none;
+}
+.dialog-content #cancel-btn:hover {
+  background-color: #434343;
+}
+.dialog-content .subt-dialog {
+  margin-top: 12px;
+  color: #98989a;
+  font-size: 16px;
+  line-height: 1.2;
+}
 
 .dialog-buttons {
   align-items: end;
@@ -1126,9 +1221,12 @@ h1 {
   gap: 10px;
 }
 
+h1 {
+  font-weight: 600 !important;
+}
+
 footer {
-  background-color: #101113;
-  border: 1px solid #1A1B1D;
+  background-color: #101014;
   height: 100%;
   width: 100%;
   padding-left: 68px;
@@ -1153,10 +1251,11 @@ footer p {
   justify-content: left;
   align-items: flex-end;
   color: #d6d6d6;
+  line-height: 1.3;
 }
 footer .separator {
-  height: 1.2px;
-  background-color: #6d6d6d;
+  height: 0.6px;
+  background-color: #03a0c9;
 }
 footer .container-bottom-footer {
   margin-bottom: 38px;

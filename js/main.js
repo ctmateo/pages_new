@@ -42,28 +42,28 @@ function eventListener() {
 
 eventListener();
 
-
 function dialogRecycle(isProduction = false) {
   const siteKey = "6LdpdQosAAAAAFqkM9uMMSj3sBZ_0C9YOapvqLmj";
-  const scriptURL = "https://script.google.com/macros/s/AKfycbwR-dCRyjNRQhYY_7L0CpfimUkz67C4zLFjm4lUHbuSLGfu3sr5JLwux7xmwX2CpaoO/exec";
+  const scriptURL =
+    "https://script.google.com/macros/s/AKfycbx4INsPAjGScae4453Egv84xaJ2HWCivfbsZ19ldXOhDB6laQPS5TuZ1eWRcD2nG_J8/exec";
 
-  // Evita múltiples diálogos
   if (document.querySelector(".dialog")) return;
 
-  // Cargar el script de reCAPTCHA solo una vez
   function loadRecaptchaScript(callback) {
-    if (window.grecaptcha) return callback();
-
+    if (window.grecaptcha) {
+      callback();
+      return;
+    }
     const script = document.createElement("script");
     script.id = "recaptcha-script";
-    script.src = "https://www.google.com/recaptcha/api.js?onload=onRecaptchaReady&render=explicit";
+    script.src =
+      "https://www.google.com/recaptcha/api.js?onload=onRecaptchaReady&render=explicit";
     script.async = true;
     script.defer = true;
     window.onRecaptchaReady = callback;
     document.body.appendChild(script);
   }
 
-  // Crear estructura del diálogo
   const dialog = document.createElement("div");
   dialog.classList.add("dialog");
 
@@ -75,67 +75,102 @@ function dialogRecycle(isProduction = false) {
   content.classList.add("dialog-content");
 
   const title = document.createElement("h3");
-  title.textContent = "Contáctanos";
+  title.id = "title-dialog";
 
+  title.classList.add("title-dialog");
+  title.textContent = "Contáctanos";
+  title.setAttribute("translate-text", "");
   const status = document.createElement("p");
   status.id = "status";
 
   const form = document.createElement("form");
   form.innerHTML = `
-    <input type="text" name="name" placeholder="Tu nombre" required>
-    <input type="email" name="email" placeholder="Tu correo electrónico" required>
-    <textarea name="msg" placeholder="Tu mensaje..." required></textarea>
+  <button type="button" id="cancel-btn"><image src = "./icons/close.svg" /></button>
+    <div id ="align-inpt"><input id="inpt2" translate-text type="text" name="name" placeholder="Nombre" required>
+    <input id="inpt1" translate-text type="email" name="email" placeholder="Correo electrónico" required></div>
+    <textarea id ="area-inpt-msg" translate-text name="msg" placeholder="Solicita información sobre precios, resuelve tus dudas o programa una demostración personalizada." required></textarea>
     <div id="captcha-container"></div>
-    <button type="submit">Enviar</button>
-    <button type="button" id="cancel-btn">Cancelar</button>
+    <button id="sub-btn" translate-text type="submit">Enviar</button>
   `;
+  const subt = document.createElement("p");
+  subt.id = "subt-dialog";
+  subt.classList.add("subt-dialog");
+  subt.setAttribute("translate-text", "");
+  subt.textContent =
+    "Nuestro equipo de relaciones está listo para atenderte. Puedes solicitar información sobre precios, resolver tus dudas o programar una demostración personalizada para conocer cómo podemos ayudarte a alcanzar tus objetivos.";
+  const address = document.createElement("p");
+  address.classList.add("subt-dialog");
+  address.textContent =
+    "Address: 2200 N Commerce Pkwy. Suite 200. Weston, FL 33326, USA - Phone: +1 (954) 372-0969";
+  address.id ="ctc-bottom";
+  address.setAttribute("translate-text", "");
+  address.style.display = "flex";
+  address.style.justifyContent = "center";
 
-  content.append(title, status, form);
+  content.append(title, subt, form, address, status);
   dialog.append(overlay, content);
   document.body.appendChild(dialog);
+  window.translatePage(currentLang);
 
-  form.querySelector("#cancel-btn").addEventListener("click", () => dialog.remove());
+  form
+    .querySelector("#cancel-btn")
+    .addEventListener("click", () => dialog.remove());
 
-  // Renderizar el CAPTCHA
   loadRecaptchaScript(() => {
-    if (!document.getElementById("captcha-container").hasAttribute("data-rendered")) {
-      grecaptcha.render("captcha-container", {
-        sitekey: siteKey,
-      });
-      document.getElementById("captcha-container").setAttribute("data-rendered", "true");
+    const captchaDiv = document.getElementById("captcha-container");
+    if (!captchaDiv.hasAttribute("data-rendered")) {
+      grecaptcha.render("captcha-container", { sitekey: siteKey });
+      captchaDiv.setAttribute("data-rendered", "true");
     }
   });
 
-  // Envío del formulario
   form.addEventListener("submit", (e) => {
     e.preventDefault();
 
     const captchaResponse = grecaptcha.getResponse();
     if (!captchaResponse) {
-      status.textContent = "❌ Por favor completa el CAPTCHA";
+      status.textContent = "Por favor completa el CAPTCHA";
       return;
     }
 
     const formData = new FormData(form);
     formData.append("g-recaptcha-response", captchaResponse);
 
-    fetch(scriptURL, { method: "POST", body: formData })
-      .then((res) => res.text())
-      .then(() => {
-        status.textContent = "✅ Mensaje enviado con éxito";
-        form.reset();
-        grecaptcha.reset();
-        setTimeout(() => dialog.remove(), 1500);
-      })
-      .catch((err) => {
-        console.error("Error!", err);
-        status.textContent = "❌ Error al enviar el mensaje";
-      });
+    if (isProduction) {
+      console.log("hola");
+      fetch(scriptURL, { method: "POST", body: formData })
+        .then((res) => res.text())
+        .then(() => {
+          status.textContent = "Enviado";
+          form.reset();
+          grecaptcha.reset();
+          setTimeout(() => dialog.remove(), 1500);
+        })
+        .catch((err) => {
+          console.error("Error!", err);
+          status.textContent = "No se pudimos enviar tu solicitud";
+        });
+    } else {
+      const tempForm = document.createElement("form");
+      tempForm.method = "POST";
+      tempForm.action = scriptURL;
+      tempForm.target = "_blank";
+
+      for (const [key, value] of formData.entries()) {
+        const input = document.createElement("input");
+        input.type = "hidden";
+        input.name = key;
+        input.value = value;
+        tempForm.appendChild(input);
+      }
+
+      document.body.appendChild(tempForm);
+      tempForm.submit();
+      document.body.removeChild(tempForm);
+      status.textContent = "Enviando tendras respuesta en 3 dias habiles";
+    }
   });
 }
-
-
-
 
 let translationsCache = {};
 
@@ -165,7 +200,7 @@ window.translatePage = async function translatePage(lang) {
 
     const elements = document.querySelectorAll("[translate-text]");
     elements.forEach((el) => {
-      const key = el.id;
+      const key = el.getAttribute("translate-text") || el.id;
       const textSection = findTranslationByKey(translations, key);
       if (!textSection)
         return console.warn(`No se encontró traducción para: ${key}`);
@@ -176,7 +211,19 @@ window.translatePage = async function translatePage(lang) {
         setTimeout(() => displazeVerticalTextWithData(textSection, el), 800);
       else if (key === "number-callers")
         displazeVerticalTextWithData(textSection, el);
-      else el.textContent = textSection;
+
+      else if (el.tagName === "INPUT" || el.tagName === "TEXTAREA") {
+        el.placeholder = textSection;
+      }
+      else if (el.tagName === "IMG" && el.hasAttribute("alt")) {
+        el.alt = textSection;
+      }
+      else if (el.hasAttribute("title")) {
+        el.title = textSection;
+      }
+      else {
+        el.textContent = textSection;
+      }
     });
   } catch (error) {
     console.error("Error cargando JSON/Lang:", error);

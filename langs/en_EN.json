@@ -3,20 +3,29 @@
         "nav1": "Home",
         "nav2": "Products",
         "nav3": "Benefits",
-        "nav4": "Events",
-        "nav5": "News",
+        "nav4": "Events & News",
+        "nav5": "Advantages",
         "nav6": "About Us",
         "contact-us-btn": "Contact us",
         "world-btn": "Resource center"
     },
+    "contact-us": {
+        "title-dialog": "Contact Us",
+        "subt-dialog": "Our relations team is ready to assist you. You can request information about pricing, resolve your questions, or schedule a personalized demo to learn how we can help you achieve your goals.",
+        "inpt1": "Email",
+        "inpt2": "Name",
+        "area-inpt-msg": "Request information about pricing, resolve your questions, or schedule a personalized demo.",
+        "sub-btn": "Send",
+        "ctc_bottom": "Address: 2200 N Commerce Pkwy. Suite 200. Weston, FL 33326, USA - Phone: +1 (954) 372-0969"
+    },
     "home": {
         "title-home": "Global Voice and SMS Connectivity: Simplified, Reliable, and Scalable",
-        "description-home": "Direct carrier routes, enterprise-grade SMS, and crystal-clear VoIP termination, powered by carrier-grade reliability.",
+        "description-home": "Direct carrier routes, enterprise SMS, and high-definition VoIP termination, all supported by the reliability and performance of carrier-grade infrastructure.",
         "home-btn": "Learn about more",
         "outline-home-btn": "About Us"
     },
     "featured-services": {
-        "title-featured-services": "Power your global communications with AlkaIP, trusted by carriers worldwide.",
+        "title-featured-services": "Power your global communications with AlkaIP, trusted by carriers worldwide",
         "feat1": "Tier-1 connectivity across 120+ countries.",
         "feat2": "High delivery rates with real-time analytics.",
         "feat3": "Voice and messaging at your fingertips.",
@@ -48,7 +57,7 @@
         },
         "desc-card-voice": "Minutes of voice calls per year with premium routes and guaranteed quality on every call.",
         "desc-card-sms": "Scale your business with SMS Speed, security, and global coverage within reach of your brand.",
-        "demo1": "Tier-1 Global Network",
+        "demo1": "Global Network",
         "demo2": "Transparent Billing",
         "demo3": "99.999% Uptime",
         "demo4": "Scalable Infrastructure",
@@ -62,57 +71,56 @@
         "desc-voice": "We offer reliable and affordable voice services for businesses of all sizes, from call centers and telephone operators to international carriers",
         "scroller-cards-voice": {
             "titles": {
-            "1": "Crystal-clear quality through Tier-1 routes",
-            "2": "CLI / TDM routing",
-            "3": "SIP trunking",
-            "4": "DID management",
-            "5": "Real-time analytics",
-            "6": "Global Call Center Termination"
+                "1": "Crystal-clear quality through Tier-1 routes",
+                "2": "CLI / TDM routing",
+                "3": "SIP trunking",
+                "4": "DID management",
+                "5": "Real-time analytics",
+                "6": "Global Call Center Termination"
             },
             "images": {
-            "img1": "./images/test4kv.jpg",
-            "img2": "./images/test4kv.jpg",
-            "img3": "./images/test4kv.jpg",
-            "img4": "./images/test4kv.jpg",
-            "img5": "./images/test4kv.jpg",
-            "img6": "./images/test4kv.jpg"
+                "img1": "./images/test4kv.jpg",
+                "img2": "./images/test4kv.jpg",
+                "img3": "./images/test4kv.jpg",
+                "img4": "./images/test4kv.jpg",
+                "img5": "./images/test4kv.jpg",
+                "img6": "./images/test4kv.jpg"
             },
             "desc": {
-            "desc1": "Reach any destination in the world with affordable rates tailored to your needs, without sacrificing the reliability of a stable connection and certified quality in every communication. Whether your company serves local or international customers, you'll have a solid infrastructure that ensures the best voice experience.",
-            "desc2": "Our service is designed to handle traffic spikes and large numbers of simultaneous calls, making it the ideal solution for contact centers, telemarketing campaigns, or any business operation that requires large-scale stability.",
-            "desc3": "With a redundant, continuously monitored network, we ensure your calls maintain superior quality and that your business is never affected by interruptions. The end-user experience remains smooth and reliable in every interaction.",
-            "desc4": "Easily manage your service balance with instant top-up processes that prevent pauses or interruptions in communication. Maintain the continuity of your operations without worrying about unexpected outages.",
-            "desc5": "Easily manage your service balance with instant top-up processes that prevent pauses or interruptions in communication. Maintain the continuity of your operations without worrying about unexpected outages.",
-            "desc6": "Easily manage your service balance with instant top-up processes that prevent pauses or interruptions in communication. Maintain the continuity of your operations without worrying about unexpected outages."
+                "desc1": "Reach any destination in the world with affordable rates tailored to your needs, without sacrificing the reliability of a stable connection and certified quality in every communication. Whether your company serves local or international customers, you'll have a solid infrastructure that ensures the best voice experience.",
+                "desc2": "Our service is designed to handle traffic spikes and large numbers of simultaneous calls, making it the ideal solution for contact centers, telemarketing campaigns, or any business operation that requires large-scale stability.",
+                "desc3": "With a redundant, continuously monitored network, we ensure your calls maintain superior quality and that your business is never affected by interruptions. The end-user experience remains smooth and reliable in every interaction.",
+                "desc4": "Easily manage your service balance with instant top-up processes that prevent pauses or interruptions in communication. Maintain the continuity of your operations without worrying about unexpected outages.",
+                "desc5": "Easily manage your service balance with instant top-up processes that prevent pauses or interruptions in communication. Maintain the continuity of your operations without worrying about unexpected outages.",
+                "desc6": "Easily manage your service balance with instant top-up processes that prevent pauses or interruptions in communication. Maintain the continuity of your operations without worrying about unexpected outages."
             }
         }
     },
     "sms-section": {
-        "sms-title" : "Enhance your communication with reliable and secure SMS",
-        "sms-desc" : "Ideal for companies seeking speed, stability, and scalability in their communications.",
-        "cards" : {
-            "sms-cd-1" : "A2P / P2A / Two-way messaging",
-            "sms-cd-2" : "RCS, SS7, VOTP, Whatsapp, Telegram, Viber",
-            "sms-cd-3" : "Global coverage",
-            "sms-cd-4" : "Smart routing",
-            "sms-cd-5" : "Delivery receipts + analytics"
+        "sms-title": "Enhance your communication with reliable and secure SMS",
+        "sms-desc": "Ideal for companies seeking speed, stability, and scalability in their communications.",
+        "cards": {
+            "sms-cd-1": "A2P / P2A / Two-way messaging",
+            "sms-cd-2": "RCS, SS7, VOTP, Whatsapp, Telegram, Viber",
+            "sms-cd-3": "Global coverage",
+            "sms-cd-4": "Smart routing",
+            "sms-cd-5": "Delivery receipts + analytics"
         }
     },
-    "events-section" : {
+    "events-section": {
         "chip-event": "Events and news",
-        "title-event" :"AlkaIp present at major global telecommunications events",
-        "desc-event" : "Our participation in international conferences and meetings reflects AlkaIp's commitment to innovation, building strategic alliances, and growth in the global market."
+        "title-event": "AlkaIp present at major global telecommunications events",
+        "desc-event": "Our participation in international conferences and meetings reflects AlkaIp's commitment to innovation, building strategic alliances, and growth in the global market."
     },
-    "map-section" : {
-        "subtitle-map" : "At AlkaIP Telecom",
-        "title-map" : "We believe that communication shouldn't be complicated."
-
+    "map-section": {
+        "subtitle-map": "At AlkaIP Telecom",
+        "title-map": "We believe that communication shouldn't be complicated."
     },
-    "support-demo" : {
-        "title-support" : "Support 24/7"
+    "support-demo": {
+        "title-support": "Support 24/7"
     },
-    "footer" : {
-        "reserved" : "©2025 Alkaip Telecom, S.A.S. All rights reserved. Alkaip and its logo are registered trademarks or trademarks of Alkaip in the United States and elsewhere.",
-        "btn-back" : "Back to top"
+    "footer": {
+        "reserved": "©2025 Alkaip Telecom, S.A.S. All rights reserved. Alkaip and its logo are registered trademarks or trademarks of Alkaip in the United States and elsewhere.",
+        "btn-back": "Back to top"
     }
 }

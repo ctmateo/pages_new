@@ -3,11 +3,20 @@
     "nav1": "Inicio",
     "nav2": "Productos",
     "nav3": "Beneficios",
-    "nav4": "Eventos",
-    "nav5": "Noticias",
+    "nav4": "Eventos y Noticias",
+    "nav5": "Ventajas",
     "nav6": "Sobre Nosotros",
     "contact-us-btn": "Contáctanos",
     "world-btn": "Centro de recursos"
+  },
+  "contact-us": {
+    "title-dialog" : "Contáctanos",
+    "subt-dialog": "Nuestro equipo de relaciones está listo para atenderte. Puedes solicitar información sobre precios, resolver tus dudas o programar una demostración personalizada para conocer cómo podemos ayudarte a alcanzar tus objetivos.",
+    "inpt1" : "Correo electrónico",
+    "inpt2" : "Nombre",
+    "area-inpt-msg" : "Solicita información sobre precios, resuelve tus dudas o programa una demostración personalizada.",
+    "sub-btn" : "Enviar",
+    "ctc_bottom" : "Dirección: 2200 N Commerce Pkwy. Suite 200. Weston, FL 33326, EE. UU. - Teléfono: +1 (954) 372-0969"
   },
   "home": {
     "title-home": "Conectividad Global de Voz y SMS: Simple, Confiable y Escalable",
@@ -16,7 +25,7 @@
     "outline-home-btn": "Sobre Nosotros"
   },
   "featured-services": {
-    "title-featured-services": "Impulsa tus comunicaciones globales con AlkaIP, la opción de confianza para operadores en todo el mundo.",
+    "title-featured-services": "Impulsa tus comunicaciones globales con AlkaIP, la opción de confianza para operadores en todo el mundo",
     "feat1": "Conectividad de nivel Tier-1 en más de 120 países.",
     "feat2": "Altas tasas de entrega con analítica en tiempo real.",
     "feat3": "Voz y mensajería al alcance de tu mano.",
@@ -48,7 +57,7 @@
     },
     "desc-card-voice": "Minutos de llamadas de voz al año con rutas premium y calidad garantizada en cada comunicación.",
     "desc-card-sms": "Escala tu negocio con SMS: velocidad, seguridad y cobertura global al alcance de tu marca.",
-    "demo1": "Red Global Tier-1",
+    "demo1": "Red Global",
     "demo2": "Facturación Transparente",
     "demo3": "99.999% de Disponibilidad",
     "demo4": "Infraestructura Escalable",
