@@ -1292,6 +1292,13 @@ h1 {
         &:hover {
             background-color: var.$HOVER_BTN_MAIN;
         }
+
+        &:disabled{
+            cursor: auto;
+            &:hover{
+                background-color: var.$BTN-COLOR-MAIN;
+            }
+        }
     }
 
     #cancel-btn {
@@ -1330,3 +1337,4 @@ h1 {
 h1{
     font-weight: 600 !important; 
 }
+    

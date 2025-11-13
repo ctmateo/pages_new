@@ -15,12 +15,15 @@
         "inpt1": "Email",
         "inpt2": "Name",
         "area-inpt-msg": "Request information about pricing, resolve your questions, or schedule a personalized demo.",
-        "sub-btn": "Send",
+        "status": "Send",
+        "status-captcha": "Please complete captcha",
+        "wsuccess" : "Sent, you will receive a response within 24 business hours.",
+        "werror" : "We were unable to send your request. Please try again later.",
         "ctc_bottom": "Address: 2200 N Commerce Pkwy. Suite 200. Weston, FL 33326, USA - Phone: +1 (954) 372-0969"
     },
     "home": {
         "title-home": "Global Voice and SMS Connectivity: Simplified, Reliable, and Scalable",
-        "description-home": "Direct carrier routes, enterprise SMS, and high-definition VoIP termination, all supported by the reliability and performance of carrier-grade infrastructure.",
+        "description-home": "Direct carrier routes, enterprise-grade SMS, and crystal-clear VoIP termination, powered by carrier-grade reliability.",
         "home-btn": "Learn about more",
         "outline-home-btn": "About Us"
     },
@@ -80,7 +83,7 @@
             },
             "images": {
                 "img1": "./images/test4kv.jpg",
-                "img2": "./images/test4kv.jpg",
+                "img2": "./images/test24k.jpg",
                 "img3": "./images/test4kv.jpg",
                 "img4": "./images/test4kv.jpg",
                 "img5": "./images/test4kv.jpg",
@@ -91,8 +94,8 @@
                 "desc2": "Our service is designed to handle traffic spikes and large numbers of simultaneous calls, making it the ideal solution for contact centers, telemarketing campaigns, or any business operation that requires large-scale stability.",
                 "desc3": "With a redundant, continuously monitored network, we ensure your calls maintain superior quality and that your business is never affected by interruptions. The end-user experience remains smooth and reliable in every interaction.",
                 "desc4": "Easily manage your service balance with instant top-up processes that prevent pauses or interruptions in communication. Maintain the continuity of your operations without worrying about unexpected outages.",
-                "desc5": "Easily manage your service balance with instant top-up processes that prevent pauses or interruptions in communication. Maintain the continuity of your operations without worrying about unexpected outages.",
-                "desc6": "Easily manage your service balance with instant top-up processes that prevent pauses or interruptions in communication. Maintain the continuity of your operations without worrying about unexpected outages."
+                "desc5": "Gain valuable insights instantly with real-time analytics that help you make data-driven decisions on the spot. Monitor your system’s performance, detect trends, and optimize operations without delays to keep your business running efficiently.",
+                "desc6": "Ensure crystal-clear voice quality and reliable global connectivity with our Call Center Termination services. Route calls efficiently across international destinations, reduce latency, and maintain seamless communication with customers around the world."
             }
         }
     },

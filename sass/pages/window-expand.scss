@@ -1,17 +1,174 @@
+@use "../abstracts/variables" as var;
 
 .slider-container {
+  position: relative;
+  width: 100%;
+  height: 100vh;
+  overflow: hidden;
+}
+
+/* === TOP BAR === */
+.slider-top-bar {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  padding: 20px 40px;
   display: flex;
-  flex-direction: column;
+  justify-content: space-between;
   align-items: center;
-  text-align: center;
+  z-index: 5;
 }
 
-.slider-item.hidden {
-  display: none;
-}
-
-.slider-controls {
+.back-btn {
   display: flex;
-  gap: 1rem;
-  margin-top: 1rem;
+  align-items: center;
+  font-size: 18px;
+  cursor: pointer;
+  transition: opacity 0.3s;
+  p{
+    color: var.$TXT-INVERT-COLOR;
+  }
+  &:hover {
+    opacity: 0.8;
+  }
+  img{
+    margin-right: 2px;
+  }
+}
+
+.slider-indicators {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+
+  .indicator-dot {
+    width: 6px;
+    height: 6px;
+    border-radius: 50%;
+    background: rgba(255, 255, 255, 0.4);
+    transition: all 500ms;
+    opacity: 0.6;
+
+    &.active {
+      opacity: 1;
+      width: 12px;
+      height: 12px;
+      border: 1.6px solid var.$TXT-INVERT-COLOR;
+    }
+  }
+}
+
+.slider-timer {
+  font-size: 16px;
+  color: white;
+}
+
+/* === SLIDES === */
+.slider-item {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  opacity: 1;
+  transition: opacity 0.8s ease-in-out;
+  
+  &.hidden {
+    opacity: 0;
+    pointer-events: none;
+  }
+
+  &:not(.hidden) {
+    opacity: 1;
+  }
+
+  img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    filter: brightness(0.4);
+    padding: 94px;
+    border-radius: 164px;
+  }
+
+  .slider-content {
+    position: absolute;
+    bottom: 220px;
+    left: 50px;
+    max-width: 70%;
+    z-index: 3;
+
+    .slider-title {
+      font-size: 48px;
+      font-weight: 600;
+      margin-bottom: 16px;
+      color: white;
+    }
+
+    p {
+      font-size: 18px;
+      color: white;
+      line-height: 1.3;
+    }
+  }
+}
+
+
+/* === CONTROLES INFERIORES === */
+.slider-controls {
+  position: absolute;
+  bottom: 128px;
+  left: 50px;
+  display: flex;
+  gap: 12px;
+  z-index: 3;
+
+  button {
+    width: 190px;
+    font-size: 18px;
+    border: none;
+    border-radius: var.$RADIUS-BRD-BTN;
+    padding: var.$PADDING-BTN;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+    font-weight: 500;
+
+    &:nth-child(1) {
+      border: 1px solid var.$TXT-INVERT-COLOR;
+      background-color: transparent;
+      color: var.$TXT-INVERT-COLOR;
+
+      &:disabled {
+        cursor: auto;
+        filter: brightness(0.5);
+
+        &:hover {
+          background-color: transparent;
+        }
+      }
+
+      &:hover {
+        background-color: var.$HOVER_COLOR;
+      }
+    }
+
+    &:nth-child(2) {
+      background-color: var.$TXT-INVERT-COLOR;
+      color: var.$BKGROUND-MAIN;
+
+      &:disabled {
+        cursor: auto;
+        filter: brightness(0.5);
+
+        &:hover {
+          background-color: var.$TXT-INVERT-COLOR;
+        }
+      }
+
+      &:hover {
+        background-color: var.$HOVER_BTN_MAIN;
+      }
+    }
+  }
 }

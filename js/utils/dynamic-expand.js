@@ -16,7 +16,6 @@ export async function dynamicChangesExpand() {
     const response = await fetch(path);
     const translation = await response.json();
 
-
     const voiceSection = translation["voice-section"];
     const cardsData = voiceSection["scroller-cards-voice"];
 
@@ -30,7 +29,6 @@ export async function dynamicChangesExpand() {
       };
     });
 
-
     const smsSection = translation["sms-section"];
     const cardDataSms = smsSection["cards"];
 
@@ -39,76 +37,163 @@ export async function dynamicChangesExpand() {
       title,
     }));
 
-
     function createSlider(items, options = {}) {
-      const { showImage = true, showDesc = true, containerClass = "" } = options;
+      const {
+        showImage = true,
+        showDesc = true,
+        containerClass = "",
+        autoPlay = true,
+        autoPlayDelay = 3, // segundos para el cambio automático
+      } = options;
+
       let currentPage = 0;
+      let interval;
+      let countdown = autoPlayDelay;
 
       const sliderContainer = document.createElement("div");
       sliderContainer.classList.add("slider-container");
       if (containerClass) sliderContainer.classList.add(containerClass);
 
+      // === HEADER SUPERIOR ===
+      const topBar = document.createElement("div");
+      topBar.classList.add("slider-top-bar");
+
+      const backBtn = document.createElement("div");
+      backBtn.classList.add("back-btn");
+
+      const iconBkBtn = document.createElement("img");
+      iconBkBtn.src = "../icons/arrow-bk.svg";
+      const txtBkBtn = document.createElement("p");
+      txtBkBtn.textContent = "Back to home";
+      backBtn.append(iconBkBtn, txtBkBtn);
+
+      backBtn.addEventListener("click", () => {
+        window.location.href = "../index.html";
+      });
+      const indicators = document.createElement("div");
+      indicators.classList.add("slider-indicators");
+
+      const timer = document.createElement("div");
+      timer.classList.add("slider-timer");
+      timer.textContent = `Next article in ${countdown}`;
+
+      topBar.append(backBtn, indicators, timer);
+      sliderContainer.appendChild(topBar);
+      let indexCurrent = 0;
+      // === SLIDES ===
       items.forEach((item, i) => {
+        indexCurrent = i;
         const slide = document.createElement("div");
         slide.classList.add("slider-item");
         if (i !== 0) slide.classList.add("hidden");
 
         if (showImage && item.img) {
           const img = document.createElement("img");
+          img.classList.add("image-contain");
           img.src = item.img;
           img.alt = item.title;
           slide.appendChild(img);
         }
 
+        const content = document.createElement("div");
+        content.classList.add("slider-content");
+
         const title = document.createElement("h3");
         title.classList.add("slider-title");
         title.textContent = item.title;
-        slide.appendChild(title);
+        content.appendChild(title);
 
         if (showDesc && item.description) {
           const desc = document.createElement("p");
           desc.textContent = item.description;
-          slide.appendChild(desc);
+          content.appendChild(desc);
         }
 
+        slide.appendChild(content);
         sliderContainer.appendChild(slide);
+
+        // crear punto indicador
+        const dot = document.createElement("span");
+        dot.classList.add("indicator-dot");
+        if (i === 0) dot.classList.add("active");
+        indicators.appendChild(dot);
       });
 
+      // === CONTROLES INFERIORES ===
       const controls = document.createElement("div");
       controls.classList.add("slider-controls");
 
       const prevBtn = document.createElement("button");
-      prevBtn.textContent = "◀ Anterior";
+      prevBtn.textContent = "Anterior";
       const nextBtn = document.createElement("button");
-      nextBtn.textContent = "Siguiente ▶";
+      nextBtn.textContent = "Siguiente";
 
       controls.append(prevBtn, nextBtn);
       sliderContainer.appendChild(controls);
 
+      // === FUNCIONES ===
       function updateSlider() {
         const slides = sliderContainer.querySelectorAll(".slider-item");
+        const dots = sliderContainer.querySelectorAll(".indicator-dot");
+
         slides.forEach((slide, i) => {
           slide.classList.toggle("hidden", i !== currentPage);
         });
+
+        dots.forEach((dot, i) => {
+          dot.classList.toggle("active", i === currentPage);
+        });
+
         prevBtn.disabled = currentPage === 0;
         nextBtn.disabled = currentPage === items.length - 1;
+      }
+
+      function startAutoPlay() {
+        if (!autoPlay) return;
+        clearInterval(interval);
+        interval = setInterval(() => {
+          countdown--;
+          timer.textContent = `Next article in ${countdown}`;
+          if (countdown <= 0) {
+            countdown = autoPlayDelay;
+            if (items.length - 1 === currentPage) {
+              for (let index = 0; index < items.length; index++) {
+                prevBtn.click();
+              }
+            } else {
+              nextBtn.click();
+            }
+          }
+        }, 1000);
+      }
+
+      function resetAutoPlay() {
+        countdown = autoPlayDelay;
+        startAutoPlay();
       }
 
       nextBtn.addEventListener("click", () => {
         if (currentPage < items.length - 1) {
           currentPage++;
-          updateSlider();
+        } else {
+          currentPage = 0;
         }
+        updateSlider();
+        resetAutoPlay();
       });
 
       prevBtn.addEventListener("click", () => {
         if (currentPage > 0) {
           currentPage--;
-          updateSlider();
+        } else {
+          currentPage = items.length - 1;
         }
+        updateSlider();
+        resetAutoPlay();
       });
 
       updateSlider();
+      startAutoPlay();
       return sliderContainer;
     }
 

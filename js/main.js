@@ -19,7 +19,6 @@ function eventListener() {
       setTimeout(() => {
         goToRoute("expand", "products", lastClickedId);
       }, 300);
-      console.log(`Clic en elemento expandible: ${el.id}`);
     }
 
     if (el.dataset.autoScroll === "true" && el.dataset.route) {
@@ -76,41 +75,52 @@ function dialogRecycle(isProduction = false) {
 
   const title = document.createElement("h3");
   title.id = "title-dialog";
-
   title.classList.add("title-dialog");
   title.textContent = "Contáctanos";
   title.setAttribute("translate-text", "");
-  const status = document.createElement("p");
-  status.id = "status";
 
   const form = document.createElement("form");
   form.innerHTML = `
-  <button type="button" id="cancel-btn"><image src = "./icons/close.svg" /></button>
-    <div id ="align-inpt"><input id="inpt2" translate-text type="text" name="name" placeholder="Nombre" required>
-    <input id="inpt1" translate-text type="email" name="email" placeholder="Correo electrónico" required></div>
-    <textarea id ="area-inpt-msg" translate-text name="msg" placeholder="Solicita información sobre precios, resuelve tus dudas o programa una demostración personalizada." required></textarea>
+    <button type="button" id="cancel-btn"><img src="./icons/close.svg" alt="Cerrar" /></button>
+    <div id="align-inpt">
+      <input id="inpt2" translate-text type="text" name="name" placeholder="Nombre" required>
+      <input id="inpt1" translate-text type="email" name="email" placeholder="Correo electrónico" required>
+    </div>
+    <textarea id="area-inpt-msg" translate-text name="msg" placeholder="Solicita información sobre precios, resuelve tus dudas o programa una demostración personalizada." required></textarea>
     <div id="captcha-container"></div>
-    <button id="sub-btn" translate-text type="submit">Enviar</button>
+    <button id="sub-btn" type="submit"><span id="status" translate-text>Enviar</span></button>
   `;
+
   const subt = document.createElement("p");
   subt.id = "subt-dialog";
   subt.classList.add("subt-dialog");
   subt.setAttribute("translate-text", "");
   subt.textContent =
     "Nuestro equipo de relaciones está listo para atenderte. Puedes solicitar información sobre precios, resolver tus dudas o programar una demostración personalizada para conocer cómo podemos ayudarte a alcanzar tus objetivos.";
+
   const address = document.createElement("p");
   address.classList.add("subt-dialog");
   address.textContent =
     "Address: 2200 N Commerce Pkwy. Suite 200. Weston, FL 33326, USA - Phone: +1 (954) 372-0969";
-  address.id ="ctc-bottom";
+  address.id = "ctc_bottom";
   address.setAttribute("translate-text", "");
   address.style.display = "flex";
   address.style.justifyContent = "center";
 
-  content.append(title, subt, form, address, status);
+  content.append(title, subt, form, address);
   dialog.append(overlay, content);
   document.body.appendChild(dialog);
+
   window.translatePage(currentLang);
+
+  const status = document.getElementById("status");
+  const subBtn = document.getElementById("sub-btn");
+
+  if (!status.textContent.trim()) {
+    status.id = "status-waiting";
+    status.textContent = "Enviar";
+    status.setAttribute("translate-text", "");
+  }
 
   form
     .querySelector("#cancel-btn")
@@ -129,7 +139,11 @@ function dialogRecycle(isProduction = false) {
 
     const captchaResponse = grecaptcha.getResponse();
     if (!captchaResponse) {
+      subBtn.disabled = true;
+      status.id = "status-captcha";
+      status.setAttribute("translate-text", "");
       status.textContent = "Por favor completa el CAPTCHA";
+      window.translatePage(currentLang);
       return;
     }
 
@@ -137,18 +151,26 @@ function dialogRecycle(isProduction = false) {
     formData.append("g-recaptcha-response", captchaResponse);
 
     if (isProduction) {
-      console.log("hola");
       fetch(scriptURL, { method: "POST", body: formData })
         .then((res) => res.text())
         .then(() => {
-          status.textContent = "Enviado";
+          status.id = "wsuccess";
+          status.setAttribute("translate-text", "");
+          status.textContent =
+            "Sent, you will receive a response within 24 business hours.";
+          window.translatePage(currentLang);
           form.reset();
           grecaptcha.reset();
-          setTimeout(() => dialog.remove(), 1500);
+          setTimeout(() => dialog.remove(), 30000);
         })
         .catch((err) => {
           console.error("Error!", err);
-          status.textContent = "No se pudimos enviar tu solicitud";
+          status.id = "werror";
+          status.setAttribute("translate-text", "");
+          status.textContent =
+            "No pudimos enviar tu solicitud, inténtalo más tarde.";
+          window.translatePage(currentLang);
+          subBtn.disabled = false;
         });
     } else {
       const tempForm = document.createElement("form");
@@ -167,7 +189,12 @@ function dialogRecycle(isProduction = false) {
       document.body.appendChild(tempForm);
       tempForm.submit();
       document.body.removeChild(tempForm);
-      status.textContent = "Enviando tendras respuesta en 3 dias habiles";
+
+      status.id = "wsuccess";
+      status.setAttribute("translate-text", "");
+      status.textContent = "Enviado, tendrás respuesta en 3 días hábiles.";
+      window.translatePage(currentLang);
+      setTimeout(() => dialog.remove(), 15000);
     }
   });
 }
@@ -211,17 +238,13 @@ window.translatePage = async function translatePage(lang) {
         setTimeout(() => displazeVerticalTextWithData(textSection, el), 800);
       else if (key === "number-callers")
         displazeVerticalTextWithData(textSection, el);
-
       else if (el.tagName === "INPUT" || el.tagName === "TEXTAREA") {
         el.placeholder = textSection;
-      }
-      else if (el.tagName === "IMG" && el.hasAttribute("alt")) {
+      } else if (el.tagName === "IMG" && el.hasAttribute("alt")) {
         el.alt = textSection;
-      }
-      else if (el.hasAttribute("title")) {
+      } else if (el.hasAttribute("title")) {
         el.title = textSection;
-      }
-      else {
+      } else {
         el.textContent = textSection;
       }
     });
@@ -502,6 +525,7 @@ function waitMouseScroller() {
 }
 
 waitMouseScroller();
+
 document.addEventListener("DOMContentLoaded", () => {
   const wrapper = document.getElementById("cardsWrapper");
   if (!wrapper) return;
@@ -519,10 +543,12 @@ document.addEventListener("DOMContentLoaded", () => {
   let isDragging = false;
   let startX;
   let scrollLeft;
+  let dragStartTime = 0;
   const cardWidth = originalCards[0].offsetWidth + 30;
 
   wrapper.addEventListener("mousedown", (e) => {
     isDown = true;
+    dragStartTime = Date.now();
     startX = e.pageX - wrapper.offsetLeft;
     scrollLeft = wrapper.scrollLeft;
     wrapper.style.cursor = "grabbing";
@@ -546,6 +572,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
   wrapper.addEventListener("touchstart", (e) => {
     isDown = true;
+    dragStartTime = Date.now();
     startX = e.touches[0].pageX - wrapper.offsetLeft;
     scrollLeft = wrapper.scrollLeft;
   });
@@ -564,24 +591,34 @@ document.addEventListener("DOMContentLoaded", () => {
     adjustInfiniteScroll();
   });
 
+
   wrapper.addEventListener("click", (e) => {
-    if (isDragging) {
-      e.preventDefault();
-      e.stopPropagation();
-      isDragging = false;
+    const el = e.target.closest(".card-mov-right");
+    if (!el) return;
+
+    if (!isDragging && el.dataset.expandable === "true") {
+      const lastClickedId = el.id;
+      setTimeout(() => {
+        goToRoute("expand", "products", lastClickedId);
+      }, 300);
     }
+
+    isDragging = false;
   });
 
   function stopDragging() {
+    if (isDown && Date.now() - dragStartTime < 150 && !isDragging) {
+      isDragging = false;
+    }
+
     if (isDown) snapToNextCard();
     isDown = false;
-    isDragging = false;
-    wrapper.style.cursor = "grab";
+    wrapper.style.cursor = "auto";
   }
 
   function adjustInfiniteScroll() {
     const maxScroll = sectionWidth * 2;
-    const minScroll = 1;
+    const minScroll = 2;
 
     if (wrapper.scrollLeft <= minScroll + 10) {
       wrapper.scrollLeft += sectionWidth;
@@ -599,6 +636,7 @@ document.addEventListener("DOMContentLoaded", () => {
     });
   }
 });
+
 
 const object = document.querySelector(".dinamyc-map");
 
@@ -732,7 +770,6 @@ function activeBtnMasonry() {
   const cards = document.querySelectorAll(".card");
   const imagecard = document.querySelectorAll(".card-image");
 
-  console.log("Setting up masonry interactions");
   cards.forEach((card) => {
     card.addEventListener("mouseenter", (e) => {
       card.classList.add("active");
