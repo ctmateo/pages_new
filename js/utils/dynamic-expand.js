@@ -43,10 +43,10 @@ export async function dynamicChangesExpand() {
         showDesc = true,
         containerClass = "",
         autoPlay = true,
-        autoPlayDelay = 3, // segundos para el cambio automático
+        autoPlayDelay = 3,
+        startIndex = 0,
       } = options;
-
-      let currentPage = 0;
+      let currentPage = startIndex; // 👈 Antes estaba en 0
       let interval;
       let countdown = autoPlayDelay;
 
@@ -75,7 +75,7 @@ export async function dynamicChangesExpand() {
 
       const timer = document.createElement("div");
       timer.classList.add("slider-timer");
-      timer.textContent = `Next article in ${countdown}`;
+      timer.textContent = `Manual`;
 
       topBar.append(backBtn, indicators, timer);
       sliderContainer.appendChild(topBar);
@@ -197,41 +197,47 @@ export async function dynamicChangesExpand() {
       return sliderContainer;
     }
 
-    if (sectionName === "service" && target.startsWith("voice")) {
-      const section = document.createElement("section");
-      section.classList.add(`${sectionName}-expand`);
+    if (
+      sectionName === "service" &&
+      target.startsWith("voice") &&
+      target !== "voice-features"
+    ) {
+      const indexTarget = voicesProductArray.findIndex(
+        (item) => item.id === target
+      );
 
-      const match = voicesProductArray.find((item) => item.id === target);
+      if (indexTarget !== -1) {
+        const slider = createSlider(voicesProductArray, {
+          showImage: true,
+          showDesc: true,
+          autoPlay: false,
+          containerClass: "voice-slider-container",
+          startIndex: indexTarget,
+        });
 
-      if (match) {
-        const img = document.createElement("img");
-        img.src = match.img;
-        img.alt = match.title;
-
-        const title = document.createElement("h3");
-        title.classList.add("title-card-scroller");
-        title.textContent = match.title;
-
-        const desc = document.createElement("p");
-        desc.textContent = match.description;
-
-        section.append(img, title, desc);
-        document.body.appendChild(section);
+        document.body.appendChild(slider);
       }
     }
 
-    if (sectionName === "service" && target.startsWith("sms")) {
-      const section = document.createElement("section");
-      section.classList.add(`${sectionName}-expand`);
+    if (
+      sectionName === "service" &&
+      target.startsWith("sms") &&
+      target !== "sms-features"
+    ) {
+      const indexTarget = smsProductArray.findIndex(
+        (item) => item.id === target
+      );
 
-      const match = smsProductArray.find((item) => item.id === target);
-      if (match) {
-        const title = document.createElement("h3");
-        title.classList.add("title-card");
-        title.textContent = match.title;
+      if (indexTarget !== -1) {
+        const slider = createSlider(smsProductArray, {
+          showImage: false,
+          showDesc: false,
+          autoPlay: false,
+          containerClass: "sms-slider-container",
+          startIndex: indexTarget,
+        });
 
-        section.append(title);
-        document.body.appendChild(section);
+        document.body.appendChild(slider);
       }
     }
 
