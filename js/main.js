@@ -8,6 +8,8 @@ const LANG_PATHS = {
 };
 export let currentLang = "EN";
 
+let scrollPos = 0;
+
 dynamicChangesExpand();
 
 function eventListener() {
@@ -17,7 +19,7 @@ function eventListener() {
 
     if (el.dataset.expandable === "true") {
       setTimeout(() => {
-        goToRoute("expand", "products", lastClickedId);
+        goToRoute("expand", "products", lastClickedId, currentLang, scrollPos);
       }, 300);
     }
 
@@ -496,32 +498,22 @@ vrCarousel.style.cursor = "grab";
 updateCarousel();
 
 function waitMouseScroller() {
-  let checkObserver = 0;
   const scrollIndicator = document.getElementById("mouseScroll");
-  let pastPositionScrollY = window.screenY;
-  let newPositionScrollY = 0;
 
-  setTimeout(() => {
-    document.getElementById("mouseScroll").classList.add("show");
-  }, 1000);
+  setTimeout(() => scrollIndicator.classList.add("show"), 1000);
 
-  window.addEventListener("scroll", () => {
+  function onScroll() {
     if (window.scrollY > 50) {
       scrollIndicator.style.opacity = "0";
       setTimeout(() => (scrollIndicator.style.display = "none"), 600);
-      pastPositionScrollY = newPositionScrollY;
-    }
-    if (window.scrollY > pastPositionScrollY) {
-      newPositionScrollY = window.scrollY;
 
-      let timeOut = setTimeout(() => {}, 1000);
-      if (timeOut > 1000 && !pastPositionScrollY) {
-        scrollIndicator.style.display = "flex";
-        document.getElementById("mouseScroll").classList.add("show");
-      }
+      scrollPos = window.scrollY;
+
+      window.removeEventListener("scroll", onScroll);
     }
-  });
-  pastPositionScrollY = newPositionScrollY;
+  }
+
+  window.addEventListener("scroll", onScroll);
 }
 
 waitMouseScroller();
@@ -591,7 +583,6 @@ document.addEventListener("DOMContentLoaded", () => {
     adjustInfiniteScroll();
   });
 
-
   wrapper.addEventListener("click", (e) => {
     const el = e.target.closest(".card-mov-right");
     if (!el) return;
@@ -599,7 +590,7 @@ document.addEventListener("DOMContentLoaded", () => {
     if (!isDragging && el.dataset.expandable === "true") {
       const lastClickedId = el.id;
       setTimeout(() => {
-        goToRoute("expand", "products", lastClickedId);
+        goToRoute("expand", "products", lastClickedId, currentLang, scrollPos);
       }, 300);
     }
 
@@ -636,7 +627,6 @@ document.addEventListener("DOMContentLoaded", () => {
     });
   }
 });
-
 
 const object = document.querySelector(".dinamyc-map");
 
@@ -739,6 +729,8 @@ function generarCards(arrayContent, cantidadPorColumna = 3) {
       title.style.zIndex = "4";
 
       const btn = document.createElement("button");
+      btn.id = "indicator-btn";
+      btn.setAttribute("translate-text", "");
       btn.classList.add("expand-btn-global", "over-image");
       btn.textContent = "Select to expand";
       btn.style.position = "absolute";
@@ -803,6 +795,21 @@ function setupDropdowns() {
     });
   });
 }
+window.addEventListener("load", () => {
+  const hash = window.location.hash;
+  if (hash) {
+    const [sectionId, lang] = hash.substring(1).split("_");
+    const target = document.querySelector(`#${sectionId}`);
+
+    if (target) {
+      target.scrollIntoView({ behavior: "smooth" });
+    }
+
+    if (lang && typeof window.translatePage === "function") {
+      window.translatePage(lang);
+    }
+  }
+});
 
 document.addEventListener("DOMContentLoaded", activeBtnMasonry);
 document.addEventListener("DOMContentLoaded", setupDropdowns);

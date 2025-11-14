@@ -15,7 +15,7 @@ document.title =
   pageTitleMap[currentPath] ||
   "AlkaIP Telecom, WholeSale VoIP and TDM Termination";
 
-export function goToRoute(route = "", dinamycPath = "", id = "") {
+export function goToRoute(route = "", dinamycPath = "", id = "", lang = "", lastId = "") {
   const target = routes[route];
   if (!target) {
     console.warn(`Ruta no válida: ${route}`);
@@ -31,7 +31,7 @@ export function goToRoute(route = "", dinamycPath = "", id = "") {
       case "products":
         url += `?section=service`;
         if (encodedId) {
-          url += `&target=${encodedId}`;
+          url += `&target=${encodedId}&lang=${lang}&id=${lastId}`;
         }
         break;
 
@@ -44,6 +44,6 @@ export function goToRoute(route = "", dinamycPath = "", id = "") {
     }
   }
 
-  console.log("🔗 Navegando a:", url);
+  console.log(url);
   window.location.href = url;
 }

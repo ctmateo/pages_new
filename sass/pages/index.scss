@@ -1,9 +1,20 @@
 @use "../abstracts/variables" as var;
 
 #navbar {
+    background: radial-gradient(circle at 4% 0%,
+            #03a1c933 3%,
+            /* color centro */
+            #49dbff 30%,
+            rgba(3, 160, 201, 0.7) 20%,
+            rgba(73, 219, 255, 0.25) 20%,
+            rgba(73, 219, 255, 0.05) 40%,
+            transparent 30%);
+    background-repeat: no-repeat;
+    animation: pulseSpot 6s ease-in-out infinite;
     position: fixed;
     top: 0;
     width: 100%;
+    height: 12%;
     display: flex;
     align-items: center;
     justify-content: space-between;
@@ -11,6 +22,20 @@
     backdrop-filter: blur(10px); */
     z-index: 3;
     padding: 26px 48px 14px;
+
+    @keyframes pulseSpot {
+        0% {
+            background-size: 100px 100px;
+        }
+
+        50% {
+            background-size: 150px 150px;
+        }
+
+        100% {
+            background-size: 100px 100px;
+        }
+    }
 
     .options-nav {
         flex: 1;
@@ -635,7 +660,7 @@
         align-items: flex-start;
 
 
-        #desc-voice{
+        #desc-voice {
             width: 68%;
         }
 
@@ -672,7 +697,7 @@
             width: 100%;
             border-radius: var.$RADIUS-BRD-BTN;
             object-fit: cover;
-            height: 348px;
+            height: 348px;            
 
             h3 {
                 position: absolute;
@@ -700,8 +725,8 @@
             cursor: pointer;
             break-inside: avoid;
             padding: 8px;
-            transition: all 0.5 ease-in-out;
-
+            transition: all 0.5 ease-in-out;            
+                  
             .expand-btn-global {
                 opacity: 0;
                 display: none;
@@ -1142,35 +1167,39 @@ h1 {
 
 
 .support-demo {
-  position: relative;
-  height: 548px;
-  background-color: var.$BKGROUND-COLR-CARD; 
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  overflow: hidden; // evita desbordes del gradiente
+    position: relative;
+    height: 548px;
+    background-color: var.$BKGROUND-COLR-CARD;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    overflow: hidden; // evita desbordes del gradiente
 
-  h1 {
-    font-size: 48px;
-    font-weight: 600;
-    color: white;
-  }
+    h1 {
+        font-size: 48px;
+        font-weight: 600;
+        color: white;
+    }
 
-  .fade-bottom {
-    position: absolute;
-    bottom: 0;
-    width: 100%;
-    height: 60%; // hace que el gradiente cubra una buena parte hacia arriba
-    pointer-events: none;
-    background: linear-gradient(
-      to bottom,
-      rgba(0, 0, 255, 0) 0%,       /* completamente transparente arriba */
-      rgba(0, 0, 255, 0.05) 25%,   /* apenas visible */
-      rgba(0, 0, 255, 0.15) 50%,   /* transición más notoria */
-      rgba(0, 0, 255, 0.4) 75%,    /* mezcla intermedia */
-      var.$BKGROUND-MAIN 100% /* color final */
-    );
-  }
+    .fade-bottom {
+        position: absolute;
+        bottom: 0;
+        width: 100%;
+        height: 60%; // hace que el gradiente cubra una buena parte hacia arriba
+        pointer-events: none;
+        background: linear-gradient(to bottom,
+                rgba(0, 0, 255, 0) 0%,
+                /* completamente transparente arriba */
+                rgba(0, 0, 255, 0.05) 25%,
+                /* apenas visible */
+                rgba(0, 0, 255, 0.15) 50%,
+                /* transición más notoria */
+                rgba(0, 0, 255, 0.4) 75%,
+                /* mezcla intermedia */
+                var.$BKGROUND-MAIN 100%
+                /* color final */
+            );
+    }
 }
 
 .dialog {
@@ -1293,9 +1322,10 @@ h1 {
             background-color: var.$HOVER_BTN_MAIN;
         }
 
-        &:disabled{
+        &:disabled {
             cursor: auto;
-            &:hover{
+
+            &:hover {
                 background-color: var.$BTN-COLOR-MAIN;
             }
         }
@@ -1310,15 +1340,15 @@ h1 {
         width: 38px;
         border-radius: 100%;
         background-color: var.$BTN-COLOR-BLACK;
-        border:none;
+        border: none;
 
 
-        &:hover{
+        &:hover {
             background-color: var.$HOVER_COLOR;
         }
     }
 
-    .subt-dialog{
+    .subt-dialog {
         margin-top: 12px;
         color: var.$TXT-MAIN-COLOR;
         font-size: 16px;
@@ -1334,7 +1364,6 @@ h1 {
     gap: 10px;
 }
 
-h1{
-    font-weight: 600 !important; 
+h1 {
+    font-weight: 600 !important;
 }
-    

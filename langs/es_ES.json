@@ -10,13 +10,13 @@
     "world-btn": "Centro de recursos"
   },
   "contact-us": {
-    "title-dialog" : "Contáctanos",
+    "title-dialog": "Contáctanos",
     "subt-dialog": "Nuestro equipo de relaciones está listo para atenderte. Puedes solicitar información sobre precios, resolver tus dudas o programar una demostración personalizada para conocer cómo podemos ayudarte a alcanzar tus objetivos.",
-    "inpt1" : "Correo electrónico",
-    "inpt2" : "Nombre",
-    "area-inpt-msg" : "Solicita información sobre precios, resuelve tus dudas o programa una demostración personalizada.",
-    "sub-btn" : "Enviar",
-    "ctc_bottom" : "Dirección: 2200 N Commerce Pkwy. Suite 200. Weston, FL 33326, EE. UU. - Teléfono: +1 (954) 372-0969"
+    "inpt1": "Correo electrónico",
+    "inpt2": "Nombre",
+    "area-inpt-msg": "Solicita información sobre precios, resuelve tus dudas o programa una demostración personalizada.",
+    "sub-btn": "Enviar",
+    "ctc_bottom": "Dirección: 2200 N Commerce Pkwy. Suite 200. Weston, FL 33326, EE. UU. - Teléfono: +1 (954) 372-0969"
   },
   "home": {
     "title-home": "Conectividad Global de Voz y SMS: Simple, Confiable y Escalable",
@@ -66,10 +66,18 @@
     "demo-desc3": "Conectividad confiable mediante protocolos SS7 y SMPP para máxima disponibilidad en tus comunicaciones.",
     "demo-desc4": "Servicios diseñados para baja latencia, alta disponibilidad y estabilidad en entornos exigentes y escalables."
   },
+  "slider-controls": {
+    "backBtn": "Volver atrás",
+    "manual": "Manual",
+    "next": "Siguiente artículo en",
+    "nxtBtn" : "Siguiente",
+    "prevBtn" : "Anterior"
+  },
   "voice-section": {
     "title-voice": "Descubre las soluciones de VOZ ilimitadas de AlkaIP Telecom",
     "desc-voice": "Ofrecemos servicios de voz confiables y asequibles para empresas de todos los tamaños, desde centros de llamadas y operadores telefónicos hasta carriers internacionales.",
     "scroller-cards-voice": {
+      "indicator-btn": "Pulsa para expandir",
       "titles": {
         "1": "Terminación de llamadas nacionales e internacionales con precios competitivos y cobertura total",
         "2": "Capacidad robusta y alto CPS para Call Centers y grandes volúmenes de llamadas",

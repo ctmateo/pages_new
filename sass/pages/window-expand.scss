@@ -23,7 +23,7 @@
 .back-btn {
   display: flex;
   align-items: center;
-  font-size: 18px;
+  font-size: 16px;
   cursor: pointer;
   transition: opacity 0.3s;
   p{
@@ -96,11 +96,11 @@
     position: absolute;
     bottom: 220px;
     left: 50px;
-    max-width: 70%;
+    max-width: 78%;
     z-index: 3;
 
     .slider-title {
-      font-size: 48px;
+      font-size: 38px;
       font-weight: 600;
       margin-bottom: 16px;
       color: white;
@@ -123,6 +123,7 @@
   display: flex;
   gap: 12px;
   z-index: 3;
+  
 
   button {
     width: 190px;
@@ -171,4 +172,49 @@
       }
     }
   }
+}
+
+.indicator{
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  p{
+    font-size: 16px;
+  }
+}
+.timer-wrapper {
+  position: relative;
+  width: 40px;
+  height: 40px;
+  display: inline-block;
+}
+
+
+.timer-circle {
+  width: 100%;
+  height: 100%;
+  transform: rotate(-90deg);
+}
+
+.circle-bg {
+  fill: none;
+  stroke: var.$BTN-COLOR-BLACK;
+  stroke-width: 4;
+}
+
+.circle-progress {
+  fill: none;
+  stroke: var.$BTN-COLOR-MAIN;
+  stroke-width: 4;
+  stroke-linecap: round;
+  transition: stroke-dasharray 0.3s linear;
+}
+
+.timer-text {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  font-size: 12px;
+  font-weight: bold;
 }

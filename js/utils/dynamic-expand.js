@@ -18,6 +18,7 @@ export async function dynamicChangesExpand() {
 
     const voiceSection = translation["voice-section"];
     const cardsData = voiceSection["scroller-cards-voice"];
+    const sliderControlsText = translation["slider-controls"] || {};
 
     const voicesProductArray = Object.keys(cardsData.titles).map((key) => {
       const index = parseInt(key);
@@ -43,10 +44,10 @@ export async function dynamicChangesExpand() {
         showDesc = true,
         containerClass = "",
         autoPlay = true,
-        autoPlayDelay = 3,
+        autoPlayDelay = 15,
         startIndex = 0,
       } = options;
-      let currentPage = startIndex; // 👈 Antes estaba en 0
+      let currentPage = startIndex;
       let interval;
       let countdown = autoPlayDelay;
 
@@ -64,22 +65,36 @@ export async function dynamicChangesExpand() {
       const iconBkBtn = document.createElement("img");
       iconBkBtn.src = "../icons/arrow-bk.svg";
       const txtBkBtn = document.createElement("p");
-      txtBkBtn.textContent = "Back to home";
+      txtBkBtn.id = "backBtn";
+      txtBkBtn.setAttribute("translate-text", "");
+      txtBkBtn.textContent = sliderControlsText.backBtn || "";
       backBtn.append(iconBkBtn, txtBkBtn);
 
       backBtn.addEventListener("click", () => {
-        window.location.href = "../index.html";
+        const params = new URLSearchParams(window.location.search);
+        let targetSection = params.get("target") || "top";
+        const lastLanguage = params.get("lang");
+        if (targetSection.startsWith("voice-cd")) {
+          targetSection = "masonry";
+          window.location.href = `../index.html#${targetSection}_${lastLanguage}`;
+        } else {
+          window.location.href = `../index.html#${targetSection}_${lastLanguage}`;
+        }
       });
+
       const indicators = document.createElement("div");
       indicators.classList.add("slider-indicators");
 
       const timer = document.createElement("div");
       timer.classList.add("slider-timer");
-      timer.textContent = `Manual`;
+      timer.id = "opt-2";
+      timer.setAttribute("tranlate-text", "");
+      timer.textContent = sliderControlsText.manual || "";
 
       topBar.append(backBtn, indicators, timer);
       sliderContainer.appendChild(topBar);
       let indexCurrent = 0;
+
       // === SLIDES ===
       items.forEach((item, i) => {
         indexCurrent = i;
@@ -124,9 +139,9 @@ export async function dynamicChangesExpand() {
       controls.classList.add("slider-controls");
 
       const prevBtn = document.createElement("button");
-      prevBtn.textContent = "Anterior";
+      prevBtn.textContent = sliderControlsText.prevBtn;
       const nextBtn = document.createElement("button");
-      nextBtn.textContent = "Siguiente";
+      nextBtn.textContent = sliderControlsText.nxtBtn;
 
       controls.append(prevBtn, nextBtn);
       sliderContainer.appendChild(controls);
@@ -151,9 +166,43 @@ export async function dynamicChangesExpand() {
       function startAutoPlay() {
         if (!autoPlay) return;
         clearInterval(interval);
+
+        const timerWrapper = `
+        <div class="indicator">
+        <p>${sliderControlsText.next}</p>
+          <div class="timer-wrapper">
+            <svg class="timer-circle" viewBox="0 0 36 36">
+              <path
+                class="circle-bg"
+                d="M18 2.0845
+                   a 15.9155 15.9155 0 0 1 0 31.831
+                   a 15.9155 15.9155 0 0 1 0 -31.831"
+              />
+              <path
+                class="circle-progress"
+                stroke-dasharray="0, 100"
+                d="M18 2.0845
+                   a 15.9155 15.9155 0 0 1 0 31.831
+                   a 15.9155 15.9155 0 0 1 0 -31.831"
+              />
+            </svg>
+            
+            <span class="timer-text">${countdown}</span>
+          </div>
+          </div>
+        `;
+        timer.innerHTML = timerWrapper;
+
+        const progressCircle = timer.querySelector(".circle-progress");
+        const timerText = timer.querySelector(".timer-text");
+
         interval = setInterval(() => {
           countdown--;
-          timer.textContent = `Next article in ${countdown}`;
+          timerText.textContent = countdown;
+
+          const percent = ((autoPlayDelay - countdown) / autoPlayDelay) * 100;
+          progressCircle.setAttribute("stroke-dasharray", `${percent}, 100`);
+
           if (countdown <= 0) {
             countdown = autoPlayDelay;
             if (items.length - 1 === currentPage) {
@@ -197,6 +246,7 @@ export async function dynamicChangesExpand() {
       return sliderContainer;
     }
 
+    // === CREAR SLIDERS SEGÚN TARGET ===
     if (
       sectionName === "service" &&
       target.startsWith("voice") &&

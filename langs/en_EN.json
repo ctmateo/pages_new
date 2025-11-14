@@ -17,8 +17,8 @@
         "area-inpt-msg": "Request information about pricing, resolve your questions, or schedule a personalized demo.",
         "status": "Send",
         "status-captcha": "Please complete captcha",
-        "wsuccess" : "Sent, you will receive a response within 24 business hours.",
-        "werror" : "We were unable to send your request. Please try again later.",
+        "wsuccess": "Sent, you will receive a response within 24 business hours.",
+        "werror": "We were unable to send your request. Please try again later.",
         "ctc_bottom": "Address: 2200 N Commerce Pkwy. Suite 200. Weston, FL 33326, USA - Phone: +1 (954) 372-0969"
     },
     "home": {
@@ -69,10 +69,18 @@
         "demo-desc3": "Reliable connectivity through SS7 and SMPP protocols for maximum availability in your communications.",
         "demo-desc4": "Services designed for low latency, high availability, and stability in demanding and scalable environments."
     },
+    "slider-controls": {
+        "backBtn": "Return back",
+        "manual": "Manual",
+        "next": "Next article in",
+        "nxtBtn": "Next",
+        "prevBtn": "Previous"
+    },
     "voice-section": {
         "title-voice": "Discover AlkaIp Telecom's unlimited VOICE solutions",
         "desc-voice": "We offer reliable and affordable voice services for businesses of all sizes, from call centers and telephone operators to international carriers",
         "scroller-cards-voice": {
+            "indicator-btn": "Select to expand",
             "titles": {
                 "1": "Crystal-clear quality through Tier-1 routes",
                 "2": "CLI / TDM routing",
