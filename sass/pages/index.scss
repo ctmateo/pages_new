@@ -1,16 +1,6 @@
 @use "../abstracts/variables" as var;
 
 #navbar {
-    background: radial-gradient(circle at 4% 0%,
-            #03a1c933 3%,
-            /* color centro */
-            #49dbff 30%,
-            rgba(3, 160, 201, 0.7) 20%,
-            rgba(73, 219, 255, 0.25) 20%,
-            rgba(73, 219, 255, 0.05) 40%,
-            transparent 30%);
-    background-repeat: no-repeat;
-    animation: pulseSpot 6s ease-in-out infinite;
     position: fixed;
     top: 0;
     width: 100%;
@@ -70,9 +60,16 @@
             width: 18px;
         }
 
-        &:hover {
-            color: #a9a9a9;
+        .hov-opacity {
+            display: flex;
+            align-items: center;
+
+            &:hover {
+                opacity: 0.7;
+                transition: opacity 0.2s ease-in-out;
+            }
         }
+
     }
 }
 
@@ -132,7 +129,7 @@
 
 .home {
     height: 100vh;
-    background-color: var.$BKGROUND-MAIN;
+    background-image: url('../images/headtest.png');
 }
 
 .anim-mouse {
@@ -145,8 +142,8 @@
     right: 50%;
     transform: translateX(50%);
     z-index: 99;
-    height: 74px;
-    width: 44px;
+    height: 46px;
+    width: 28px;
     border-radius: 33px;
     border: 2px solid #d6d6d6;
     opacity: 0;
@@ -163,11 +160,11 @@
 }
 
 .mouser-int {
-    width: 12px;
-    height: 12px;
+    width: 8px;
+    height: 8px;
     background-color: #d6d6d6;
     border-radius: 100%;
-    animation: scrollDown 1.5s infinite ease-in-out;
+    animation: scrollDown 3s infinite ease-in-out;
 }
 
 @keyframes scrollDown {
@@ -196,44 +193,59 @@
     padding: 100px;
 }
 
+.drop.active {
+    .rot {
+        transition: all 0.2s ease-in-out;
+        transform: rotate(180deg);
+    }
 
+}
 
 .drop.active .window {
     display: block;
 }
 
+.drop.active .window-2 {
+    display: block;
+}
+
 
 .window {
-    margin-top: 18.5px;
+    margin-top: 10px;
     position: absolute;
     right: 0;
     display: none;
-    background-color: #1a1b1d62;
+    background-color: var.$BKGROUND-MAIN;
     border: 0.3px solid #25262a;
     border-radius: 12px;
-    color: #a9a9a9;
+    color: var.$TXT-INVERT-COLOR;
+}
 
-    p {
-        padding: 8px;
-        width: 124px;
-        cursor: pointer;
+li.drop {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+}
 
-        &:hover {
-            background-color: #2b2b2b;
-            display: block;
-            font-weight: bold;
-        }
+.father-item {
+    width: 100%;
+    position: static;
+    /* o quitar esta propiedad */
+}
 
-        &:nth-child(1):hover {
-            border-radius: 12px 12px 0 0;
-            font-weight: bold;
-        }
-
-        &:nth-child(2):hover {
-            border-radius: 0 0 12px 12px;
-            font-weight: bold;
-        }
-    }
+.window-2 {
+    margin-top: 10px;
+    position: absolute;
+    display: none;
+    top: 100%;
+    left: -72px;
+    background-color: var.$BKGROUND-MAIN;
+    border: 0.3px solid #25262a;
+    border-radius: 12px;
+    color: var.$TXT-INVERT-COLOR;
+    z-index: 10;
+    min-width: 220px;
+    width: max-content;
 }
 
 .right-btns-nav {
@@ -249,8 +261,25 @@
     align-items: center;
     position: relative;
 
+    .flex {
+        cursor: pointer;
+        #flex-arrow {
+            width: 20px;
+        }
+
+        p {
+            margin-left: 8px;
+            color: white;
+            text-decoration: underline;
+
+        }
+        &:hover{
+            opacity: 0.7;
+        }
+    }
+
     img {
-        width: 32px;
+        width: 24px;
     }
 }
 
@@ -277,23 +306,32 @@
     font-size: 18px;
 }
 
-.drop {
-    cursor: pointer;
-}
 
-.outline {}
+.item-drop {
+    display: flex;
+    padding: 8px;
+    width: max-content;
+    margin-right: 10px;
+    cursor: pointer;
+
+    &:hover {
+        color: var.$HOVER_BTN_MAIN;
+    }
+
+}
 
 #title-home {
     font-size: 38px;
     font-weight: 500;
     margin-bottom: 24px;
     color: var.$TXT-TITLE-COLOR;
+    width: 75%;
 }
 
 #description-home {
-    font-size: 22px;
+    font-size: 20px;
     width: 70%;
-    color: var.$TXT-MAIN-COLOR;
+    color: var.$TXT-TITLE-COLOR;
     margin-bottom: 24px;
     line-height: 1.1;
 }
@@ -364,13 +402,14 @@
     justify-content: center;
     height: 720px;
     width: 100%;
-    background-color: var.$BKGROUND-COLR-CARD;
+    background-color: var.$BKGROUND-MAIN;
 
     h2 {
-        font-size: 26px;
+        width: 80%;
+        font-size: 38px;
         text-align: center;
         color: #d6d6d6;
-        font-weight: 400
+        font-weight: 600
     }
 }
 
@@ -379,7 +418,7 @@
     justify-content: center;
     align-items: center;
     gap: 42px;
-    margin-top: 32px;
+    margin-top: 58px;
     color: #929292;
     font-size: 18px;
 
@@ -629,7 +668,7 @@
             align-items: flex-start;
             flex-direction: column;
             justify-content: end;
-            height: 322px;
+            margin-top: 48px;
 
             h1 {
                 font-weight: 500;
@@ -646,8 +685,10 @@
             }
 
             img {
+                box-sizing: border-box;
+                object-fit: cover;
                 width: 32%;
-                margin-bottom: 48px;
+                margin-bottom: 18px;
             }
         }
     }
@@ -697,7 +738,7 @@
             width: 100%;
             border-radius: var.$RADIUS-BRD-BTN;
             object-fit: cover;
-            height: 348px;            
+            height: 348px;
 
             h3 {
                 position: absolute;
@@ -707,13 +748,18 @@
                 color: var.$TXT-INVERT-COLOR;
                 display: flex;
                 flex-direction: row;
-                max-lines: 1;
                 height: 100%;
-                white-space: nowrap;
-                overflow: hidden;
+                align-items: flex-end;
+            }
+
+            h3 span {
+                display: inline-block;
                 text-overflow: ellipsis;
-                max-width: 300px;
-                align-items: end;
+                overflow: hidden;
+                white-space: nowrap;
+                max-width: 328px;
+                height: max-content;
+                padding-bottom: 3px;
             }
         }
 
@@ -725,8 +771,8 @@
             cursor: pointer;
             break-inside: avoid;
             padding: 8px;
-            transition: all 0.5 ease-in-out;            
-                  
+            transition: all 0.5 ease-in-out;
+
             .expand-btn-global {
                 opacity: 0;
                 display: none;
@@ -1173,7 +1219,7 @@ h1 {
     display: flex;
     align-items: center;
     justify-content: center;
-    overflow: hidden; // evita desbordes del gradiente
+    overflow: hidden;
 
     h1 {
         font-size: 48px;
@@ -1185,20 +1231,14 @@ h1 {
         position: absolute;
         bottom: 0;
         width: 100%;
-        height: 60%; // hace que el gradiente cubra una buena parte hacia arriba
+        height: 60%;
         pointer-events: none;
         background: linear-gradient(to bottom,
                 rgba(0, 0, 255, 0) 0%,
-                /* completamente transparente arriba */
                 rgba(0, 0, 255, 0.05) 25%,
-                /* apenas visible */
                 rgba(0, 0, 255, 0.15) 50%,
-                /* transición más notoria */
                 rgba(0, 0, 255, 0.4) 75%,
-                /* mezcla intermedia */
-                var.$BKGROUND-MAIN 100%
-                /* color final */
-            );
+                var.$BKGROUND-MAIN 100%);
     }
 }
 
@@ -1367,3 +1407,160 @@ h1 {
 h1 {
     font-weight: 600 !important;
 }
+
+.loader-box {
+    position: fixed;
+    width: 100%;
+    height: 100%;
+    z-index: 999;
+
+    .center-ld-box {
+        position: relative;
+        width: 100%;
+        height: 100%;
+        background-color: black;
+
+        video {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            width: 304px;
+            height: 304px;
+        }
+
+    }
+
+
+}
+
+.circle-progress {
+    position: absolute;
+    bottom: 64px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 44px;
+    /* tamaño total del spinner */
+    height: 44px;
+}
+
+.circle-progress svg {
+    width: 100%;
+    height: 100%;
+    overflow: visible;
+}
+
+/* CÍRCULO BASE FIJO (fino) */
+circle.base {
+    fill: none;
+    stroke: rgba(255, 255, 255, 0.25);
+    /* color suave */
+    stroke-width: 4;
+    /* más delgado */
+}
+
+/* SPINNER GIRATORIO (grosor mayor) */
+circle.spinner {
+    fill: none;
+    stroke: #ffffff;
+    stroke-width: 8;
+    /* más grueso */
+    stroke-linecap: round;
+
+    stroke-dasharray: 80 220;
+    /* arco visible y parte oculta */
+
+    /* centrado */
+    transform-origin: center;
+    transform-box: fill-box;
+
+    /* animación infinita */
+    animation: spinnerRotate 1.2s linear infinite;
+}
+
+/* ROTACIÓN */
+@keyframes spinnerRotate {
+    from {
+        transform: rotate(0deg);
+    }
+
+    to {
+        transform: rotate(360deg);
+    }
+}
+
+/* Overlay inactivo */
+.overlay-lang {
+    display: none;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    justify-content: center;
+    align-items: center;
+    z-index: 1005;
+
+    /* ❗ SIN background sólido */
+    background: rgba(255, 255, 255, 0);  /* completamente transparente */
+
+    /* Desenfoque suave */
+    backdrop-filter: blur(40px);
+
+    overflow: hidden;
+    opacity: 0;
+    transition: opacity 0.4s ease-in-out;
+}
+
+/* Overlay activo */
+.overlay-lang.active {
+    display: flex;
+    opacity: 1;
+}
+
+/* Barrido de luz suave */
+.overlay-lang::after {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: -120%;
+    width: 50%;         /* luz más ancha = más suave */
+    height: 100%;
+
+    background: linear-gradient(
+        115deg,
+        rgba(255,255,255,0) 0%,
+        rgba(255,255,255,0.2) 20%,
+        rgba(255,255,255,0.45) 40%,
+        rgba(255,255,255,0.1) 70%,
+        rgba(255,255,255,0) 100%
+    );
+
+    filter: blur(20px);   /* más suave */
+    transform: skewX(-20deg);
+    opacity: 0;
+}
+
+/* Cuando está activo, la luz cruza suavemente */
+.overlay-lang.active::after {
+    animation: lightSweepSoft 1.3s ease-in-out forwards;
+}
+
+/* Animación más suave */
+@keyframes lightSweepSoft {
+    0% {
+        left: -120%;
+        opacity: 0;
+    }
+    20% {
+        opacity: 0.5;
+    }
+    60% {
+        opacity: 0.35;
+    }
+    100% {
+        left: 140%;
+        opacity: 0;
+    }
+}
+

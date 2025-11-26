@@ -1,3 +1,4 @@
+@charset "UTF-8";
 @import url("https://fonts.googleapis.com/css2?family=Outfit:wght@100..900&display=swap");
 @import url("https://fonts.googleapis.com/css2?family=Bruno+Ace&display=swap");
 *,
@@ -116,9 +117,6 @@ li, h1, h2, p, div, button, textarea, input, h3 {
 }
 
 #navbar {
-  background: radial-gradient(circle at 4% 0%, rgba(3, 161, 201, 0.2) 3%, #49dbff 30%, rgba(3, 160, 201, 0.7) 20%, rgba(73, 219, 255, 0.25) 20%, rgba(73, 219, 255, 0.05) 40%, transparent 30%);
-  background-repeat: no-repeat;
-  animation: pulseSpot 6s ease-in-out infinite;
   position: fixed;
   top: 0;
   width: 100%;
@@ -172,13 +170,18 @@ li, h1, h2, p, div, button, textarea, input, h3 {
   margin-left: 2px;
   width: 18px;
 }
-#navbar li:hover {
-  color: #a9a9a9;
+#navbar li .hov-opacity {
+  display: flex;
+  align-items: center;
+}
+#navbar li .hov-opacity:hover {
+  opacity: 0.7;
+  transition: opacity 0.2s ease-in-out;
 }
 
 .btn-black {
   width: fit-content;
-  background-color: #343437;
+  background-color: #1e1e1e;
   border: none;
   cursor: pointer;
   border-radius: 8px;
@@ -227,7 +230,7 @@ li, h1, h2, p, div, button, textarea, input, h3 {
 
 .home {
   height: 100vh;
-  background-color: #101014;
+  background-image: url("../images/headtest.png");
 }
 
 .anim-mouse {
@@ -240,8 +243,8 @@ li, h1, h2, p, div, button, textarea, input, h3 {
   right: 50%;
   transform: translateX(50%);
   z-index: 99;
-  height: 74px;
-  width: 44px;
+  height: 46px;
+  width: 28px;
   border-radius: 33px;
   border: 2px solid #d6d6d6;
   opacity: 0;
@@ -257,11 +260,11 @@ li, h1, h2, p, div, button, textarea, input, h3 {
 }
 
 .mouser-int {
-  width: 12px;
-  height: 12px;
+  width: 8px;
+  height: 8px;
   background-color: #d6d6d6;
   border-radius: 100%;
-  animation: scrollDown 1.5s infinite ease-in-out;
+  animation: scrollDown 3s infinite ease-in-out;
 }
 
 @keyframes scrollDown {
@@ -286,37 +289,55 @@ li, h1, h2, p, div, button, textarea, input, h3 {
   padding: 100px;
 }
 
+.drop.active .rot {
+  transition: all 0.2s ease-in-out;
+  transform: rotate(180deg);
+}
+
 .drop.active .window {
   display: block;
 }
 
+.drop.active .window-2 {
+  display: block;
+}
+
 .window {
-  margin-top: 18.5px;
+  margin-top: 10px;
   position: absolute;
   right: 0;
   display: none;
-  background-color: rgba(26, 27, 29, 0.3843137255);
+  background-color: #101014;
   border: 0.3px solid #25262a;
   border-radius: 12px;
-  color: #a9a9a9;
+  color: white;
 }
-.window p {
-  padding: 8px;
-  width: 124px;
-  cursor: pointer;
+
+li.drop {
+  position: relative;
+  display: flex;
+  flex-direction: column;
 }
-.window p:hover {
-  background-color: #2b2b2b;
-  display: block;
-  font-weight: bold;
+
+.father-item {
+  width: 100%;
+  position: static;
+  /* o quitar esta propiedad */
 }
-.window p:nth-child(1):hover {
-  border-radius: 12px 12px 0 0;
-  font-weight: bold;
-}
-.window p:nth-child(2):hover {
-  border-radius: 0 0 12px 12px;
-  font-weight: bold;
+
+.window-2 {
+  margin-top: 10px;
+  position: absolute;
+  display: none;
+  top: 100%;
+  left: -72px;
+  background-color: #101014;
+  border: 0.3px solid #25262a;
+  border-radius: 12px;
+  color: white;
+  z-index: 10;
+  min-width: 220px;
+  width: max-content;
 }
 
 .right-btns-nav {
@@ -332,8 +353,22 @@ li, h1, h2, p, div, button, textarea, input, h3 {
   align-items: center;
   position: relative;
 }
+.dropdown .flex {
+  cursor: pointer;
+}
+.dropdown .flex #flex-arrow {
+  width: 20px;
+}
+.dropdown .flex p {
+  margin-left: 8px;
+  color: white;
+  text-decoration: underline;
+}
+.dropdown .flex:hover {
+  opacity: 0.7;
+}
 .dropdown img {
-  width: 32px;
+  width: 24px;
 }
 
 .global-btn {
@@ -358,8 +393,15 @@ li, h1, h2, p, div, button, textarea, input, h3 {
   font-size: 18px;
 }
 
-.drop {
+.item-drop {
+  display: flex;
+  padding: 8px;
+  width: max-content;
+  margin-right: 10px;
   cursor: pointer;
+}
+.item-drop:hover {
+  color: #49dbff;
 }
 
 #title-home {
@@ -367,12 +409,13 @@ li, h1, h2, p, div, button, textarea, input, h3 {
   font-weight: 500;
   margin-bottom: 24px;
   color: #e7e7e7;
+  width: 75%;
 }
 
 #description-home {
-  font-size: 22px;
+  font-size: 20px;
   width: 70%;
-  color: #98989a;
+  color: #e7e7e7;
   margin-bottom: 24px;
   line-height: 1.1;
 }
@@ -437,13 +480,14 @@ li, h1, h2, p, div, button, textarea, input, h3 {
   justify-content: center;
   height: 720px;
   width: 100%;
-  background-color: #1c1c21;
+  background-color: #101014;
 }
 .wrapper-companies-trusted h2 {
-  font-size: 26px;
+  width: 80%;
+  font-size: 38px;
   text-align: center;
   color: #d6d6d6;
-  font-weight: 400;
+  font-weight: 600;
 }
 
 .data-companies-trusted {
@@ -451,7 +495,7 @@ li, h1, h2, p, div, button, textarea, input, h3 {
   justify-content: center;
   align-items: center;
   gap: 42px;
-  margin-top: 32px;
+  margin-top: 58px;
   color: #929292;
   font-size: 18px;
 }
@@ -655,7 +699,7 @@ li, h1, h2, p, div, button, textarea, input, h3 {
   align-items: flex-start;
   flex-direction: column;
   justify-content: end;
-  height: 322px;
+  margin-top: 48px;
 }
 .products-description .features-product .feature h1 {
   font-weight: 500;
@@ -670,8 +714,10 @@ li, h1, h2, p, div, button, textarea, input, h3 {
   line-height: 1.2;
 }
 .products-description .features-product .feature img {
+  box-sizing: border-box;
+  object-fit: cover;
   width: 32%;
-  margin-bottom: 48px;
+  margin-bottom: 18px;
 }
 .products-description .know-u-product {
   padding: 0px 68px 0 48px;
@@ -719,13 +765,17 @@ li, h1, h2, p, div, button, textarea, input, h3 {
   color: white;
   display: flex;
   flex-direction: row;
-  max-lines: 1;
   height: 100%;
-  white-space: nowrap;
-  overflow: hidden;
+  align-items: flex-end;
+}
+.products-description .know-u-product .card-image h3 span {
+  display: inline-block;
   text-overflow: ellipsis;
-  max-width: 300px;
-  align-items: end;
+  overflow: hidden;
+  white-space: nowrap;
+  max-width: 328px;
+  height: max-content;
+  padding-bottom: 3px;
 }
 .products-description .know-u-product .card {
   width: 100%;
@@ -1169,7 +1219,7 @@ h1 {
   font-weight: 500;
 }
 .dialog-content input:hover {
-  background-color: #343437;
+  background-color: #1e1e1e;
 }
 .dialog-content textarea {
   appearance: none;
@@ -1188,7 +1238,7 @@ h1 {
   margin-bottom: 18px;
 }
 .dialog-content textarea:hover {
-  background-color: #343437;
+  background-color: #1e1e1e;
 }
 .dialog-content #captcha-container {
   display: flex;
@@ -1222,7 +1272,7 @@ h1 {
   height: 38px;
   width: 38px;
   border-radius: 100%;
-  background-color: #343437;
+  background-color: #1e1e1e;
   border: none;
 }
 .dialog-content #cancel-btn:hover {
@@ -1246,6 +1296,139 @@ h1 {
   font-weight: 600 !important;
 }
 
+.loader-box {
+  position: fixed;
+  width: 100%;
+  height: 100%;
+  z-index: 999;
+}
+.loader-box .center-ld-box {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  background-color: black;
+}
+.loader-box .center-ld-box video {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 304px;
+  height: 304px;
+}
+
+.circle-progress {
+  position: absolute;
+  bottom: 64px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 44px;
+  /* tamaño total del spinner */
+  height: 44px;
+}
+
+.circle-progress svg {
+  width: 100%;
+  height: 100%;
+  overflow: visible;
+}
+
+/* CÍRCULO BASE FIJO (fino) */
+circle.base {
+  fill: none;
+  stroke: rgba(255, 255, 255, 0.25);
+  /* color suave */
+  stroke-width: 4;
+  /* más delgado */
+}
+
+/* SPINNER GIRATORIO (grosor mayor) */
+circle.spinner {
+  fill: none;
+  stroke: #ffffff;
+  stroke-width: 8;
+  /* más grueso */
+  stroke-linecap: round;
+  stroke-dasharray: 80 220;
+  /* arco visible y parte oculta */
+  /* centrado */
+  transform-origin: center;
+  transform-box: fill-box;
+  /* animación infinita */
+  animation: spinnerRotate 1.2s linear infinite;
+}
+
+/* ROTACIÓN */
+@keyframes spinnerRotate {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}
+/* Overlay inactivo */
+.overlay-lang {
+  display: none;
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  justify-content: center;
+  align-items: center;
+  z-index: 1005;
+  /* ❗ SIN background sólido */
+  background: rgba(255, 255, 255, 0); /* completamente transparente */
+  /* Desenfoque suave */
+  backdrop-filter: blur(40px);
+  overflow: hidden;
+  opacity: 0;
+  transition: opacity 0.4s ease-in-out;
+}
+
+/* Overlay activo */
+.overlay-lang.active {
+  display: flex;
+  opacity: 1;
+}
+
+/* Barrido de luz suave */
+.overlay-lang::after {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: -120%;
+  width: 50%; /* luz más ancha = más suave */
+  height: 100%;
+  background: linear-gradient(115deg, rgba(255, 255, 255, 0) 0%, rgba(255, 255, 255, 0.2) 20%, rgba(255, 255, 255, 0.45) 40%, rgba(255, 255, 255, 0.1) 70%, rgba(255, 255, 255, 0) 100%);
+  filter: blur(20px); /* más suave */
+  transform: skewX(-20deg);
+  opacity: 0;
+}
+
+/* Cuando está activo, la luz cruza suavemente */
+.overlay-lang.active::after {
+  animation: lightSweepSoft 1.3s ease-in-out forwards;
+}
+
+/* Animación más suave */
+@keyframes lightSweepSoft {
+  0% {
+    left: -120%;
+    opacity: 0;
+  }
+  20% {
+    opacity: 0.5;
+  }
+  60% {
+    opacity: 0.35;
+  }
+  100% {
+    left: 140%;
+    opacity: 0;
+  }
+}
 footer {
   background-color: #101014;
   height: 100%;
@@ -1484,7 +1667,7 @@ footer .icons {
 
 .circle-bg {
   fill: none;
-  stroke: #343437;
+  stroke: #1e1e1e;
   stroke-width: 4;
 }
 

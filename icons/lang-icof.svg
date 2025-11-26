@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg id="b" data-name="Capa 2" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 40.5 42.52">
+  <g id="c" data-name="Capa 1">
+    <path d="m20.25,2c10.06,0,18.25,8.64,18.25,19.26s-8.19,19.26-18.25,19.26S2,31.88,2,21.26,10.19,2,20.25,2M20.25,0C9.07,0,0,9.52,0,21.26s9.07,21.26,20.25,21.26,20.25-9.52,20.25-21.26S31.43,0,20.25,0h0Z" style="fill: #fff;"/>
+    <path d="m34.58,36.28c-1.27-1.33-2.71-2.49-4.27-3.44-2.96-1.78-6.4-2.8-10.06-2.8s-7.09,1.02-10.06,2.8c-1.57.94-3,2.1-4.27,3.44" style="fill: none; stroke: #fff; stroke-miterlimit: 10; stroke-width: 2px;"/>
+    <path d="m5.92,6.24c1.27,1.33,2.71,2.49,4.27,3.44,2.96,1.78,6.4,2.8,10.06,2.8s7.09-1.02,10.06-2.8c1.57-.94,3-2.1,4.27-3.44" style="fill: none; stroke: #fff; stroke-miterlimit: 10; stroke-width: 2px;"/>
+    <path d="m20.25,2c5.42,0,9.99,8.82,9.99,19.26s-4.58,19.26-9.99,19.26-9.99-8.82-9.99-19.26S14.83,2,20.25,2M20.25,0C13.63,0,8.26,9.52,8.26,21.26s5.37,21.26,11.99,21.26,11.99-9.52,11.99-21.26S26.87,0,20.25,0h0Z" style="fill: #fff;"/>
+    <path d="m20.25,42.52V0v42.52Z" style="fill: none; stroke: #fff; stroke-miterlimit: 10; stroke-width: 2px;"/>
+    <path d="m.09,21.22l40.32.09L.09,21.22Z" style="fill: none; stroke: #fff; stroke-miterlimit: 10; stroke-width: 2px;"/>
+  </g>
+</svg>

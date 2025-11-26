@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg id="b" data-name="Capa 2" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 0 569.63 342.91">
+  <defs>
+    <linearGradient id="d" data-name="Degradado sin nombre 14" x1="465.44" y1="-60.28" x2="24.57" y2="393.83" gradientUnits="userSpaceOnUse">
+      <stop offset=".19" stop-color="#fff" stop-opacity="0"/>
+      <stop offset=".38" stop-color="#d8d8d8" stop-opacity=".02"/>
+      <stop offset=".44" stop-color="#bebebf" stop-opacity=".04"/>
+      <stop offset=".5" stop-color="#101014" stop-opacity=".22"/>
+      <stop offset=".56" stop-color="#101014" stop-opacity=".75"/>
+      <stop offset=".58" stop-color="#101014"/>
+    </linearGradient>
+  </defs>
+  <g id="c" data-name="Capa 1">
+    <path d="m569.13,84.44v173.55h-311.14c-60.89-60.9-112.61-112.61-173.55-173.55h484.69Z" style="fill: #fabd00;"/>
+    <path d="m569.63,0v84.44H84.44C58.45,58.45,30.77,30.78,0,0h569.63Z" style="fill: #ad1519;"/>
+    <path d="m569.63,257.99v84.44h-227.2c-30.78-30.78-58.44-58.45-84.44-84.44h311.64Z" style="fill: #ad1519;"/>
+    <polygon points="0 0 127.56 0 480.92 342.91 343.32 342.91 0 0" style="fill: url(#d);"/>
+  </g>
+</svg>

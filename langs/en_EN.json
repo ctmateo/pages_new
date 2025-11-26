@@ -9,6 +9,10 @@
         "contact-us-btn": "Contact us",
         "world-btn": "Resource center"
     },
+    "langs":{
+        "en": "English",
+        "es": "Español"
+    },
     "contact-us": {
         "title-dialog": "Contact Us",
         "subt-dialog": "Our relations team is ready to assist you. You can request information about pricing, resolve your questions, or schedule a personalized demo to learn how we can help you achieve your goals.",

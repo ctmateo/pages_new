@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg id="b" data-name="Capa 2" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 0 573.8 342.91">
+  <defs>
+    <linearGradient id="d" data-name="Degradado sin nombre 14" x1="465.44" y1="-60.28" x2="24.57" y2="393.83" gradientUnits="userSpaceOnUse">
+      <stop offset=".19" stop-color="#fff" stop-opacity="0"/>
+      <stop offset=".38" stop-color="#d8d8d8" stop-opacity=".02"/>
+      <stop offset=".44" stop-color="#bebebf" stop-opacity=".04"/>
+      <stop offset=".5" stop-color="#101014" stop-opacity=".22"/>
+      <stop offset=".56" stop-color="#101014" stop-opacity=".75"/>
+      <stop offset=".58" stop-color="#101014"/>
+    </linearGradient>
+  </defs>
+  <g id="c" data-name="Capa 1">
+    <path d="m573.79,0v342.91h-226.72l-21.82-21.82c-26.24-26.24-50.27-50.28-73.12-73.12-13.75-13.76-27.08-27.08-40.19-40.2l-101.92-101.92c-18.88-18.88-38.48-38.47-59.4-59.39C35.86,31.7,20.45,16.29,4.16,0h569.63Z" style="fill: #fff;"/>
+    <g>
+      <path d="m573.79,134.66h-248.54V0h-73.12v134.66h-113.3l73.11,73.11h40.19v40.2c22.85,22.84,46.88,46.88,73.12,73.12v-113.32h248.54v-73.11Z" style="fill: #c8102e;"/>
+      <path d="m201.36,106.39L25.42,0H4.16c16.29,16.29,31.7,31.7,46.46,46.46l106.93,59.93h43.81Z" style="fill: #c8102e;"/>
+      <polygon points="549.47 0 360.18 114.3 403.99 114.3 573.8 9.33 573.8 0 549.47 0" style="fill: #c8102e;"/>
+      <polygon points="388.05 240.65 557.26 342.91 573.8 342.91 573.8 328.51 431.74 240.65 388.05 240.65" style="fill: #c8102e;"/>
+    </g>
+    <polygon points="127.77 116.57 120.74 116.57 110.02 105.85 127.77 116.57" style="fill: #012169;"/>
+    <g>
+      <polygon points="232.54 98.49 232.54 0 72.38 0 232.54 98.49" style="fill: #012169;"/>
+      <polygon points="347.48 0 347.48 98.49 507.65 0 347.48 0" style="fill: #012169;"/>
+      <polygon points="450.19 116.57 573.8 116.57 573.8 41.96 450.19 116.57" style="fill: #012169;"/>
+      <polygon points="347.48 342.91 507.65 342.91 347.48 244.43 347.48 342.91" style="fill: #012169;"/>
+      <polygon points="573.8 305.51 573.8 230.89 450.19 230.89 573.8 305.51" style="fill: #012169;"/>
+    </g>
+    <polygon points="0 0 127.56 0 480.92 342.91 343.32 342.91 0 0" style="fill: url(#d);"/>
+  </g>
+</svg>

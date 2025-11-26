@@ -203,8 +203,16 @@ function dialogRecycle(isProduction = false) {
 
 let translationsCache = {};
 
+
+
 window.translatePage = async function translatePage(lang) {
   currentLang = lang;
+  console.log("LANGS", currentLang);
+
+  const selectorlang = document.querySelector(".select-lang");
+  if (selectorlang) {
+    selectorlang.id = currentLang === "ES" ? "es" : "en";
+  }
 
   try {
     let translations = translationsCache[lang];
@@ -233,27 +241,38 @@ window.translatePage = async function translatePage(lang) {
       const textSection = findTranslationByKey(translations, key);
       if (!textSection)
         return console.warn(`No se encontró traducción para: ${key}`);
-
       if (key === "change-text-voice")
         displazeVerticalTextWithData(textSection, el);
       else if (key === "change-text-sms")
         setTimeout(() => displazeVerticalTextWithData(textSection, el), 800);
       else if (key === "number-callers")
         displazeVerticalTextWithData(textSection, el);
-      else if (el.tagName === "INPUT" || el.tagName === "TEXTAREA") {
+      else if (el.tagName === "INPUT" || el.tagName === "TEXTAREA")
         el.placeholder = textSection;
-      } else if (el.tagName === "IMG" && el.hasAttribute("alt")) {
+      else if (el.tagName === "IMG" && el.hasAttribute("alt"))
         el.alt = textSection;
-      } else if (el.hasAttribute("title")) {
-        el.title = textSection;
-      } else {
-        el.textContent = textSection;
-      }
+      else if (el.hasAttribute("title")) el.title = textSection;
+      else el.textContent = textSection;
     });
   } catch (error) {
     console.error("Error cargando JSON/Lang:", error);
   }
 };
+
+window.clicktranslatePage = function(lang) {
+  if (lang === currentLang) return;
+  const overlay = document.querySelector(".overlay-lang");
+  
+  if (overlay) {
+    overlay.classList.add("active");
+    setTimeout(() => overlay.classList.remove("active"), 1300);
+  } else {
+    console.warn("No existe .overlay-lang");
+  }
+
+  translatePage(lang);
+};
+
 
 function displazeVerticalTextWithData(sectionData, element) {
   if (element._displazeInterval) {
@@ -628,32 +647,48 @@ document.addEventListener("DOMContentLoaded", () => {
   }
 });
 
-const object = document.querySelector(".dinamyc-map");
+function initSVGMap() {
+  const object = document.querySelector(".dinamyc-map");
+  if (!object) return;
 
-object.addEventListener("load", function () {
-  const svg = object.contentDocument;
+  function tryLoadSVG() {
+    const svgDoc = object.contentDocument;
 
-  const paths = svg.querySelectorAll("path");
-  paths.forEach((path) => {
-    path.style.fill = "#5d5d5d";
-    path.style.stroke = "#edededff";
-    path.style.strokeWidth = "1px";
-    path.style.transition = "fill 0.3s ease, stroke 0.3s ease";
-    path.style.cursor = "pointer";
+    if (!svgDoc) {
+      setTimeout(tryLoadSVG, 50);
+      return;
+    }
 
-    path.addEventListener("mouseenter", function () {
-      path.style.fill = "#FF6347";
-      path.style.stroke = "#FF4500";
-      path.style.strokeWidth = "2px";
-    });
+    const paths = svgDoc.querySelectorAll("path");
+    if (!paths.length) return;
 
-    path.addEventListener("mouseleave", function () {
+    paths.forEach((path) => {
       path.style.fill = "#5d5d5d";
       path.style.stroke = "#edededff";
       path.style.strokeWidth = "1px";
+      path.style.transition = "fill 0.3s ease, stroke 0.3s ease";
+      path.style.cursor = "pointer";
+
+      path.addEventListener("mouseenter", () => {
+        path.style.fill = "#FF6347";
+        path.style.stroke = "#FF4500";
+        path.style.strokeWidth = "2px";
+      });
+
+      path.addEventListener("mouseleave", () => {
+        path.style.fill = "#5d5d5d";
+        path.style.stroke = "#edededff";
+        path.style.strokeWidth = "1px";
+      });
     });
-  });
-});
+  }
+
+  tryLoadSVG();
+}
+
+window.addEventListener("DOMContentLoaded", initSVGMap);
+window.addEventListener("load", initSVGMap);
+
 
 const masonry = document.getElementById("masonry");
 const ALTURA_GRANDE = 374;
@@ -723,8 +758,9 @@ function generarCards(arrayContent, cantidadPorColumna = 3) {
       overlay.style.pointerEvents = "none";
 
       const title = document.createElement("h3");
+      const titlewrap = document.createElement("span");
       title.classList.add("title-card-scroller");
-      title.textContent = content.title;
+      titlewrap.textContent = content.title;
       title.style.position = "absolute";
       title.style.zIndex = "4";
 
@@ -739,6 +775,7 @@ function generarCards(arrayContent, cantidadPorColumna = 3) {
       btn.style.zIndex = "3";
       btn.style.pointerEvents = "auto";
 
+      title.append(titlewrap);
       imageDiv.appendChild(title);
       imageDiv.appendChild(overlay);
       imageDiv.appendChild(btn);
@@ -783,7 +820,11 @@ function setupDropdowns() {
   dropdowns.forEach((drop) => {
     let closeTimeout;
 
+    // medir posición horizontal del item
     drop.addEventListener("mouseenter", () => {
+      const rect = drop.getBoundingClientRect();
+      drop.style.setProperty("--offset-left", rect.left + "px");
+
       clearTimeout(closeTimeout);
       drop.classList.add("active");
     });
@@ -795,6 +836,7 @@ function setupDropdowns() {
     });
   });
 }
+
 window.addEventListener("load", () => {
   const hash = window.location.hash;
   if (hash) {
@@ -810,6 +852,40 @@ window.addEventListener("load", () => {
     }
   }
 });
+
+function isReadyDom() {
+  const body = document.body;
+  const loadingScreen = document.querySelector(".loader-box");
+
+  if (sessionStorage.getItem("loaderShown")) {
+    if (loadingScreen) loadingScreen.style.display = "none";
+    body.style.overflowY = "auto";
+    return;
+  }
+
+  body.style.overflowY = "hidden";
+
+  if (document.readyState === "complete") {
+    setTimeout(() => {
+      if (loadingScreen) {
+        loadingScreen.style.opacity = "0";
+
+        setTimeout(() => {
+          loadingScreen.style.display = "none";
+        }, 500);
+      }
+
+      body.style.overflowY = "auto";
+
+      sessionStorage.setItem("loaderShown", "true");
+
+    }, 8000);
+  }
+}
+
+window.addEventListener("load", isReadyDom);
+
+
 
 document.addEventListener("DOMContentLoaded", activeBtnMasonry);
 document.addEventListener("DOMContentLoaded", setupDropdowns);

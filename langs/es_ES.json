@@ -9,6 +9,10 @@
     "contact-us-btn": "Contáctanos",
     "world-btn": "Centro de recursos"
   },
+  "langs": {
+    "en": "English",
+    "es": "Español"
+  },
   "contact-us": {
     "title-dialog": "Contáctanos",
     "subt-dialog": "Nuestro equipo de relaciones está listo para atenderte. Puedes solicitar información sobre precios, resolver tus dudas o programar una demostración personalizada para conocer cómo podemos ayudarte a alcanzar tus objetivos.",
@@ -70,8 +74,8 @@
     "backBtn": "Volver atrás",
     "manual": "Manual",
     "next": "Siguiente artículo en",
-    "nxtBtn" : "Siguiente",
-    "prevBtn" : "Anterior"
+    "nxtBtn": "Siguiente",
+    "prevBtn": "Anterior"
   },
   "voice-section": {
     "title-voice": "Descubre las soluciones de VOZ ilimitadas de AlkaIP Telecom",
