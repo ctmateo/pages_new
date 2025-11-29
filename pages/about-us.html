@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>About Us</title>
+
+    <link rel="shortcut icon" href="/icons/facv-ico.svg" type="image/x-icon" />
+    <link rel="stylesheet" href="/sass/main.css" />
+  </head>
+
+  <body>
+    <div class="navbar-container"></div>
+    <div class="overlay-lang"></div>
+    <div class="loader-box">
+      <div class="center-ld-box">
+        <video src="/images/loader-alka.mp4" autoplay muted></video>
+        <div class="circle-progress">
+          <svg viewBox="0 0 120 120">
+            <circle class="base" cx="60" cy="60" r="50"></circle>
+
+            <circle class="spinner" cx="60" cy="60" r="50"></circle>
+          </svg>
+        </div>
+      </div>
+    </div>
+    <section class="about-wrapper">
+      <div class="snap-area" data-index="0"></div>
+      <div class="snap-area" data-index="1"></div>
+      <div class="snap-area" data-index="0"></div>
+    </section>
+
+    <div class="about-dynamic">
+      <div id="containerTitles" class="container-titles"></div>
+
+      <h1 id="mainTitle" class="main-title"></h1>
+
+      <p id="mainDesc" class="desc"></p>
+    </div>
+
+    <script type="module" src="/js/main.js"></script>
+
+    <script>
+      async function loadNavbar() {
+        try {
+          const res = await fetch("/pages/components/nav.html");
+          const html = await res.text();
+
+          const parser = new DOMParser();
+          const doc = parser.parseFromString(html, "text/html");
+          const template = doc.getElementById("navbar-template");
+
+          const clone = template.content.cloneNode(true);
+          document.querySelector(".navbar-container").appendChild(clone);
+
+          await new Promise((resolve) => setTimeout(resolve, 0));
+
+          window.currentLang = window.currentLang || "EN";
+          if (typeof window.translatePage === "function") {
+            window.translatePage(window.currentLang);
+          }
+
+          if (typeof window.setupDropdowns === "function") {
+            window.setupDropdowns();
+          }
+          
+        } catch (err) {
+          console.error("Error cargando navbar:", err);
+        }
+      }
+
+      loadNavbar();
+    </script>
+  </body>
+</html>

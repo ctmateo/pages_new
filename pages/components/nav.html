@@ -1,0 +1,141 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+    <link rel="stylesheet" href="../../sass/main.scss" />
+  </head>
+  <body>
+    <template id="navbar-template">
+      <nav class="navbar" id="navbar">
+        <div class="logo">
+          <img
+            id="logo"
+            data-route=".home"
+            data-auto-scroll="true"
+            src="/images/logo10.svg"
+            alt="logo"
+          />
+        </div>
+        <div class="options-nav" id="anim-nav">
+          <ul>
+            <li id="cursor">
+              <div class="hov-opacity">
+                <p
+                  id="nav1"
+                  translate-text
+                  data-route=".home"
+                  data-auto-scroll="true"
+                ></p>
+              </div>
+            </li>
+            <li id="cursor">
+              <div class="hov-opacity">
+                <p
+                  id="nav2"
+                  translate-text
+                  data-route=".products-description"
+                  data-auto-scroll="true"
+                ></p>
+              </div>
+            </li>
+            <li id="cursor">
+              <div class="hov-opacity">
+                <p
+                  id="nav4"
+                  translate-text
+                  data-route=".events-news"
+                  data-auto-scroll="true"
+                ></p>
+              </div>
+            </li>
+            <li id="cursor">
+              <div class="hov-opacity">
+                <p
+                  data-auto-scroll="true"
+                  data-route=".features-product"
+                  id="nav5"
+                  translate-text
+                ></p>
+              </div>
+            </li>
+            <li class="drop">
+              <div class="hov-opacity">
+                <p class="only-cursor" id="nav6" data-index="0" translate-text></p>
+                <img
+                  id="ready-charge"
+                  class="rot"
+                  src="/icons/arrow_down.svg"
+                  alt="down"
+                />
+              </div>
+
+              <div class="father-item">
+                <div class="window-2">
+                  <div
+                    class="item-drop"
+                    id="choose-us"
+                    data-index="2"
+                  >
+                    <p id="drop-abt-us" translate-text></p>
+                  </div>
+                  <div
+                    class="item-drop"
+                    id="mission-vision"
+                    data-index="0"
+                  >
+                    <p id="drop-abt-mision" translate-text></p>
+                  </div>
+                  <div
+                    class="item-drop"
+                    id="strengths"
+                    data-index="1"
+                  >
+                    <p id="drop-abt-strengths" translate-text></p>
+                  </div>
+                </div>
+              </div>
+            </li>
+          </ul>
+        </div>
+        <div class="right-btns-nav">
+          <div class="dropdown">
+            <div class="drop">
+              <div class="flex">
+                <img
+                  id="ready-charge"
+                  class="outline"
+                  src="/icons/lang-icof2.svg"
+                  alt="lang"
+                />
+                <p class="select-lang" translate-text></p>
+                <img
+                  id="flex-arrow"
+                  class="rot"
+                  src="/icons/arrow_down.svg"
+                  alt="down"
+                />
+              </div>
+              <div class="window">
+                <div class="item-drop" onclick="clicktranslatePage('EN')">
+                  <p>English (EN)</p>
+                </div>
+                <div class="item-drop">
+                  <p onclick="clicktranslatePage('ES')">Español (ES)</p>
+                </div>
+              </div>
+            </div>
+          </div>
+          <button id="world-btn" class="btn-black" translate-text></button>
+          <button
+            id="contact-us-btn"
+            class="global-btn"
+            translate-text
+            data-open-dialog="true"
+          ></button>
+        </div>
+      </nav>
+    </template>
+  </body>
+</html>

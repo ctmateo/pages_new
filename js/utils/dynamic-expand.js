@@ -1,6 +1,6 @@
 const LANG_PATHS = {
-  ES: "../langs/es_ES.json",
-  EN: "../langs/en_EN.json",
+  ES: "/langs/es_ES.json",
+  EN: "/langs/en_EN.json",
 };
 
 const params = new URLSearchParams(window.location.search);
@@ -55,7 +55,6 @@ export async function dynamicChangesExpand() {
       sliderContainer.classList.add("slider-container");
       if (containerClass) sliderContainer.classList.add(containerClass);
 
-      // === HEADER SUPERIOR ===
       const topBar = document.createElement("div");
       topBar.classList.add("slider-top-bar");
 
@@ -95,7 +94,6 @@ export async function dynamicChangesExpand() {
       sliderContainer.appendChild(topBar);
       let indexCurrent = 0;
 
-      // === SLIDES ===
       items.forEach((item, i) => {
         indexCurrent = i;
         const slide = document.createElement("div");
@@ -127,14 +125,12 @@ export async function dynamicChangesExpand() {
         slide.appendChild(content);
         sliderContainer.appendChild(slide);
 
-        // crear punto indicador
         const dot = document.createElement("span");
         dot.classList.add("indicator-dot");
         if (i === 0) dot.classList.add("active");
         indicators.appendChild(dot);
       });
 
-      // === CONTROLES INFERIORES ===
       const controls = document.createElement("div");
       controls.classList.add("slider-controls");
 
@@ -146,7 +142,6 @@ export async function dynamicChangesExpand() {
       controls.append(prevBtn, nextBtn);
       sliderContainer.appendChild(controls);
 
-      // === FUNCIONES ===
       function updateSlider() {
         const slides = sliderContainer.querySelectorAll(".slider-item");
         const dots = sliderContainer.querySelectorAll(".indicator-dot");
@@ -246,7 +241,6 @@ export async function dynamicChangesExpand() {
       return sliderContainer;
     }
 
-    // === CREAR SLIDERS SEGÚN TARGET ===
     if (
       sectionName === "service" &&
       target.startsWith("voice") &&
@@ -307,6 +301,12 @@ export async function dynamicChangesExpand() {
         containerClass: "sms-slider-container",
       });
       document.body.appendChild(slider);
+    }
+    if (sectionName === "aboutus") {
+      const params = new URLSearchParams(window.location.search);
+      const lang = params.get("lang") || "EN";
+
+      window.location.href = `about-us.html?lang=${lang}`;
     }
   } catch (error) {
     console.error("Error cargando las traducciones:", error);

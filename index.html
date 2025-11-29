@@ -8,10 +8,11 @@
     <link rel="stylesheet" href="./sass/main.css" />
   </head>
   <body>
+    <div class="navbar-container"></div>
     <div class="overlay-lang"></div>
     <div class="loader-box">
       <div class="center-ld-box">
-        <video src="images/loader-alka.mp4" autoplay muted></video>
+        <video src="/images/loader-alka.mp4" autoplay muted></video>
         <div class="circle-progress">
           <svg viewBox="0 0 120 120">
             <circle class="base" cx="60" cy="60" r="50"></circle>
@@ -22,123 +23,22 @@
       </div>
     </div>
 
-    <div class="safe-area">
-      <nav class="navbar" id="navbar">
-        <div class="logo">
-          <img
-            id="logo"
-            data-route=".home"
-            data-auto-scroll="true"
-            src="./images/logo10.svg"
-            alt="logo"
-          />
-        </div>
-        <div class="options-nav" id="anim-nav">
-          <ul>
-            <li>
-              <div class="hov-opacity">
-                <p
-                  id="nav1"
-                  translate-text
-                  data-route=".home"
-                  data-auto-scroll="true"
-                ></p>
-              </div>
-            </li>
-            <li>
-              <div class="hov-opacity">
-                <p
-                  id="nav2"
-                  translate-text
-                  data-route=".products-description"
-                  data-auto-scroll="true"
-                ></p>
-              </div>
-            </li>
-            <li>
-              <div class="hov-opacity">
-                <p
-                  id="nav4"
-                  translate-text
-                  data-route=".events-news"
-                  data-auto-scroll="true"
-                ></p>
-              </div>
-            </li>
-            <li>
-              <div class="hov-opacity">
-                <p
-                  data-auto-scroll="true"
-                  data-route=".features-product"
-                  id="nav5"
-                  translate-text
-                ></p>
-              </div>
-            </li>
-            <li class="drop">
-              <div class="hov-opacity">
-                <p id="nav6" translate-text></p>
-                <img
-                  id="ready-charge"
-                  class="rot"
-                  src="./icons/arrow_down.svg"
-                  alt="down"
-                />
-              </div>
-
-              <div class="father-item">
-                <div class="window-2">
-                  <div class="item-drop"><p onclick="translatePage('EN')">Why choose us</p></div>
-                  <div class="item-drop"><p onclick="translatePage('ES')">Mission</p></div>
-                  <div class="item-drop"><p onclick="translatePage('ES')">Our Strengths</p></div>
-                </div>
-              </div>
-            </li>
-          </ul>
-        </div>
-        <div class="right-btns-nav">
-          <div class="dropdown">
-            <div class="drop">
-              <div class="flex">
-                <img
-                  id="ready-charge"
-                  class="outline"
-                  src="./icons/lang-icof2.svg"
-                  alt="lang"
-                />
-                <p class="select-lang" translate-text></p>
-                <img
-                  id="flex-arrow"
-                  class="rot"
-                  src="./icons/arrow_down.svg"
-                  alt="down"
-                />
-              </div>
-              <div class="window">
-                <div class="item-drop" onclick="clicktranslatePage('EN')">
-                  <p>English (EN)</p>
-                </div>
-                <div class="item-drop">
-                  <p onclick="clicktranslatePage('ES')">Español (ES)</p>
-                </div>
-              </div>
-            </div>
-          </div>
-          <button id="world-btn" class="btn-black" translate-text></button>
-          <button
-            id="contact-us-btn"
-            class="global-btn"
-            translate-text
-            data-open-dialog="true"
-          ></button>
-        </div>
-      </nav>
-    </div>
-
     <section class="home" id="home">
       <div id="margin-area">
-        <h1 id="title-home" translate-text></h1>
-        <p id="description-home" translate-text></p>
+        <div class="wrapper-title-home">
+          <div class="flex">
+            <div class="wrapper-chip">
+              <div class="chip">
+                <h3 id="nts" translate-text>Tier-1</h3>
+              </div>
+              <p>connectivity across 120+ countries.</p>
+            </div>
+          </div>
+          <h1 id="title-home" translate-text></h1>
+        </div>
+        <div class="wrapper-desc-home">
+          <p id="description-home" translate-text></p>
+        </div>
 
         <div class="wrapper-btns">
           <button
@@ -146,6 +46,13 @@
             class="global-btn"
             translate-text
             data-route=".products-description"
+            data-auto-scroll="true"
+          ></button>
+          <button
+            id="outline-home-btn"
+            class="btn-black"
+            translate-text
+            data-route=".events-news"
             data-auto-scroll="true"
           ></button>
         </div>
@@ -164,12 +71,12 @@
           <div id="data">
             <p id="feat1" translate-text></p>
           </div>
-          <div id="data">
-            <p id="feat2" translate-text></p>
-          </div>
-          <div id="data">
-            <p id="feat3" translate-text></p>
-          </div>
+          <button
+            id="btn-new-client"
+            class="global-btn"
+            translate-text
+            data-open-dialog="true"
+          ></button>
         </div>
       </div>
     </section>
@@ -217,17 +124,17 @@
           <p id="demo-desc1" translate-text></p>
         </div>
         <div class="feature">
-          <img id="ready-charge" src="./images/.png" alt="feature1" />
+          <img id="ready-charge" src="/images/test-img.png" alt="feature1" />
           <h1 id="demo2" translate-text></h1>
           <p id="demo-desc2" translate-text></p>
         </div>
         <div class="feature">
-          <img id="ready-charge" src="./images/test-img.png" alt="feature1" />
+          <img id="ready-charge" src="/images/test-img.png" alt="feature1" />
           <h1 id="demo3" translate-text></h1>
           <p id="demo-desc3" translate-text></p>
         </div>
         <div class="feature">
-          <img id="ready-charge" src="./images/server.png" alt="feature1" />
+          <img id="ready-charge" src="/images/server.png" alt="feature1" />
           <h1 id="demo4" translate-text></h1>
           <p id="demo-desc4" translate-text></p>
         </div>
@@ -245,6 +152,7 @@
           <div class="fade-bottom"></div>
         </div>
       </div>
+      <div id="carousel"></div>
       <div class="description-message-container">
         <div class="tile-wrapper">
           <div class="info-voice">
@@ -294,28 +202,28 @@
       <div class="vr-carousel">
         <div class="carousel">
           <div class="card">
-            <img id="ready-charge" src="./images/test4kv.jpg" alt="test" />
+            <img id="ready-charge" src="/images/test4kv.jpg" alt="test" />
           </div>
           <div class="card">
-            <img id="ready-charge" src="./images/test4kv.jpg" alt="test" />
+            <img id="ready-charge" src="/images/test4kv.jpg" alt="test" />
           </div>
           <div class="card">
-            <img id="ready-charge" src="./images/test4kv.jpg" alt="test" />
+            <img id="ready-charge" src="/images/test4kv.jpg" alt="test" />
           </div>
           <div class="card">
-            <img id="ready-charge" src="./images/test4kv.jpg" alt="test" />
+            <img id="ready-charge" src="/images/test4kv.jpg" alt="test" />
           </div>
           <div class="card">
-            <img id="ready-charge" src="./images/test4kv.jpg" alt="test" />
+            <img id="ready-charge" src="/images/test4kv.jpg" alt="test" />
           </div>
           <div class="card">
-            <img id="ready-charge" src="./images/test4kv.jpg" alt="test" />
+            <img id="ready-charge" src="/images/test4kv.jpg" alt="test" />
           </div>
           <div class="card">
-            <img id="ready-charge" src="./images/test4kv.jpg" alt="test" />
+            <img id="ready-charge" src="/images/test4kv.jpg" alt="test" />
           </div>
           <div class="card">
-            <img id="ready-charge" src="./images/test4kv.jpg" alt="test" />
+            <img id="ready-charge" src="/images/test4kv.jpg" alt="test" />
           </div>
         </div>
       </div>
@@ -372,7 +280,37 @@
         </button>
       </div>
     </footer>
+    <script type="module" src="/js/main.js"></script>
 
-    <script type="module" src="./js/main.js"></script>
+    <script>
+      async function loadNavbar() {
+        try {
+          const res = await fetch("/pages/components/nav.html");
+          const html = await res.text();
+
+          const parser = new DOMParser();
+          const doc = parser.parseFromString(html, "text/html");
+          const template = doc.getElementById("navbar-template");
+
+          const clone = template.content.cloneNode(true);
+          document.querySelector(".navbar-container").appendChild(clone);
+
+          await new Promise((resolve) => setTimeout(resolve, 0));
+
+          window.currentLang = window.currentLang || "EN";
+          if (typeof window.translatePage === "function") {
+            window.translatePage(window.currentLang);
+          }
+
+          if (typeof window.setupDropdowns === "function") {
+            window.setupDropdowns();
+          }
+        } catch (err) {
+          console.error("Error cargando navbar:", err);
+        }
+      }
+
+      loadNavbar();
+    </script>
   </body>
 </html>

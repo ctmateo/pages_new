@@ -9,16 +9,21 @@
         "contact-us-btn": "Contact us",
         "world-btn": "Resource center"
     },
-    "langs":{
+    "drops":{
+        "drop-abt-us" : "Why choose us?",
+        "drop-abt-mision" : "Mission",
+        "drop-abt-strengths" : "Our Strengths"
+    },
+    "langs": {
         "en": "English",
         "es": "Español"
     },
     "contact-us": {
         "title-dialog": "Contact Us",
         "subt-dialog": "Our relations team is ready to assist you. You can request information about pricing, resolve your questions, or schedule a personalized demo to learn how we can help you achieve your goals.",
-        "inpt1": "Email",
-        "inpt2": "Name",
-        "area-inpt-msg": "Request information about pricing, resolve your questions, or schedule a personalized demo.",
+        "inpt1": "Email*",
+        "inpt2": "Name*",
+        "area-inpt-msg": "Request information about pricing, resolve your questions, or schedule a personalized demo.*",
         "status": "Send",
         "status-captcha": "Please complete captcha",
         "wsuccess": "Sent, you will receive a response within 24 business hours.",
@@ -27,16 +32,14 @@
     },
     "home": {
         "title-home": "Global Voice and SMS Connectivity: Simplified, Reliable, and Scalable",
-        "description-home": "Direct carrier routes, enterprise-grade SMS, and crystal-clear VoIP termination, powered by carrier-grade reliability.",
+        "description-home": "We offer direct carrier routes, enterprise-level SMS services, and high-quality VoIP termination, all supported by a reliable infrastructure that ensures smooth and secure communication for businesses of any size.",
         "home-btn": "Learn about more",
-        "outline-home-btn": "About Us"
+        "outline-home-btn": "Events & News"
     },
     "featured-services": {
         "title-featured-services": "Power your global communications with AlkaIP, trusted by carriers worldwide",
-        "feat1": "Tier-1 connectivity across 120+ countries.",
-        "feat2": "High delivery rates with real-time analytics.",
-        "feat3": "Voice and messaging at your fingertips.",
-        "feat4": "99.999% uptime and real-time monitoring."
+        "feat1": "Join our network and enhance your business communications with enterprise messaging, crystal-clear VoIP, and global carrier connectivity.",
+        "btn-new-client": "More information"
     },
     "product-demo": {
         "chip-products": "About Our Products",
@@ -137,5 +140,17 @@
     "footer": {
         "reserved": "©2025 Alkaip Telecom, S.A.S. All rights reserved. Alkaip and its logo are registered trademarks or trademarks of Alkaip in the United States and elsewhere.",
         "btn-back": "Back to top"
+    },
+    "about-section": {
+        "titles": {
+            "title-about-2": "Mission",
+            "title-about-1": "Our strengths",
+            "title-about-0": "Why choose us?"
+        },
+        "descriptions": {
+            "desc-about-2": "To connect the world with reliable, transparent, and scalable voice and messaging infrastructure.",
+            "desc-about-1": "Tier-1 Global Network, Transparent Billing, 99.999% Uptime, Scalable Infrastructure, 24/7 Expert Support",
+            "desc-about-0": "AlkaIP Telecom is an international operator specializing in providing quality voice and SMS termination for the wholesale and retail markets since 2012. Our customers range from small call shops and call centers to top-tier operators and PTTs. With several years of combined experience in the industry, we pride ourselves on offering quality services at competitive prices."
+        }
     }
 }

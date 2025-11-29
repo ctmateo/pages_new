@@ -1,12 +1,13 @@
 import { goToRoute } from "./router.js";
 import { dynamicChangesExpand } from "./utils/dynamic-expand.js";
 
+let currentPage = window.location.pathname;
 let lastClickedId = null;
 const LANG_PATHS = {
-  ES: "./langs/es_ES.json",
-  EN: "./langs/en_EN.json",
+  ES: "/langs/es_ES.json",
+  EN: "/langs/en_EN.json",
 };
-export let currentLang = "EN";
+window.currentLang = window.currentLang || "EN";
 
 let scrollPos = 0;
 
@@ -15,18 +16,47 @@ dynamicChangesExpand();
 function eventListener() {
   document.addEventListener("click", (event) => {
     const el = event.target;
-    if (!el.id) return;
+
+    if (!el || (!el.id && !el.dataset)) return;
 
     if (el.dataset.expandable === "true") {
+      lastClickedId = el.id;
       setTimeout(() => {
-        goToRoute("expand", "products", lastClickedId, currentLang, scrollPos);
+        goToRoute(
+          "expand",
+          "products",
+          lastClickedId,
+          window.currentLang,
+          scrollPos
+        );
       }, 300);
+      return;
     }
 
     if (el.dataset.autoScroll === "true" && el.dataset.route) {
-      const section = document.querySelector(el.dataset.route);
-      if (section) section.scrollIntoView({ behavior: "smooth" });
+      const routeSelector = el.dataset.route;
+      const section = document.querySelector(routeSelector);
+      const isHome = window.location.pathname.endsWith("index.html");
+
+      if (isHome) {
+        if (section) {
+          const url = new URL(window.location.href);
+          url.searchParams.set("lang", window.currentLang);
+          window.history.replaceState({}, "", url.toString());
+
+          section.scrollIntoView({ behavior: "smooth" });
+        } else {
+          console.warn("No existe la sección:", routeSelector);
+        }
+        return;
+      }
+
+      localStorage.setItem("scrollToSection", routeSelector);
+
+      window.location.href = `/index.html?lang=${window.currentLang}`;
+      return;
     }
+
     if (el.dataset.openDialog === "true") {
       dialogRecycle(
         el.dataset.title || "",
@@ -35,11 +65,29 @@ function eventListener() {
         el.dataset.nameBtn || "Aceptar",
         parseInt(el.dataset.numberBtn) || 2
       );
+      return;
     }
 
-    lastClickedId = el.id;
+    if (el.id) {
+      lastClickedId = el.id;
+    }
   });
 }
+
+window.addEventListener("DOMContentLoaded", () => {
+  const routeSelector = localStorage.getItem("scrollToSection");
+  if (routeSelector) {
+    const target = document.querySelector(routeSelector);
+
+    if (target) {
+      setTimeout(() => {
+        target.scrollIntoView({ behavior: "smooth" });
+      }, 300);
+    }
+
+    localStorage.removeItem("scrollToSection");
+  }
+});
 
 eventListener();
 
@@ -83,7 +131,7 @@ function dialogRecycle(isProduction = false) {
 
   const form = document.createElement("form");
   form.innerHTML = `
-    <button type="button" id="cancel-btn"><img src="./icons/close.svg" alt="Cerrar" /></button>
+    <button type="button" id="cancel-btn"><img src="/icons/close.svg" alt="Cerrar" /></button>
     <div id="align-inpt">
       <input id="inpt2" translate-text type="text" name="name" placeholder="Nombre" required>
       <input id="inpt1" translate-text type="email" name="email" placeholder="Correo electrónico" required>
@@ -113,7 +161,7 @@ function dialogRecycle(isProduction = false) {
   dialog.append(overlay, content);
   document.body.appendChild(dialog);
 
-  window.translatePage(currentLang);
+  window.translatePage(window.currentLang);
 
   const status = document.getElementById("status");
   const subBtn = document.getElementById("sub-btn");
@@ -145,7 +193,7 @@ function dialogRecycle(isProduction = false) {
       status.id = "status-captcha";
       status.setAttribute("translate-text", "");
       status.textContent = "Por favor completa el CAPTCHA";
-      window.translatePage(currentLang);
+      window.translatePage(window.currentLang);
       return;
     }
 
@@ -160,7 +208,7 @@ function dialogRecycle(isProduction = false) {
           status.setAttribute("translate-text", "");
           status.textContent =
             "Sent, you will receive a response within 24 business hours.";
-          window.translatePage(currentLang);
+          window.translatePage(window.currentLang);
           form.reset();
           grecaptcha.reset();
           setTimeout(() => dialog.remove(), 30000);
@@ -171,7 +219,7 @@ function dialogRecycle(isProduction = false) {
           status.setAttribute("translate-text", "");
           status.textContent =
             "No pudimos enviar tu solicitud, inténtalo más tarde.";
-          window.translatePage(currentLang);
+          window.translatePage(window.currentLang);
           subBtn.disabled = false;
         });
     } else {
@@ -195,84 +243,135 @@ function dialogRecycle(isProduction = false) {
       status.id = "wsuccess";
       status.setAttribute("translate-text", "");
       status.textContent = "Enviado, tendrás respuesta en 3 días hábiles.";
-      window.translatePage(currentLang);
+      window.translatePage(window.currentLang);
       setTimeout(() => dialog.remove(), 15000);
     }
   });
 }
-
 let translationsCache = {};
 
+window.translatePage = async function translatePage(lang = window.currentLang) {
+  window.currentLang = lang;
 
-
-window.translatePage = async function translatePage(lang) {
-  currentLang = lang;
-  console.log("LANGS", currentLang);
-
+  // Actualizar selector de idioma visual
   const selectorlang = document.querySelector(".select-lang");
   if (selectorlang) {
-    selectorlang.id = currentLang === "ES" ? "es" : "en";
+    selectorlang.id = lang === "ES" ? "es" : "en";
   }
 
   try {
     let translations = translationsCache[lang];
+
+    /* -------------------------------------------------------
+        1️⃣ Cargar JSON SOLO si no está en cache
+           PERO usando structuredClone para evitar contaminación
+    ------------------------------------------------------- */
     if (!translations) {
       const path = LANG_PATHS[lang];
-      if (!path) return console.error("Idioma no disponible:", lang);
+      if (!path) {
+        console.error("Idioma no disponible:", lang);
+        return;
+      }
+
       const response = await fetch(path);
-      translations = await response.json();
+      const jsonData = await response.json();
+
+      // Clonado profundo: evita mezclar idiomas
+      translations = structuredClone(jsonData);
+
       translationsCache[lang] = translations;
     }
 
-    const voiceSection = translations["voice-section"];
-    const cardsData = voiceSection["scroller-cards-voice"];
-    const arrayContent = Object.keys(cardsData.titles).map((key, i) => ({
-      title: cardsData.titles[key],
-      img: cardsData.images[`img${i + 1}`],
-      description: cardsData.desc[`desc${i + 1}`],
-    }));
-    generarCards(arrayContent);
+    /* -------------------------------------------------------
+        2️⃣ Si existe sección VOICE → generar cards
+    ------------------------------------------------------- */
+    const voiceSection = translations?.["voice-section"];
+    const cardsData = voiceSection?.["scroller-cards-voice"];
 
-    changeNumberFast();
+    if (window.generarCards && cardsData) {
+      const arrayContent = Object.keys(cardsData.titles).map((key, i) => ({
+        title: cardsData.titles[key],
+        img: cardsData.images[`img${i + 1}`],
+        description: cardsData.desc[`desc${i + 1}`],
+      }));
 
+      generarCards(arrayContent);
+      changeNumberFast();
+    }
+
+    /* -------------------------------------------------------
+        3️⃣ Traducir todos los elementos con translate-text
+    ------------------------------------------------------- */
     const elements = document.querySelectorAll("[translate-text]");
+
     elements.forEach((el) => {
       const key = el.getAttribute("translate-text") || el.id;
+
       const textSection = findTranslationByKey(translations, key);
-      if (!textSection)
-        return console.warn(`No se encontró traducción para: ${key}`);
-      if (key === "change-text-voice")
+      if (!textSection) {
+        console.warn("No existe traducción para:", key);
+        return;
+      }
+
+      // Casos especiales
+      if (key === "change-text-voice" || key === "number-callers") {
         displazeVerticalTextWithData(textSection, el);
-      else if (key === "change-text-sms")
+        return;
+      }
+
+      if (key === "change-text-sms") {
         setTimeout(() => displazeVerticalTextWithData(textSection, el), 800);
-      else if (key === "number-callers")
-        displazeVerticalTextWithData(textSection, el);
-      else if (el.tagName === "INPUT" || el.tagName === "TEXTAREA")
+        return;
+      }
+
+      // Inputs y textareas
+      if ("placeholder" in el) {
         el.placeholder = textSection;
-      else if (el.tagName === "IMG" && el.hasAttribute("alt"))
+        return;
+      }
+
+      // Imágenes
+      if (el.tagName === "IMG" && el.hasAttribute("alt")) {
         el.alt = textSection;
-      else if (el.hasAttribute("title")) el.title = textSection;
-      else el.textContent = textSection;
+        return;
+      }
+
+      // Title
+      if (el.hasAttribute("title")) {
+        el.title = textSection;
+      }
+
+      // Texto genérico
+      el.textContent = textSection;
     });
   } catch (error) {
     console.error("Error cargando JSON/Lang:", error);
   }
 };
 
-window.clicktranslatePage = function(lang) {
-  if (lang === currentLang) return;
+window.clicktranslatePage = async function (lang) {
+  if (lang === window.currentLang) return;
+
   const overlay = document.querySelector(".overlay-lang");
-  
   if (overlay) {
     overlay.classList.add("active");
     setTimeout(() => overlay.classList.remove("active"), 1300);
-  } else {
-    console.warn("No existe .overlay-lang");
   }
 
-  translatePage(lang);
-};
+  // Actualiza idioma sin cambiar de página
+  window.currentLang = lang;
 
+  if (window.location.pathname.includes("about-us.html")) {
+    await updateAboutLanguage(lang);
+  } else {
+    await translatePage(lang);
+  }
+
+  // Actualiza el parámetro lang en la URL SIN recargar
+  const url = new URL(window.location.href);
+  url.searchParams.set("lang", lang);
+  window.history.replaceState({}, "", url);
+};
 
 function displazeVerticalTextWithData(sectionData, element) {
   if (element._displazeInterval) {
@@ -356,15 +455,17 @@ function findTranslationByKey(obj, key) {
   return null;
 }
 
-translatePage(currentLang);
+translatePage(window.currentLang);
 
 async function changeNumberFast() {
   const element = document.getElementById("number");
   if (!element) return;
+
   const elementSufix = document.getElementById("number-callers");
 
   let i = 0;
   let h1 = element.querySelector("h1");
+
   if (!h1) {
     h1 = document.createElement("h1");
     h1.classList.add("enter");
@@ -393,131 +494,161 @@ async function changeNumberFast() {
   }, 30);
 }
 
-const vrCarousel = document.querySelector(".vr-carousel");
-const carousel = document.querySelector(".carousel");
-const cards = document.querySelectorAll(".card");
-
-if (!vrCarousel || !carousel || cards.length === 0) {
-  console.error("Faltan elementos del carrusel en el DOM.");
-}
-
-const total = cards.length;
-const radius = 1100;
-const speed = 0.001;
-let angle = 0;
-let isDragging = false;
-let startX = 0;
-let currentX = 0;
-
-let prevUserSelect = "";
-let prevWebkitUserSelect = "";
-
-function disableTextSelection() {
-  prevUserSelect = document.body.style.userSelect;
-  prevWebkitUserSelect = document.body.style.webkitUserSelect;
-  document.body.style.userSelect = "none";
-  document.body.style.webkitUserSelect = "none";
-}
-
-function restoreTextSelection() {
-  document.body.style.userSelect = prevUserSelect;
-  document.body.style.webkitUserSelect = prevWebkitUserSelect;
-}
-
-function updateCarousel() {
-  if (!isDragging) {
-    angle += speed;
+(function () {
+  if (!location.pathname.endsWith("index.html") && location.pathname !== "/") {
+    console.warn("Carrusel desactivado en esta página.");
+    return;
   }
 
-  cards.forEach((card, i) => {
-    const theta = i * ((2 * Math.PI) / total) + angle;
-    const x = Math.sin(theta) * radius;
-    const z = Math.cos(theta) * radius;
+  const vrCarousel = document.querySelector(".vr-carousel");
+  const carousel = document.querySelector(".carousel");
+  const cards = document.querySelectorAll(".card");
 
-    card.style.transform = `translateX(${x}px) translateZ(${z}px) rotateY(${theta}rad)`;
+  if (!vrCarousel || !carousel || cards.length === 0) {
+    console.error("Faltan elementos del carrusel en el DOM.");
+  }
 
-    if (z > 0) {
-      card.style.opacity = 0;
-      card.style.pointerEvents = "none";
-    } else {
-      card.style.opacity = 1;
-      card.style.pointerEvents = "auto";
+  const total = cards.length;
+  const radius = 1100;
+  const speed = 0.001;
+  let angle = 0;
+  let isDragging = false;
+  let startX = 0;
+  let currentX = 0;
+
+  let prevUserSelect = "";
+  let prevWebkitUserSelect = "";
+
+  function disableTextSelection() {
+    prevUserSelect = document.body.style.userSelect;
+    prevWebkitUserSelect = document.body.style.webkitUserSelect;
+    document.body.style.userSelect = "none";
+    document.body.style.webkitUserSelect = "none";
+  }
+
+  function restoreTextSelection() {
+    document.body.style.userSelect = prevUserSelect;
+    document.body.style.webkitUserSelect = prevWebkitUserSelect;
+  }
+
+  window.useRouteDropdown = function (index) {
+    const isAbout = window.location.pathname.includes("about-us.html");
+
+    localStorage.setItem("aboutSnapIndex", index);
+
+    if (!isAbout) {
+      window.location.href = `/pages/about-us.html?lang=${window.currentLang}`;
+      return;
     }
+
+    scrollToAboutSection(index);
+  };
+
+  document.addEventListener("click", (e) => {
+    const el = e.target.closest(".item-drop");
+
+    if (!el || !el.dataset.index) return;
+
+    const index = el.dataset.index;
+    useRouteDropdown(index);
   });
 
-  requestAnimationFrame(updateCarousel);
-}
+  function updateCarousel() {
+    if (!isDragging) {
+      angle += speed;
+    }
 
-vrCarousel.addEventListener("mousedown", (e) => {
-  isDragging = true;
-  startX = e.pageX;
-  vrCarousel.style.cursor = "grabbing";
-  disableTextSelection();
-  e.preventDefault();
-});
+    cards.forEach((card, i) => {
+      const theta = i * ((2 * Math.PI) / total) + angle;
+      const x = Math.sin(theta) * radius;
+      const z = Math.cos(theta) * radius;
 
-vrCarousel.addEventListener("mousemove", (e) => {
-  if (!isDragging) return;
-  currentX = e.pageX;
-  const delta = currentX - startX;
-  angle += delta * 0.0008;
-  startX = currentX;
-  e.preventDefault();
-});
+      card.style.transform = `translateX(${x}px) translateZ(${z}px) rotateY(${theta}rad)`;
 
-vrCarousel.addEventListener("mouseup", () => {
-  isDragging = false;
-  vrCarousel.style.cursor = "grab";
-  restoreTextSelection();
-});
+      if (z > 0) {
+        card.style.opacity = 0;
+        card.style.pointerEvents = "none";
+      } else {
+        card.style.opacity = 1;
+        card.style.pointerEvents = "auto";
+      }
+    });
 
-vrCarousel.addEventListener("mouseleave", () => {
-  isDragging = false;
-  vrCarousel.style.cursor = "grab";
-  restoreTextSelection();
-});
+    requestAnimationFrame(updateCarousel);
+  }
 
-vrCarousel.addEventListener("dragstart", (e) => {
-  e.preventDefault();
-});
-
-vrCarousel.addEventListener(
-  "touchstart",
-  (e) => {
+  vrCarousel.addEventListener("mousedown", (e) => {
     isDragging = true;
-    startX = e.touches[0].pageX;
+    startX = e.pageX;
     vrCarousel.style.cursor = "grabbing";
     disableTextSelection();
     e.preventDefault();
-  },
-  { passive: false }
-);
+  });
 
-vrCarousel.addEventListener(
-  "touchmove",
-  (e) => {
+  vrCarousel.addEventListener("mousemove", (e) => {
     if (!isDragging) return;
-    currentX = e.touches[0].pageX;
+    currentX = e.pageX;
     const delta = currentX - startX;
     angle += delta * 0.0008;
     startX = currentX;
     e.preventDefault();
-  },
-  { passive: false }
-);
+  });
 
-vrCarousel.addEventListener("touchend", () => {
-  isDragging = false;
+  vrCarousel.addEventListener("mouseup", () => {
+    isDragging = false;
+    vrCarousel.style.cursor = "grab";
+    restoreTextSelection();
+  });
+
+  vrCarousel.addEventListener("mouseleave", () => {
+    isDragging = false;
+    vrCarousel.style.cursor = "grab";
+    restoreTextSelection();
+  });
+
+  vrCarousel.addEventListener("dragstart", (e) => {
+    e.preventDefault();
+  });
+
+  vrCarousel.addEventListener(
+    "touchstart",
+    (e) => {
+      isDragging = true;
+      startX = e.touches[0].pageX;
+      vrCarousel.style.cursor = "grabbing";
+      disableTextSelection();
+      e.preventDefault();
+    },
+    { passive: false }
+  );
+
+  vrCarousel.addEventListener(
+    "touchmove",
+    (e) => {
+      if (!isDragging) return;
+      currentX = e.touches[0].pageX;
+      const delta = currentX - startX;
+      angle += delta * 0.0008;
+      startX = currentX;
+      e.preventDefault();
+    },
+    { passive: false }
+  );
+
+  vrCarousel.addEventListener("touchend", () => {
+    isDragging = false;
+    vrCarousel.style.cursor = "grab";
+    restoreTextSelection();
+  });
+
   vrCarousel.style.cursor = "grab";
-  restoreTextSelection();
-});
 
-vrCarousel.style.cursor = "grab";
-
-updateCarousel();
+  updateCarousel();
+})();
 
 function waitMouseScroller() {
   const scrollIndicator = document.getElementById("mouseScroll");
+  if (!scrollIndicator) return; // Parche: salir si no existe
 
   setTimeout(() => scrollIndicator.classList.add("show"), 1000);
 
@@ -694,105 +825,106 @@ const masonry = document.getElementById("masonry");
 const ALTURA_GRANDE = 374;
 const ALTURA_PEQUENA = 374;
 
-const columnas = [];
-for (let i = 0; i < 3; i++) {
-  const col = document.createElement("div");
-  col.classList.add("columna");
-  col.style.display = "flex";
-  col.style.flexDirection = "column";
-  col.style.flex = "1";
-  columnas.push(col);
-  masonry.appendChild(col);
-}
-
-const patronesColumnas = [
-  ["pequena", "grande"],
-  ["grande", "pequena"],
-  ["pequena", "grande"],
-];
-
-let indicePorColumna = [0, 0, 0];
-function limpiarMasonry() {
-  columnas.forEach((col) => (col.innerHTML = ""));
-  indicePorColumna = [0, 0, 0];
-}
-
-let indiceGlobal = 0;
-
-function generarCards(arrayContent, cantidadPorColumna = 3) {
-  limpiarMasonry();
-
-  const totalFilas = 3;
-  let indiceGlobal = 0;
-
-  for (let fila = 0; fila < totalFilas; fila++) {
-    for (let c = 0; c < cantidadPorColumna; c++) {
-      const columna = columnas[c];
-      const patron = patronesColumnas[c];
-      const tipo = patron[indicePorColumna[c] % patron.length];
-      const altura = tipo === "grande" ? ALTURA_GRANDE : ALTURA_PEQUENA;
-
-      const content = arrayContent[indiceGlobal % arrayContent.length];
-      indiceGlobal++;
-
-      const card = document.createElement("div");
-      card.classList.add("card");
-      card.id = `voice-cd-${indiceGlobal}`;
-      card.dataset.expandable = "true";
-      card.style.height = `${altura}px`;
-      card.style.transition = "opacity 0.5s ease";
-      card.style.opacity = "0";
-
-      const imageDiv = document.createElement("div");
-      imageDiv.classList.add("card-image");
-
-      imageDiv.style.backgroundImage = `url(${content.img})`;
-      imageDiv.style.backgroundSize = "cover";
-      imageDiv.style.backgroundPosition = "center";
-      imageDiv.style.position = "relative";
-      imageDiv.style.pointerEvents = "none";
-
-      const overlay = document.createElement("div");
-      overlay.classList.add("overlay");
-      overlay.style.position = "absolute";
-      overlay.style.pointerEvents = "none";
-
-      const title = document.createElement("h3");
-      const titlewrap = document.createElement("span");
-      title.classList.add("title-card-scroller");
-      titlewrap.textContent = content.title;
-      title.style.position = "absolute";
-      title.style.zIndex = "4";
-
-      const btn = document.createElement("button");
-      btn.id = "indicator-btn";
-      btn.setAttribute("translate-text", "");
-      btn.classList.add("expand-btn-global", "over-image");
-      btn.textContent = "Select to expand";
-      btn.style.position = "absolute";
-      btn.style.top = "20px";
-      btn.style.right = "20px";
-      btn.style.zIndex = "3";
-      btn.style.pointerEvents = "auto";
-
-      title.append(titlewrap);
-      imageDiv.appendChild(title);
-      imageDiv.appendChild(overlay);
-      imageDiv.appendChild(btn);
-
-      const contentDiv = document.createElement("div");
-      contentDiv.classList.add("card-content");
-
-      card.appendChild(imageDiv);
-      card.appendChild(contentDiv);
-      columna.appendChild(card);
-
-      requestAnimationFrame(() => (card.style.opacity = "1"));
-      indicePorColumna[c]++;
-    }
+if (masonry) {
+  const columnas = [];
+  for (let i = 0; i < 3; i++) {
+    const col = document.createElement("div");
+    col.classList.add("columna");
+    col.style.display = "flex";
+    col.style.flexDirection = "column";
+    col.style.flex = "1";
+    columnas.push(col);
+    masonry.appendChild(col);
   }
 
-  activeBtnMasonry();
+  const patronesColumnas = [
+    ["pequena", "grande"],
+    ["grande", "pequena"],
+    ["pequena", "grande"],
+  ];
+
+  let indicePorColumna = [0, 0, 0];
+  function limpiarMasonry() {
+    columnas.forEach((col) => (col.innerHTML = ""));
+    indicePorColumna = [0, 0, 0];
+  }
+
+  let indiceGlobal = 0;
+
+  window.generarCards = function (arrayContent, cantidadPorColumna = 3) {
+    limpiarMasonry();
+
+    const totalFilas = 2;
+    let indiceGlobal = 0;
+
+    for (let fila = 0; fila < totalFilas; fila++) {
+      for (let c = 0; c < cantidadPorColumna; c++) {
+        const columna = columnas[c];
+        const patron = patronesColumnas[c];
+        const tipo = patron[indicePorColumna[c] % patron.length];
+        const altura = tipo === "grande" ? ALTURA_GRANDE : ALTURA_PEQUENA;
+
+        const content = arrayContent[indiceGlobal % arrayContent.length];
+        indiceGlobal++;
+
+        const card = document.createElement("div");
+        card.classList.add("card");
+        card.id = `voice-cd-${indiceGlobal}`;
+        card.dataset.expandable = "true";
+        card.style.height = `${altura}px`;
+        card.style.transition = "opacity 0.5s ease";
+        card.style.opacity = "0";
+
+        const imageDiv = document.createElement("div");
+        imageDiv.classList.add("card-image");
+        imageDiv.style.backgroundImage = `url(${content.img})`;
+        imageDiv.style.backgroundSize = "cover";
+        imageDiv.style.backgroundPosition = "center";
+        imageDiv.style.position = "relative";
+        imageDiv.style.pointerEvents = "none";
+
+        const overlay = document.createElement("div");
+        overlay.classList.add("overlay");
+        overlay.style.position = "absolute";
+        overlay.style.pointerEvents = "none";
+
+        const title = document.createElement("h3");
+        const titlewrap = document.createElement("span");
+        title.classList.add("title-card-scroller");
+        titlewrap.textContent = content.title;
+        title.style.position = "absolute";
+        title.style.zIndex = "4";
+
+        const btn = document.createElement("button");
+        btn.id = "indicator-btn";
+        btn.setAttribute("translate-text", "");
+        btn.classList.add("expand-btn-global", "over-image");
+        btn.textContent = "Select to expand";
+        btn.style.position = "absolute";
+        btn.style.top = "20px";
+        btn.style.right = "20px";
+        btn.style.zIndex = "3";
+        btn.style.pointerEvents = "auto";
+
+        title.append(titlewrap);
+        imageDiv.appendChild(title);
+        imageDiv.appendChild(overlay);
+        imageDiv.appendChild(btn);
+
+        const contentDiv = document.createElement("div");
+        contentDiv.classList.add("card-content");
+
+        card.appendChild(imageDiv);
+        card.appendChild(contentDiv);
+        columna.appendChild(card);
+
+        requestAnimationFrame(() => (card.style.opacity = "1"));
+        indicePorColumna[c]++;
+      }
+    }
+
+    activeBtnMasonry();
+  };
 }
 
 function activeBtnMasonry() {
@@ -814,13 +946,12 @@ function activeBtnMasonry() {
   });
 }
 
-function setupDropdowns() {
+window.setupDropdowns = function () {
   const dropdowns = document.querySelectorAll(".drop");
 
   dropdowns.forEach((drop) => {
     let closeTimeout;
 
-    // medir posición horizontal del item
     drop.addEventListener("mouseenter", () => {
       const rect = drop.getBoundingClientRect();
       drop.style.setProperty("--offset-left", rect.left + "px");
@@ -835,7 +966,7 @@ function setupDropdowns() {
       }, 150);
     });
   });
-}
+};
 
 window.addEventListener("load", () => {
   const hash = window.location.hash;
@@ -878,15 +1009,133 @@ function isReadyDom() {
       body.style.overflowY = "auto";
 
       sessionStorage.setItem("loaderShown", "true");
-
     }, 8000);
   }
 }
 
 window.addEventListener("load", isReadyDom);
 
-
-
 document.addEventListener("DOMContentLoaded", activeBtnMasonry);
 document.addEventListener("DOMContentLoaded", setupDropdowns);
-eventListener();
+window.addEventListener("load", setupDropdowns);
+
+const containerTitles = document.getElementById("containerTitles");
+const mainDesc = document.getElementById("mainDesc");
+const snapAreas = document.querySelectorAll(".snap-area");
+
+let titlesArray = [];
+let descArray = [];
+
+const params = new URLSearchParams(window.location.search);
+const langFromURL = params.get("lang");
+
+if (langFromURL) {
+  window.currentLang = langFromURL.toUpperCase();
+}
+
+async function initAboutSection() {
+  if (!translationsCache[window.currentLang]) {
+    await window.translatePage(window.currentLang);
+  }
+
+  containerTitles.innerHTML = "";
+
+  const langData = translationsCache[window.currentLang];
+  if (!langData || !langData["about-section"]) {
+    console.error("No existe 'about-section' en los langs");
+    return;
+  }
+
+  const about = langData["about-section"];
+
+  titlesArray = Object.entries(about.titles);
+  descArray = Object.entries(about.descriptions);
+
+  titlesArray.forEach(([key, value], i) => {
+    const el = document.createElement("div");
+    el.classList.add("changing-title");
+    el.dataset.index = i;
+    el.id = `title-about-${i}`;
+    el.setAttribute("translate-text", key);
+    el.textContent = value;
+    containerTitles.appendChild(el);
+  });
+
+  setupObserver();
+  updateContent(0);
+}
+
+function updateContent(index) {
+  const smallTitles = document.querySelectorAll(".changing-title");
+
+  smallTitles.forEach((t) => t.classList.remove("active"));
+  smallTitles[index].classList.add("active");
+
+  const [key, value] = descArray[index];
+
+  mainDesc.id = key;
+  mainDesc.setAttribute("translate-text", key);
+  mainDesc.textContent = value;
+}
+
+function setupObserver() {
+  const observer = new IntersectionObserver(
+    (entries) => {
+      entries.forEach((entry) => {
+        if (entry.isIntersecting) {
+          updateContent(parseInt(entry.target.dataset.index));
+        }
+      });
+    },
+    { threshold: 0.55 }
+  );
+
+  snapAreas.forEach((area, i) => {
+    area.dataset.index = i;
+    observer.observe(area);
+  });
+}
+
+window.updateAboutLanguage = async function (lang) {
+  window.currentLang = lang;
+
+  await translatePage(lang);
+
+  await initAboutSection();
+};
+
+window.translatePage(window.currentLang);
+
+if (window.location.pathname.includes("about-us")) {
+  initAboutSection().then(scrollToInitialSnap);
+
+  async function scrollToInitialSnap() {
+    const savedIndex = localStorage.getItem("aboutSnapIndex");
+    if (!savedIndex) return;
+
+    const index = parseInt(savedIndex);
+    const target = document.querySelector(`.snap-area[data-index="${index}"]`);
+
+    if (target) {
+      target.scrollIntoView({ behavior: "smooth" });
+      updateContent(index);
+    }
+
+    localStorage.removeItem("aboutSnapIndex");
+  }
+}
+
+function scrollToAboutSection(index) {
+  const sections = [
+    ".mission-vision",
+    ".strengths",
+    ".choose-us"
+  ];
+
+  const selector = sections[index];
+  const target = document.querySelector(selector);
+
+  if (target) {
+    target.scrollIntoView({ behavior: "smooth" });
+  }
+}
